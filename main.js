@@ -1,11 +1,14 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
-const clientLog = ("./storage/clientLog.json");
+
+const fs = require("fs");
+let points = JSON.parse(fs.readFileSync("./storage/points.json", "utf8"));
+let clientLog = JSON.parse(fs.readFileSync("./storage/clientLog.json", "utf8"));
 
 client.on("ready", () => {
-    console.log("I am ready!" + ' And currently running in: '+client.channels.length+' Servers');
-  fs.link
+    console.log("I am ready!" + ' And currently running in: '+client.guilds.size+' Servers');
+  //
 });
 
 client.on("message", async message => {
@@ -32,7 +35,36 @@ client.on("message", async message => {
         let text = args.slice(0).join(" ");
         message.delete();
         message.channel.send(text);
-    }   
+    } else 
+      
+      if (command === 'purge') {
+        await snooze(5000);
+        let messagecount = parseInt(args[0], 10);
+        message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
+        
+        message.channel.send(`${messagecount} messages deleted. :)`)
+      }else
+
+        if (!points[message.author.id]) points[message.author.id] = {
+        points: 0,
+        level: 0
+        };
+        let userData = points[message.author.id];
+        userData.points++;
+
+        let curLevel = Math.floor(0.1 * Math.sqrt(userData.points));
+        if (curLevel > userData.level) {
+            // Level up!
+            userData.level = curLevel;
+            message.reply(`You"ve leveled up to level **${curLevel}**! Ain"t that dandy?`);
+        }
+
+        if (command === 'points') {
+            message.reply(`You are currently level ${userData.level}, with ${userData.points} points.`);
+        }
+        fs.writeFile("./points.json", JSON.stringify(points), (err) => {
+            if (err) console.error(err)
+        });
   
     //else
 
@@ -50,7 +82,7 @@ client.on("message", async message => {
     }
     */
 });
-
+/*
   function calcMessages(userID, userTag) {
     var user = {
       ClientID: userID,
@@ -60,5 +92,5 @@ client.on("message", async message => {
     fs.write(":)");
     
   }
-
+*/
 client.login(config.token);
