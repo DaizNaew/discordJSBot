@@ -1,9 +1,11 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
+const clientLog = ("./storage/clientLog.json");
 
 client.on("ready", () => {
-    console.log("I am ready!");
+    console.log("I am ready!" + ' And currently running in: '+client.channels.length+' Servers');
+  fs.link
 });
 
 client.on("message", async message => {
@@ -14,6 +16,7 @@ client.on("message", async message => {
 
     if(command === 'ping') {
         message.channel.send('Pong!');
+        message.channel.send('This bot has a: '+client.ping+'ms delay to the server.');
     } else
 
     if(command === 'blah') {
@@ -23,14 +26,14 @@ client.on("message", async message => {
     if (command === "asl") {
         let [age, sex, location] = args;
         message.reply(`Hello ${message.author.username}, I see you're a ${age} year old ${sex} from ${location}. Wanna date?`);
-    } else 
+    } else
 
     if(command === "say"){
         let text = args.slice(0).join(" ");
         message.delete();
         message.channel.send(text);
-    } 
-
+    }   
+  
     //else
 
     /*
@@ -48,5 +51,14 @@ client.on("message", async message => {
     */
 });
 
+  function calcMessages(userID, userTag) {
+    var user = {
+      ClientID: userID,
+      ClientName: userTag
+    };
+    var parseObject = JSON.parse(user);
+    fs.write(":)");
+    
+  }
 
 client.login(config.token);
