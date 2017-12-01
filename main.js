@@ -8,8 +8,17 @@ let clientLog;
 client.on("ready", () => {
     console.log("I am ready!" + ' And currently running in: '+client.guilds.size+' Servers');
     //
+    checkDirectory("./storage/", function(err) {
+        if(err) {
+            console.log("Something went wrong: ",err);
+        } else {
+
+        }
+    });
     checkAllDeps("storage/clientLog.json");
-    clientLog = JSON.parse(fs.readFileSync("storage/clientLog.json", "utf8"));
+    setTimeout(function() {
+        clientLog = JSON.parse(fs.readFileSync("storage/clientLog.json", "utf8"));
+    }, 750); 
 });
 
 client.on("message", async message => {
@@ -77,17 +86,35 @@ client.on("message", async message => {
 */
 
 function checkAllDeps(FilePos){
-    
-    fs.open(FilePos, 'wx', (err, fd) => {
-        if (err) {
-            if (err.code === 'EEXIST') {
-                console.error(`${FilePos} already exists`);
-                return;
+    setTimeout(function() {
+        fs.open(FilePos, 'wx', (err, fd) => {
+            if (err) {
+                if (err.code === 'EEXIST') {
+                    console.error(`${FilePos} already exists`);
+                    return;
+                }
+                throw err;
             }
-            throw err;
-        }
-        fs.writeFile(FilePos, "{ } ");
-      });
+            writeToFile(FilePos, " { } ");
+          });
+    }, 500);
 }
+
+function writeToFile(file, text) {
+    fs.writeFileSync(file, text);
+}
+
+function checkDirectory(directory, callback) {  
+    fs.stat(directory, function(err, stats) {
+      //Check if error defined and the error code is "not exists"
+      if (err && err.errno === -4058) {
+        //Create the directory, call the callback.
+        fs.mkdir(directory, callback);
+      } else {
+        //just in case there was a different error:
+        callback(err)
+      }
+    });
+  }
 
 client.login(config.token);
