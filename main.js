@@ -1,14 +1,18 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
-
 const fs = require("fs");
+
 let points = JSON.parse(fs.readFileSync("./storage/points.json", "utf8"));
 let clientLog = JSON.parse(fs.readFileSync("./storage/clientLog.json", "utf8"));
 
+function checkAllDeps(){
+
+}
+
 client.on("ready", () => {
     console.log("I am ready!" + ' And currently running in: '+client.guilds.size+' Servers');
-  //
+    //
 });
 
 client.on("message", async message => {
@@ -37,13 +41,13 @@ client.on("message", async message => {
         message.channel.send(text);
     } else 
       
-      if (command === 'purge') {
-        await snooze(5000);
-        let messagecount = parseInt(args[0], 10);
-        message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
-        
-        message.channel.send(`${messagecount} messages deleted. :)`)
-      }else
+    if (command === 'clear') {
+        let messagecount = parseInt(args[0]) + 1;
+        await message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
+        setTimeout(function(){ message.channel.send(`Done :) I have deleted ${messagecount} messages, `); }, 500);
+        setTimeout(function(){ message.channel.send(`this message will self destruct in 5 seconds`); }, 500);
+        setTimeout(function(){ message.channel.bulkDelete(2); }, 5000);
+      }
 
         if (!points[message.author.id]) points[message.author.id] = {
         points: 0,
