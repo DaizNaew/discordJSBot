@@ -6,22 +6,30 @@ const fs = require("fs");
 let clientLog;
 
 client.on("ready", () => {
+    
     console.log("I am ready!" + ' And currently running in: '+client.guilds.size+' Servers');
-    //
+
     checkDirectory("./storage/", function(err) {
         if(err) {
             console.log("Something went wrong: ",err);
         } else {
-
+            console.log("No errors detected and I am good to go.");
         }
     });
+
     checkAllDeps("storage/clientLog.json");
+
     setTimeout(function() {
         clientLog = JSON.parse(fs.readFileSync("storage/clientLog.json", "utf8"));
-    }, 750); 
+    }, 750);
+
+    var channel = client.channels.get('385782063887941632');
+    //channel.send('Bot deployed and ready for action.');
+
 });
 
 client.on("message", async message => {
+    logging(message);
     if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
@@ -30,10 +38,6 @@ client.on("message", async message => {
     if(command === 'ping') {
         message.channel.send('Pong!');
         message.channel.send('This bot has a: '+client.ping+'ms delay to the server.');
-    } else
-
-    if(command === 'blah') {
-        message.channel.send('Meh.');
     } else
 
     if (command === "asl") {
@@ -53,25 +57,31 @@ client.on("message", async message => {
         setTimeout(function(){ message.channel.send(`Done :) I have deleted ${messagecount} messages, `); }, 500);
         setTimeout(function(){ message.channel.send(`this message will self destruct in 5 seconds`); }, 500);
         setTimeout(function(){ message.channel.bulkDelete(2); }, 5000);
-      } 
-  
-    //else
+    } else
+    
+    if (command === 'log') {
+        getAllLog(message);
+    } else
 
-    /*
-    if(command === 'purge') {
-        const deleteCount = parseInt(args[0], 10);
-        if(!deleteCount || deleteCount < 2 || deleteCount > 100) 
-            return message.reply(`I believe you tried to show too much power`);
+    if(command === 'show') {
+        let n = args[0];
 
-            const fetched = await message.channel.fetchMessages({count: deleteCount});
-            message.channel.bulkDelete(fetched)
-        .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
-        message.channel.send("Amount of purged messages = " + deleteCount);
+        var result = message.mentions.users;
+        
+        console.log(result);
+
+        message.reply(`${result}`);
+
+
+
+        /* if(clientLog[client.users.get(id)]) {
+            message.reply(`Jeg har en log på denne person : ${clientLog[client.users.get(n).id].usertag}`);
+        } else {
+            message.reply(`Nej, den person kender jeg ikke.`);
+        } */
         
     }
-    */
 });
-
 
 /*
   function calcMessages(userID, userTag) {
@@ -84,6 +94,52 @@ client.on("message", async message => {
     
   }
 */
+
+function getAllLog(message){
+    for(i in clientLog){
+        console.log(clientLog[i]);
+    }
+    message.channel.send('There are '+i+' logged.');
+}
+
+function logging(message){
+
+
+    if (!clientLog[message.author.id]) clientLog[message.author.id] = {
+        
+        messagesSent: 0, 
+        usertag: message.author.id, 
+        usercreatedate: message.author.createdAt, 
+        clientisbot: message.author.bot, 
+        firstNick: message.author.tag, 
+        banhammer: 0, 
+        kickhammer: 0
+    }
+
+    if(clientLog[message.author.id].usertag != message.author.tag) {
+        clientLog[message.author.id].usertag = message.author.tag;
+    }
+ 
+    if(clientLog[message.author.id].usercreatedate != message.author.createdAt) {
+        clientLog[message.author.id].usercreatedate = message.author.createdAt;
+    }
+ 
+    if(clientLog[message.author.id].clientisbot != message.author.bot) {
+        clientLog[message.author.id].clientisbot = message.author.bot;
+    }
+ 
+    clientLog[message.author.id].messagesSent++;
+ 
+    fs.writeFile('storage/clientLog.json', JSON.stringify(clientLog, null, 4), (err) => {
+        if (err) console.error(err);
+    });
+
+}
+
+
+function writeToFile(file, text) {
+    fs.writeFileSync(file, text);
+}
 
 function checkAllDeps(FilePos){
     setTimeout(function() {
@@ -98,10 +154,6 @@ function checkAllDeps(FilePos){
             writeToFile(FilePos, " { } ");
           });
     }, 500);
-}
-
-function writeToFile(file, text) {
-    fs.writeFileSync(file, text);
 }
 
 function checkDirectory(directory, callback) {  
