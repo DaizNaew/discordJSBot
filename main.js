@@ -3,16 +3,13 @@ const client = new Discord.Client();
 const config = require("./config.json");
 const fs = require("fs");
 
-let points = JSON.parse(fs.readFileSync("./storage/points.json", "utf8"));
-let clientLog = JSON.parse(fs.readFileSync("./storage/clientLog.json", "utf8"));
-
-function checkAllDeps(){
-
-}
+let clientLog;
 
 client.on("ready", () => {
     console.log("I am ready!" + ' And currently running in: '+client.guilds.size+' Servers');
     //
+    checkAllDeps("storage/clientLog.json");
+    clientLog = JSON.parse(fs.readFileSync("storage/clientLog.json", "utf8"));
 });
 
 client.on("message", async message => {
@@ -47,28 +44,7 @@ client.on("message", async message => {
         setTimeout(function(){ message.channel.send(`Done :) I have deleted ${messagecount} messages, `); }, 500);
         setTimeout(function(){ message.channel.send(`this message will self destruct in 5 seconds`); }, 500);
         setTimeout(function(){ message.channel.bulkDelete(2); }, 5000);
-      }
-
-        if (!points[message.author.id]) points[message.author.id] = {
-        points: 0,
-        level: 0
-        };
-        let userData = points[message.author.id];
-        userData.points++;
-
-        let curLevel = Math.floor(0.1 * Math.sqrt(userData.points));
-        if (curLevel > userData.level) {
-            // Level up!
-            userData.level = curLevel;
-            message.reply(`You"ve leveled up to level **${curLevel}**! Ain"t that dandy?`);
-        }
-
-        if (command === 'points') {
-            message.reply(`You are currently level ${userData.level}, with ${userData.points} points.`);
-        }
-        fs.writeFile("./points.json", JSON.stringify(points), (err) => {
-            if (err) console.error(err)
-        });
+      } 
   
     //else
 
@@ -86,6 +62,8 @@ client.on("message", async message => {
     }
     */
 });
+
+
 /*
   function calcMessages(userID, userTag) {
     var user = {
@@ -97,4 +75,19 @@ client.on("message", async message => {
     
   }
 */
+
+function checkAllDeps(FilePos){
+    
+    fs.open(FilePos, 'wx', (err, fd) => {
+        if (err) {
+            if (err.code === 'EEXIST') {
+                console.error(`${FilePos} already exists`);
+                return;
+            }
+            throw err;
+        }
+        fs.writeFile(FilePos, "{ } ");
+      });
+}
+
 client.login(config.token);
