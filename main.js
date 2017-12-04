@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
 const fs = require("fs");
+const func = require("./enum/propFunctions");
 
 let clientLog;
 
@@ -65,22 +66,26 @@ client.on("message", async message => {
 
     if(command === 'show') {
         let n = args[0];
-
-        var result = message.mentions.users;
-        
-        console.log(result);
-
-        message.reply(`${result}`);
-
-
-
-        /* if(clientLog[client.users.get(id)]) {
-            message.reply(`Jeg har en log på denne person : ${clientLog[client.users.get(n).id].usertag}`);
+        var mention = message.mentions.members.first();
+        var author = message.author;
+        if(n) {
+            console.log(`Show command used by: ${author.id} to show data about: ${mention.id}`);
+            if(clientLog[mention.id]) {
+                message.reply(`Jeg har en log på denne person : ${clientLog[mention.id].usertag}`);
+            } else {
+                message.reply(`Nej, den person kender jeg ikke.`);
+            }
         } else {
-            message.reply(`Nej, den person kender jeg ikke.`);
-        } */
-        
+            console.log(`Show command used by: ${author.id} to show data about themself`);
+            if(clientLog[author.id]) {
+                message.reply(`Jeg kender dig godt : ${clientLog[author.id].usertag}`);
+            } else {
+                message.reply(`Du er tydeligvis god til at gemme dig, jeg har intet på dig.`);
+            }
+        }
     }
+    
+    
 });
 
 /*
@@ -103,7 +108,6 @@ function getAllLog(message){
 }
 
 function logging(message){
-
 
     if (!clientLog[message.author.id]) clientLog[message.author.id] = {
         
@@ -129,17 +133,12 @@ function logging(message){
     }
  
     clientLog[message.author.id].messagesSent++;
- 
-    fs.writeFile('storage/clientLog.json', JSON.stringify(clientLog, null, 4), (err) => {
-        if (err) console.error(err);
-    });
+
+    func.writeToFileAsync('storage/clientLog.json', func.beautifyJSON(clientLog));
 
 }
 
 
-function writeToFile(file, text) {
-    fs.writeFileSync(file, text);
-}
 
 function checkAllDeps(FilePos){
     setTimeout(function() {
@@ -151,22 +150,22 @@ function checkAllDeps(FilePos){
                 }
                 throw err;
             }
-            writeToFile(FilePos, " { } ");
-          });
+            func.writeToFile(FilePos, " { } ");
+            });
     }, 500);
 }
 
 function checkDirectory(directory, callback) {  
     fs.stat(directory, function(err, stats) {
-      //Check if error defined and the error code is "not exists"
-      if (err && err.errno === -4058) {
-        //Create the directory, call the callback.
-        fs.mkdir(directory, callback);
-      } else {
-        //just in case there was a different error:
-        callback(err)
-      }
+        //Check if error defined and the error code is "not exists"
+        if (err && err.errno === -4058) {
+            //Create the directory, call the callback.
+            fs.mkdir(directory, callback);
+        } else {
+            //just in case there was a different error:
+            callback(err)
+        }
     });
-  }
+}
 
 client.login(config.token);

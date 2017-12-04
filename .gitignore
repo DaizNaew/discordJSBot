@@ -3,3 +3,4 @@ storage/
 nodemon.json
 package-lock.json
 package.json
+config.json
