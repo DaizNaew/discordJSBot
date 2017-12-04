@@ -1,4 +1,7 @@
 {
     "token": "#",
-    "prefix": "!"
+    "prefix": "!",
+    "mprefix": "m",
+    "ytKey": "#"
   }
+

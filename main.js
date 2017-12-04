@@ -1,17 +1,51 @@
+//NPM Node modules
 const Discord = require("discord.js");
-const client = new Discord.Client();
-const config = require("./config.json");
-
 const fs = require("fs");
-let points = JSON.parse(fs.readFileSync("./storage/points.json", "utf8"));
-let clientLog = JSON.parse(fs.readFileSync("./storage/clientLog.json", "utf8"));
+const ytdl = require("ytdl-core");
+const search = require("youtube-search");
+
+var _ = require("lodash");
+var _ = require("lodash/core");
+var fp = require("lodash/fp");
+
+var array = require('lodash/array');
+var object = require('lodash/fp/object');
+
+//Local files
+const config = require("./config.json");
+const func = require("./enum/propFunctions");
+
+//Design the client
+const client = new Discord.Client();
+let clientLog;
 
 client.on("ready", () => {
+    
     console.log("I am ready!" + ' And currently running in: '+client.guilds.size+' Servers');
-  //
+
+    func.checkDirectory("./storage/", function(err) {
+        if(err) {
+            console.log("Something went wrong: ",err);
+        } else {
+            console.log("No errors detected and I am good to go.");
+        }
+    });
+
+    checkAllDeps("storage/clientLog.json");
+
+    setTimeout(function() {
+        clientLog = JSON.parse(fs.readFileSync("storage/clientLog.json", "utf8"));
+    }, 750);
+
+    var channel = client.channels.get('385782063887941632');
+    var date = new Date(channel.createdTimestamp);
+    console.log(`I am ${channel.client.user.tag} residing in ${channel.type} channel created at ${date}`);
+    //channel.send('Bot deployed and ready for action.');
+
 });
 
 client.on("message", async message => {
+    logging(message);
     if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
@@ -20,77 +54,202 @@ client.on("message", async message => {
     if(command === 'ping') {
         message.channel.send('Pong!');
         message.channel.send('This bot has a: '+client.ping+'ms delay to the server.');
-    } else
-
-    if(command === 'blah') {
-        message.channel.send('Meh.');
-    } else
+    }
 
     if (command === "asl") {
         let [age, sex, location] = args;
         message.reply(`Hello ${message.author.username}, I see you're a ${age} year old ${sex} from ${location}. Wanna date?`);
-    } else
+    }
 
     if(command === "say"){
         let text = args.slice(0).join(" ");
         message.delete();
         message.channel.send(text);
-    } else 
-      
-      if (command === 'purge') {
-        await snooze(5000);
-        let messagecount = parseInt(args[0], 10);
-        message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
-        
-        message.channel.send(`${messagecount} messages deleted. :)`)
-      }else
-
-        if (!points[message.author.id]) points[message.author.id] = {
-        points: 0,
-        level: 0
-        };
-        let userData = points[message.author.id];
-        userData.points++;
-
-        let curLevel = Math.floor(0.1 * Math.sqrt(userData.points));
-        if (curLevel > userData.level) {
-            // Level up!
-            userData.level = curLevel;
-            message.reply(`You"ve leveled up to level **${curLevel}**! Ain"t that dandy?`);
-        }
-
-        if (command === 'points') {
-            message.reply(`You are currently level ${userData.level}, with ${userData.points} points.`);
-        }
-        fs.writeFile("./points.json", JSON.stringify(points), (err) => {
-            if (err) console.error(err)
-        });
-  
-    //else
-
-    /*
-    if(command === 'purge') {
-        const deleteCount = parseInt(args[0], 10);
-        if(!deleteCount || deleteCount < 2 || deleteCount > 100) 
-            return message.reply(`I believe you tried to show too much power`);
-
-            const fetched = await message.channel.fetchMessages({count: deleteCount});
-            message.channel.bulkDelete(fetched)
-        .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
-        message.channel.send("Amount of purged messages = " + deleteCount);
-        
     }
-    */
-});
-/*
-  function calcMessages(userID, userTag) {
-    var user = {
-      ClientID: userID,
-      ClientName: userTag
-    };
-    var parseObject = JSON.parse(user);
-    fs.write(":)");
+      
+    if (command === 'clear') {
+        let messagecount = parseInt(args[0]) + 1;
+        await message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
+        setTimeout(function(){ message.channel.send(`Done :) I have deleted ${messagecount} messages, `); }, 500);
+        setTimeout(function(){ message.channel.send(`this message will self destruct in 5 seconds`); }, 500);
+        setTimeout(function(){ message.channel.bulkDelete(2); }, 5000);
+    }
     
-  }
-*/
+    if (command === 'log') {
+        getAllLog(message);
+    }
+
+    //Fix formatting for dm
+    if(command === 'show') {
+        let n = args[0];
+        let mention = message.mentions.members.first();
+        let author = message.author;
+        if(n) {
+            console.log(`Show command used by: ${author.id} to show data about: ${mention.id}`);
+            if(clientLog[mention.id]) {
+                message.reply(`Jeg har en log på denne person : ${clientLog[mention.id].usertag}`);
+                message.author.send(`${clientLog[author.id].usertag} Blev oprættet den: ${clientLog[author.id].usercreatedate} med disse stats:
+                \nNavn på serveren: ${clientLog[author.id].firstNick} 
+                Om bot eller ej: ${clientLog[author.id].clientisbot} 
+                Har sendt: ${clientLog[author.id].messagesSent} beskeder
+                Har kicket: ${clientLog[author.id].kickhammer} brugere, og bannet: ${clientLog[author.id].banhammer} brugere`)
+                .then(message => console.log(`sent Message: ${message.content}`))
+                .catch(console.error);
+            } else {
+                message.reply(`Nej, den person kender jeg ikke.`);
+            }
+        } else {
+            console.log(`Show command used by: ${author.id} to show data about themself`);
+            if(clientLog[author.id]) {
+                message.reply(`Jeg kender dig godt : ${clientLog[author.id].usertag}`);
+                message.author.send(`${clientLog[author.id].usertag} Blev oprættet den: ${clientLog[author.id].usercreatedate} med disse stats:
+                \nNavn på serveren: ${clientLog[author.id].firstNick} 
+                Om bot elelr ej: ${clientLog[author.id].clientisbot} 
+                Har sendt: ${clientLog[author.id].messagesSent} beskeder
+                Har kicket: ${clientLog[author.id].kickhammer} brugere, og bannet: ${clientLog[author.id].banhammer} brugere`)
+                .then(message => console.log(`sent Message: ${message.content}`))
+                .catch(console.error);
+            } else {
+                message.reply(`Du er tydeligvis god til at gemme dig, jeg har intet på dig.`);
+            }
+        }
+    }
+
+});
+
+//Sound commands
+client.on('message', async message => {
+
+    logging(message);
+    if (!message.content.startsWith(config.mprefix) || message.author.bot) return;
+
+    const args = message.content.slice(config.mprefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+
+    if(command === 'join') {
+        let vChan = message.member.voiceChannel;
+        //console.log(vChan);
+        vChan.join().then(connection => console.log(`connected to ${vChan.name}`)).catch(console.error);
+    }
+
+    if(command === 'leave') {
+        let vChan = message.member.voiceChannel;
+        vChan.leave();console.log(`left channel ${vChan.name}`);
+    }
+
+    if(command === 'airhorn') {
+        const horn = './sound/Jamaican Horn Siren.wav';
+        const broadcast = client.createVoiceBroadcast();
+        broadcast.playFile(horn);
+        if(client.voiceConnections.values() === null) return;
+        for(const connection of client.voiceConnections.values()) {
+            connection.playBroadcast(broadcast);
+        }
+    }
+
+    if(command === 'play') {
+        let input = args.slice(0).join(" ");
+        const streamOptions = { seek: 0, volume: 1 };
+        const broadcast = client.createVoiceBroadcast();
+        let vChan = message.member.voiceChannel;
+        var opts = {
+            maxResults: 1,
+            key: config.ytKey
+        };
+
+        if(!input.startsWith('https://')){
+            search(input, opts, function(err, results) {
+                if(err) return console.log(err);
+                console.dir(results);
+                var stdata = JSON.stringify(results);
+                var sdata = JSON.parse(stdata);
+                console.log(sdata);
+                console.log(sdata.name);
+            });
+        } else {
+            vChan.join()
+            .then(connection => {
+                const stream = ytdl(input, { filter : 'audioonly'});
+                broadcast.playStream(stream);
+                const dispatcher = connection.playBroadcast(broadcast);
+            })
+            .catch(console.error);
+        }
+    }
+
+    if(command === 'stop') {
+        const broadcast = client.broadcasts;
+        for(const connection of broadcast) {
+            connection.end();
+        }
+    }
+
+    if(command === 'pause') {
+        const broadcast = client.broadcasts;
+        for(const connection of broadcast) {
+            connection.pause();
+        }
+    }
+
+    if(command === 'resume') {
+        const broadcast = client.broadcasts;
+        for(const connection of broadcast) {
+            connection.resume();
+        }
+    }
+
+});
+
+function getAllLog(message){
+    for(const log of clientLog){
+        console.log(log);
+    }
+    message.channel.send('There are '+i+' logged.');
+}
+
+function logging(message){
+
+    if (!clientLog[message.author.id]) clientLog[message.author.id] = {
+        
+        messagesSent: 0, 
+        usertag: message.author.id, 
+        usercreatedate: message.author.createdAt, 
+        clientisbot: message.author.bot, 
+        firstNick: message.author.tag, 
+        banhammer: 0, 
+        kickhammer: 0
+    }
+
+    if(clientLog[message.author.id].usertag != message.author.tag) {
+        clientLog[message.author.id].usertag = message.author.tag;
+    }
+ 
+    if(clientLog[message.author.id].usercreatedate != message.author.createdAt) {
+        clientLog[message.author.id].usercreatedate = message.author.createdAt;
+    }
+ 
+    if(clientLog[message.author.id].clientisbot != message.author.bot) {
+        clientLog[message.author.id].clientisbot = message.author.bot;
+    }
+ 
+    clientLog[message.author.id].messagesSent++;
+
+    func.writeToFileAsync('storage/clientLog.json', func.beautifyJSON(clientLog));
+
+}
+function checkAllDeps(FilePos) {
+    setTimeout(function() {
+        fs.open(FilePos, 'wx', (err, fd) => {
+            if (err) {
+                if (err.code === 'EEXIST') {
+                    console.error(`${FilePos} already exists`);
+                    return;
+                }
+                throw err;
+            }
+            func.writeToFileSync(FilePos, " { } ");
+            });
+    }, 500);
+}
+
 client.login(config.token);
