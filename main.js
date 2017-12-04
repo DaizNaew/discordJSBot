@@ -88,7 +88,7 @@ client.on("message", async message => {
             console.log(`Show command used by: ${author.id} to show data about: ${mention.id}`);
             if(clientLog[mention.id]) {
                 message.reply(`Jeg har en log på denne person : ${clientLog[mention.id].usertag}`);
-                message.author.send(`${clientLog[author.id].usertag} Blev oprættet den: ${clientLog[author.id].usercreatedate} med disse stats:
+                message.author.send(`${clientLog[author.id].usertag} Blev oprættet: ${clientLog[author.id].usercreatedate} med disse stats:
                 \nNavn på serveren: ${clientLog[author.id].firstNick} 
                 Om bot eller ej: ${clientLog[author.id].clientisbot} 
                 Har sendt: ${clientLog[author.id].messagesSent} beskeder
@@ -102,7 +102,7 @@ client.on("message", async message => {
             console.log(`Show command used by: ${author.id} to show data about themself`);
             if(clientLog[author.id]) {
                 message.reply(`Jeg kender dig godt : ${clientLog[author.id].usertag}`);
-                message.author.send(`${clientLog[author.id].usertag} Blev oprættet den: ${clientLog[author.id].usercreatedate} med disse stats:
+                message.author.send(`${clientLog[author.id].usertag} Blev oprættet: ${clientLog[author.id].usercreatedate} med disse stats:
                 \nNavn på serveren: ${clientLog[author.id].firstNick} 
                 Om bot elelr ej: ${clientLog[author.id].clientisbot} 
                 Har sendt: ${clientLog[author.id].messagesSent} beskeder
@@ -114,7 +114,6 @@ client.on("message", async message => {
             }
         }
     }
-
 });
 
 //Sound commands
@@ -129,11 +128,13 @@ client.on('message', async message => {
     if(command === 'join') {
         let vChan = message.member.voiceChannel;
         //console.log(vChan);
+        if(!vChan) return message.channel.send(`Jeg kan ikke joine dig min ven, du er ikke i nogen voice. :(`);
         vChan.join().then(connection => console.log(`connected to ${vChan.name}`)).catch(console.error);
     }
 
     if(command === 'leave') {
         let vChan = message.member.voiceChannel;
+        if(!vChan) return message.channel.send(`Jeg kan ikke joine dig min ven, du er ikke i nogen voice. :(`);
         vChan.leave();console.log(`left channel ${vChan.name}`);
     }
 
@@ -152,17 +153,30 @@ client.on('message', async message => {
         const streamOptions = { seek: 0, volume: 1 };
         const broadcast = client.createVoiceBroadcast();
         let vChan = message.member.voiceChannel;
+
         var opts = {
             maxResults: 1,
-            key: config.ytKey
+            key: config.ytKey,
+            type: 'video'
         };
 
         if(!input.startsWith('https://')){
             search(input, opts, function(err, results) {
                 if(err) return console.log(err);
+                var linkToPlay = results[0].link;
                 console.dir(results);
+                message.reply(results[0].link);
+                if(!vChan) return message.channel.send(`Jeg kan ikke joine dig min ven, du er ikke i nogen voice. :(`);
+                vChan.join()
+                .then(connection => {
+                    const stream = ytdl(linkToPlay, { filter : 'audioonly'});
+                    broadcast.playStream(stream);
+                    const dispatcher = connection.playBroadcast(broadcast);
+                })
+                .catch(console.error);
             });
         } else {
+            if(!vChan) return message.channel.send(`Jeg kan ikke joine dig min ven, du er ikke i nogen voice. :(`);
             vChan.join()
             .then(connection => {
                 const stream = ytdl(input, { filter : 'audioonly'});
@@ -171,6 +185,7 @@ client.on('message', async message => {
             })
             .catch(console.error);
         }
+        
     }
 
     if(command === 'stop') {
@@ -233,6 +248,7 @@ function logging(message){
     func.writeToFileAsync('storage/clientLog.json', func.beautifyJSON(clientLog));
 
 }
+
 function checkAllDeps(FilePos) {
     setTimeout(function() {
         fs.open(FilePos, 'wx', (err, fd) => {
