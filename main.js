@@ -79,10 +79,7 @@ client.on("message", async message => {
         getAllLog(message);
     }
 
-    
-
-    
-
+    //Fix formatting for dm
     if(command === 'show') {
         let n = args[0];
         let mention = message.mentions.members.first();
@@ -91,6 +88,13 @@ client.on("message", async message => {
             console.log(`Show command used by: ${author.id} to show data about: ${mention.id}`);
             if(clientLog[mention.id]) {
                 message.reply(`Jeg har en log på denne person : ${clientLog[mention.id].usertag}`);
+                message.author.send(`${clientLog[author.id].usertag} Blev oprættet den: ${clientLog[author.id].usercreatedate} med disse stats:
+                \nNavn på serveren: ${clientLog[author.id].firstNick} 
+                Om bot eller ej: ${clientLog[author.id].clientisbot} 
+                Har sendt: ${clientLog[author.id].messagesSent} beskeder
+                Har kicket: ${clientLog[author.id].kickhammer} brugere, og bannet: ${clientLog[author.id].banhammer} brugere`)
+                .then(message => console.log(`sent Message: ${message.content}`))
+                .catch(console.error);
             } else {
                 message.reply(`Nej, den person kender jeg ikke.`);
             }
@@ -98,6 +102,13 @@ client.on("message", async message => {
             console.log(`Show command used by: ${author.id} to show data about themself`);
             if(clientLog[author.id]) {
                 message.reply(`Jeg kender dig godt : ${clientLog[author.id].usertag}`);
+                message.author.send(`${clientLog[author.id].usertag} Blev oprættet den: ${clientLog[author.id].usercreatedate} med disse stats:
+                \nNavn på serveren: ${clientLog[author.id].firstNick} 
+                Om bot elelr ej: ${clientLog[author.id].clientisbot} 
+                Har sendt: ${clientLog[author.id].messagesSent} beskeder
+                Har kicket: ${clientLog[author.id].kickhammer} brugere, og bannet: ${clientLog[author.id].banhammer} brugere`)
+                .then(message => console.log(`sent Message: ${message.content}`))
+                .catch(console.error);
             } else {
                 message.reply(`Du er tydeligvis god til at gemme dig, jeg har intet på dig.`);
             }
