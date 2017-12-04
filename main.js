@@ -161,10 +161,6 @@ client.on('message', async message => {
             search(input, opts, function(err, results) {
                 if(err) return console.log(err);
                 console.dir(results);
-                var stdata = JSON.stringify(results);
-                var sdata = JSON.parse(stdata);
-                console.log(sdata);
-                console.log(sdata.name);
             });
         } else {
             vChan.join()
