@@ -1,16 +1,29 @@
+//NPM Node modules
 const Discord = require("discord.js");
-const client = new Discord.Client();
-const config = require("./config.json");
 const fs = require("fs");
+const ytdl = require("ytdl-core");
+const search = require("youtube-search");
+
+var _ = require("lodash");
+var _ = require("lodash/core");
+var fp = require("lodash/fp");
+
+var array = require('lodash/array');
+var object = require('lodash/fp/object');
+
+//Local files
+const config = require("./config.json");
 const func = require("./enum/propFunctions");
 
+//Design the client
+const client = new Discord.Client();
 let clientLog;
 
 client.on("ready", () => {
     
     console.log("I am ready!" + ' And currently running in: '+client.guilds.size+' Servers');
 
-    checkDirectory("./storage/", function(err) {
+    func.checkDirectory("./storage/", function(err) {
         if(err) {
             console.log("Something went wrong: ",err);
         } else {
@@ -25,6 +38,8 @@ client.on("ready", () => {
     }, 750);
 
     var channel = client.channels.get('385782063887941632');
+    var date = new Date(channel.createdTimestamp);
+    console.log(`I am ${channel.client.user.tag} residing in ${channel.type} channel created at ${date}`);
     //channel.send('Bot deployed and ready for action.');
 
 });
@@ -39,18 +54,18 @@ client.on("message", async message => {
     if(command === 'ping') {
         message.channel.send('Pong!');
         message.channel.send('This bot has a: '+client.ping+'ms delay to the server.');
-    } else
+    }
 
     if (command === "asl") {
         let [age, sex, location] = args;
         message.reply(`Hello ${message.author.username}, I see you're a ${age} year old ${sex} from ${location}. Wanna date?`);
-    } else
+    }
 
     if(command === "say"){
         let text = args.slice(0).join(" ");
         message.delete();
         message.channel.send(text);
-    } else 
+    }
       
     if (command === 'clear') {
         let messagecount = parseInt(args[0]) + 1;
@@ -58,16 +73,20 @@ client.on("message", async message => {
         setTimeout(function(){ message.channel.send(`Done :) I have deleted ${messagecount} messages, `); }, 500);
         setTimeout(function(){ message.channel.send(`this message will self destruct in 5 seconds`); }, 500);
         setTimeout(function(){ message.channel.bulkDelete(2); }, 5000);
-    } else
+    }
     
     if (command === 'log') {
         getAllLog(message);
-    } else
+    }
+
+    
+
+    
 
     if(command === 'show') {
         let n = args[0];
-        var mention = message.mentions.members.first();
-        var author = message.author;
+        let mention = message.mentions.members.first();
+        let author = message.author;
         if(n) {
             console.log(`Show command used by: ${author.id} to show data about: ${mention.id}`);
             if(clientLog[mention.id]) {
@@ -84,25 +103,95 @@ client.on("message", async message => {
             }
         }
     }
-    
-    
+
 });
 
-/*
-  function calcMessages(userID, userTag) {
-    var user = {
-      ClientID: userID,
-      ClientName: userTag
-    };
-    var parseObject = JSON.parse(user);
-    fs.write(":)");
-    
-  }
-*/
+//Sound commands
+client.on('message', async message => {
+
+    logging(message);
+    if (!message.content.startsWith(config.mprefix) || message.author.bot) return;
+
+    const args = message.content.slice(config.mprefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+
+    if(command === 'join') {
+        let vChan = message.member.voiceChannel;
+        //console.log(vChan);
+        vChan.join().then(connection => console.log(`connected to ${vChan.name}`)).catch(console.error);
+    }
+
+    if(command === 'leave') {
+        let vChan = message.member.voiceChannel;
+        vChan.leave();console.log(`left channel ${vChan.name}`);
+    }
+
+    if(command === 'airhorn') {
+        const horn = './sound/Jamaican Horn Siren.wav';
+        const broadcast = client.createVoiceBroadcast();
+        broadcast.playFile(horn);
+        if(client.voiceConnections.values() === null) return;
+        for(const connection of client.voiceConnections.values()) {
+            connection.playBroadcast(broadcast);
+        }
+    }
+
+    if(command === 'play') {
+        let input = args.slice(0).join(" ");
+        const streamOptions = { seek: 0, volume: 1 };
+        const broadcast = client.createVoiceBroadcast();
+        let vChan = message.member.voiceChannel;
+        var opts = {
+            maxResults: 1,
+            key: config.ytKey
+        };
+
+        if(!input.startsWith('https://')){
+            search(input, opts, function(err, results) {
+                if(err) return console.log(err);
+                console.dir(results);
+                var stdata = JSON.stringify(results);
+                var sdata = JSON.parse(stdata);
+                console.log(sdata);
+                console.log(sdata.name);
+            });
+        } else {
+            vChan.join()
+            .then(connection => {
+                const stream = ytdl(input, { filter : 'audioonly'});
+                broadcast.playStream(stream);
+                const dispatcher = connection.playBroadcast(broadcast);
+            })
+            .catch(console.error);
+        }
+    }
+
+    if(command === 'stop') {
+        const broadcast = client.broadcasts;
+        for(const connection of broadcast) {
+            connection.end();
+        }
+    }
+
+    if(command === 'pause') {
+        const broadcast = client.broadcasts;
+        for(const connection of broadcast) {
+            connection.pause();
+        }
+    }
+
+    if(command === 'resume') {
+        const broadcast = client.broadcasts;
+        for(const connection of broadcast) {
+            connection.resume();
+        }
+    }
+
+});
 
 function getAllLog(message){
-    for(i in clientLog){
-        console.log(clientLog[i]);
+    for(const log of clientLog){
+        console.log(log);
     }
     message.channel.send('There are '+i+' logged.');
 }
@@ -137,10 +226,7 @@ function logging(message){
     func.writeToFileAsync('storage/clientLog.json', func.beautifyJSON(clientLog));
 
 }
-
-
-
-function checkAllDeps(FilePos){
+function checkAllDeps(FilePos) {
     setTimeout(function() {
         fs.open(FilePos, 'wx', (err, fd) => {
             if (err) {
@@ -150,22 +236,9 @@ function checkAllDeps(FilePos){
                 }
                 throw err;
             }
-            func.writeToFile(FilePos, " { } ");
+            func.writeToFileSync(FilePos, " { } ");
             });
     }, 500);
-}
-
-function checkDirectory(directory, callback) {  
-    fs.stat(directory, function(err, stats) {
-        //Check if error defined and the error code is "not exists"
-        if (err && err.errno === -4058) {
-            //Create the directory, call the callback.
-            fs.mkdir(directory, callback);
-        } else {
-            //just in case there was a different error:
-            callback(err)
-        }
-    });
 }
 
 client.login(config.token);
