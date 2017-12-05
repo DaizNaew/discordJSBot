@@ -133,8 +133,7 @@ client.on('message', async message => {
     }
 
     if(command === 'leave') {
-        let vChan = message.member.voiceChannel;
-        if(!vChan) return message.channel.send(`Jeg kan ikke joine dig min ven, du er ikke i nogen voice. :(`);
+        let vChan = client.voiceChannel;
         vChan.leave();console.log(`left channel ${vChan.name}`);
     }
 
@@ -165,8 +164,9 @@ client.on('message', async message => {
                 if(err) return console.log(err);
                 var linkToPlay = results[0].link;
                 console.dir(results);
-                message.reply(results[0].link);
                 if(!vChan) return message.channel.send(`Jeg kan ikke joine dig min ven, du er ikke i nogen voice. :(`);
+                message.reply(results[0].link);
+                
                 vChan.join()
                 .then(connection => {
                     const stream = ytdl(linkToPlay, { filter : 'audioonly'});
