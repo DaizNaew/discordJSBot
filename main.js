@@ -64,27 +64,38 @@ client.on("message", async message => {
     if(command === "say"){
         let text = args.slice(0).join(" ");
         message.delete();
-        message.channel.send(text);
+        
+/* 
+        message.channel.send(text); */
     }
-      
+
     if (command === 'clear') {
+        if(!parseInt(args[0])) return;
         let messagecount = parseInt(args[0]) + 1;
-        await message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
-        setTimeout(function(){ message.channel.send(`Done :) I have deleted ${messagecount} messages, `); }, 500);
-        setTimeout(function(){ message.channel.send(`this message will self destruct in 5 seconds`); }, 500);
-        setTimeout(function(){ message.channel.bulkDelete(2); }, 5000);
+        if(messagecount > 25 || messagecount === 0) return;
+        await message.channel.fetchMessages({limit: messagecount})
+        .then(messages => message.channel.bulkDelete(messages));
+        let msgobj;
+
+        setTimeout(function(){ msgobj = message.channel.send(`Done :) I have deleted ${messagecount-1} messages, `); }, 500);
+
+        setTimeout(function(){ console.dir(_.compact(msgobj)); }, 1000);
+
+        //setTimeout(function(){ message.channel.send(`this message will self destruct in 5 seconds`); }, 500);
+        //setTimeout(function(){ message.channel.bulkDelete(2); }, 5000);
     }
     
     if (command === 'log') {
         getAllLog(message);
     }
-
+    
     //Fix formatting for dm
     if(command === 'show') {
         let n = args[0];
         let mention = message.mentions.members.first();
         let author = message.author;
         if(n) {
+            showEmbed(clientLog[mention.id].usertag, message);
             console.log(`Show command used by: ${author.id} to show data about: ${mention.id}`);
             if(clientLog[mention.id]) {
                 message.reply(`Jeg har en log på denne person : ${clientLog[mention.id].usertag}`);
@@ -115,6 +126,19 @@ client.on("message", async message => {
         }
     }
 });
+
+function showEmbed(data, message) {
+    const embed = new Discord.RichEmbed()
+    .setThumbnail(` `) // Icon
+    .setColor(0x00AE86) // Color
+    .addField(`Message`, data, true) // Servercount
+    .setFooter(` `) // Footer
+    // Send Embed
+    message.channel.send({
+        embed
+    });
+    
+}
 
 //Sound commands
 client.on('message', async message => {
