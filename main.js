@@ -14,14 +14,41 @@ var object = require('lodash/fp/object');
 const Enmap = require('enmap');
 const EnmapLevel = require('enmap-level');
 
-//Local files
-const config = require("./config.json");
-const func = require("./enum/propFunctions");
+const chalk = require('chalk');
+const moment = require('moment');
 
 //Design the client
 const client = new Discord.Client();
 let clientLog;
 
+//Local files
+const config = require("./config.json");
+const func = require("./enum/propFunctions");
+require('./util/eventLoader')(client);
+
+const log = message => {
+    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
+  };
+
+  client.commands = new Discord.Collection();
+  client.aliases = new Discord.Collection();
+
+  fs.readdir('./commands/', (err, files) => {
+    if (err) console.error(err);
+    log(`Loading a total of ${files.length} commands.`);
+    files.forEach(f => {
+      const props = require(`./commands/${f}`);
+      log(`Loading Command: ${props.help.name}. 👌`);
+      client.commands.set(props.help.name, props);
+      props.conf.aliases.forEach(alias => {
+        client.aliases.set(alias, props.help.name);
+      });
+    });
+  });
+
+
+
+  /*
 client.on("ready", () => {
     
     console.log("I am ready!" + ' And currently running in: '+client.guilds.size+' Servers');
@@ -80,9 +107,7 @@ client.on("message", async message => {
 
         setTimeout(function(){ msgobj = message.channel.send(`Done :) I have deleted ${messagecount-1} messages, `); }, 500);
 
-        setTimeout(function(){ console.dir(_.compact(msgobj)); }, 1000);
-
-        //setTimeout(function(){ message.channel.send(`this message will self destruct in 5 seconds`); }, 500);
+        //setTimeout(function(){ message.channel.send(`this message will self destruct in 5 seconds`) }, 500);
         //setTimeout(function(){ message.channel.bulkDelete(2); }, 5000);
     }
     
@@ -261,20 +286,17 @@ function logging(message){
     func.writeToFileAsync('storage/clientLog.json', func.beautifyJSON(clientLog));
 
 }
+*/
 
-function checkAllDeps(FilePos) {
-    setTimeout(function() {
-        fs.open(FilePos, 'wx', (err, fd) => {
-            if (err) {
-                if (err.code === 'EEXIST') {
-                    console.error(`${FilePos} already exists`);
-                    return;
-                }
-                throw err;
-            }
-            func.writeToFileSync(FilePos, " { } ");
-            });
-    }, 500);
-}
+var regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
+
+client.on('warn', e => {
+  console.log(chalk.bgYellow(e.replace(regToken, 'that was redacted')));
+});
+
+client.on('error', e => {
+  console.log(chalk.bgRed(e.replace(regToken, 'that was redacted')));
+});
+
 
 client.login(config.token);
