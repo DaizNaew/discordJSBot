@@ -92,39 +92,28 @@ client.on("message", async message => {
     
     //Fix formatting for dm
     if(command === 'show') {
-        let n = args[0];
         let mention = message.mentions.members.first();
         let author = message.author;
-        if(n) {
-            showEmbed(clientLog[mention.id].usertag, message);
-            console.log(`Show command used by: ${author.id} to show data about: ${mention.id}`);
-            if(clientLog[mention.id]) {
-                message.reply(`Jeg har en log på denne person : ${clientLog[mention.id].usertag}`);
-                message.author.send(`${clientLog[author.id].usertag} Blev oprættet: ${clientLog[author.id].usercreatedate} med disse stats:
-                \nNavn på serveren: ${clientLog[author.id].firstNick} 
-                Om bot eller ej: ${clientLog[author.id].clientisbot} 
-                Har sendt: ${clientLog[author.id].messagesSent} beskeder
-                Har kicket: ${clientLog[author.id].kickhammer} brugere, og bannet: ${clientLog[author.id].banhammer} brugere`)
+        let id;
+        if(!mention) {
+            id = author.id;
+        } else {
+            id = mention.id;
+        }
+            showEmbed(clientLog[id].usertag, message);
+            console.log(`Show command used by: ${author.id} to show data about: ${id}`);
+            if(clientLog[id]) {
+                message.reply(`Jeg har en log på denne person : ${clientLog[id].usertag}`);
+                message.author.send(`${clientLog[id].usertag} Blev oprættet: ${clientLog[id].usercreatedate} med disse stats:
+                \nNavn på serveren: ${clientLog[id].firstNick} 
+                Om bot eller ej: ${clientLog[id].clientisbot} 
+                Har sendt: ${clientLog[id].messagesSent} beskeder
+                Har kicket: ${clientLog[id].kickhammer} brugere, og bannet: ${clientLog[id].banhammer} brugere`)
                 .then(message => console.log(`sent Message: ${message.content}`))
                 .catch(console.error);
             } else {
                 message.reply(`Nej, den person kender jeg ikke.`);
             }
-        } else {
-            console.log(`Show command used by: ${author.id} to show data about themself`);
-            if(clientLog[author.id]) {
-                message.reply(`Jeg kender dig godt : ${clientLog[author.id].usertag}`);
-                message.author.send(`${clientLog[author.id].usertag} Blev oprættet: ${clientLog[author.id].usercreatedate} med disse stats:
-                \nNavn på serveren: ${clientLog[author.id].firstNick} 
-                Om bot elelr ej: ${clientLog[author.id].clientisbot} 
-                Har sendt: ${clientLog[author.id].messagesSent} beskeder
-                Har kicket: ${clientLog[author.id].kickhammer} brugere, og bannet: ${clientLog[author.id].banhammer} brugere`)
-                .then(message => console.log(`sent Message: ${message.content}`))
-                .catch(console.error);
-            } else {
-                message.reply(`Du er tydeligvis god til at gemme dig, jeg har intet på dig.`);
-            }
-        }
     }
 });
 
