@@ -1,5 +1,6 @@
 const fs = require("fs");
 module.exports = {
+  
     arrayifyJSON: function(arrayToJSON) {
         return JSON.parse(arrayToJSON, null, 4);
     },
