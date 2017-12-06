@@ -64,9 +64,7 @@ client.on("message", async message => {
     if(command === "say"){
         let text = args.slice(0).join(" ");
         message.delete();
-        
-/* 
-        message.channel.send(text); */
+        message.channel.send(text);
     }
 
     if (command === 'clear') {
@@ -148,16 +146,17 @@ client.on('message', async message => {
 
     const args = message.content.slice(config.mprefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+    const vChan = message.member.voiceChannel;
+    const errorJoinMSG = `Jeg kan ikke joine dig min ven, du er ikke i nogen voice. :(`;
+    
 
     if(command === 'join') {
-        let vChan = message.member.voiceChannel;
         //console.log(vChan);
-        if(!vChan) return message.channel.send(`Jeg kan ikke joine dig min ven, du er ikke i nogen voice. :(`);
+        if(!vChan) return message.channel.send(errorJoinMSG);
         vChan.join().then(connection => console.log(`connected to ${vChan.name}`)).catch(console.error);
     }
 
     if(command === 'leave') {
-        let vChan = client.voiceChannel;
         vChan.leave();console.log(`left channel ${vChan.name}`);
     }
 
@@ -165,72 +164,68 @@ client.on('message', async message => {
         const horn = './sound/Jamaican Horn Siren.wav';
         const broadcast = client.createVoiceBroadcast();
         broadcast.playFile(horn);
-        if(client.voiceConnections.values() === null) return;
-        for(const connection of client.voiceConnections.values()) {
-            connection.playBroadcast(broadcast);
-        }
+        if(!vChan) return message.channel.send(errorJoinMSG);
+        vChan.join()
+        .then(connection => {
+            const dispatcher = connection.playFile(horn);
+        })
+        .catch(console.error);
     }
 
     if(command === 'play') {
         let input = args.slice(0).join(" ");
         const streamOptions = { seek: 0, volume: 1 };
         const broadcast = client.createVoiceBroadcast();
-        let vChan = message.member.voiceChannel;
-
+        
         var opts = {
             maxResults: 1,
             key: config.ytKey,
             type: 'video'
         };
 
-        if(!input.startsWith('https://')){
+        if(input) {
             search(input, opts, function(err, results) {
                 if(err) return console.log(err);
-                var linkToPlay = results[0].link;
+                let linkToPlay = results[0].link;
                 console.dir(results);
-                if(!vChan) return message.channel.send(`Jeg kan ikke joine dig min ven, du er ikke i nogen voice. :(`);
-                message.reply(results[0].link);
-                
+                if(!vChan) return message.channel.send(errorJoinMSG);
+                message.reply(`Now playing: ${results[0].title}`);
                 vChan.join()
                 .then(connection => {
                     const stream = ytdl(linkToPlay, { filter : 'audioonly'});
                     broadcast.playStream(stream);
                     const dispatcher = connection.playBroadcast(broadcast);
+                    
                 })
                 .catch(console.error);
             });
         } else {
-            if(!vChan) return message.channel.send(`Jeg kan ikke joine dig min ven, du er ikke i nogen voice. :(`);
-            vChan.join()
-            .then(connection => {
-                const stream = ytdl(input, { filter : 'audioonly'});
-                broadcast.playStream(stream);
-                const dispatcher = connection.playBroadcast(broadcast);
-            })
-            .catch(console.error);
+            return message.channel.send(`Du skal indtaste en sang eller give et link for at jeg virker.`);
         }
-        
     }
 
     if(command === 'stop') {
-        const broadcast = client.broadcasts;
+        
+        /* const broadcast = client.broadcasts;
+        console.dir(broadcast);
         for(const connection of broadcast) {
+            
             connection.end();
-        }
+        } */
     }
 
     if(command === 'pause') {
-        const broadcast = client.broadcasts;
-        for(const connection of broadcast) {
-            connection.pause();
-        }
+        
+        dispatcher.pause();
+        
     }
 
     if(command === 'resume') {
-        const broadcast = client.broadcasts;
+        if(dispatcher.pause) dispatcher.pause();
+        /* const broadcast = client.broadcasts;
         for(const connection of broadcast) {
             connection.resume();
-        }
+        } */
     }
 
 });
