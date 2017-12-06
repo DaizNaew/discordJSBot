@@ -1,13 +1,14 @@
-const clientLog = require('../storage/clientLog.json');
+
 
 exports.run = (client, message, params) => {
     message.channel.send('Fetching...')
     .then(msg => {
+        const clientLog = require('../storage/clientLog.json');
         msg.edit(showUserLog(message, clientLog));
         console.dir(params);
     })
     .catch(error => {
-        message.channel.send('Der gik noget galt inde i mig. :(: '+ error);
+        message.channel.send('Der gik noget galt inde i mig. :( : \n '+ error);
     });
 }
 
@@ -24,7 +25,7 @@ exports.help = {
     usage: 'Show <user>  /Supply no user to check yo self '
 }
 
-    function showUserLog(message, params, clientLog){
+    function showUserLog(message, clientLog){
         let mention =  message.mentions.members.first();
         let author = message.author;
         let id;

@@ -1,7 +1,10 @@
 const settings = require('../config.json');
 
+const logging = require('../enum/logging');
 
 module.exports = message => {
+
+        logging(message);
 
     const client = message.client;
     if (message.author.bot) return;

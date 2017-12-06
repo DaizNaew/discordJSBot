@@ -4,7 +4,7 @@ const fs = require('fs');
 
 
 function checkAllDeps(FilePos) {
-    setTimeout(function() {
+    
         fs.open(FilePos, 'wx', (err, fd) => {
             if (err) {
                 if (err.code === 'EEXIST') {
@@ -15,7 +15,6 @@ function checkAllDeps(FilePos) {
             }
             func.writeToFileSync(FilePos, " { } ");
             });
-    }, 500);
 }
 
 module.exports = client => {
@@ -33,10 +32,9 @@ module.exports = client => {
             }
         });
 
-        checkAllDeps("./storage/clientLog.json");
-    
         setTimeout(function() {
-            clientLog = JSON.parse(fs.readFileSync("./storage/clientLog.json", "utf8"));
-        }, 750);
+            checkAllDeps("./storage/clientLog.json");
+        }, 50);   
+
     
 }
