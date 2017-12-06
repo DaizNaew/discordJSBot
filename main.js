@@ -11,6 +11,9 @@ var fp = require("lodash/fp");
 var array = require('lodash/array');
 var object = require('lodash/fp/object');
 
+const Enmap = require('enmap');
+const EnmapLevel = require('enmap-level');
+
 //Local files
 const config = require("./config.json");
 const func = require("./enum/propFunctions");
@@ -125,19 +128,6 @@ client.on("message", async message => {
     }
 });
 
-function showEmbed(data, message) {
-    const embed = new Discord.RichEmbed()
-    .setThumbnail(` `) // Icon
-    .setColor(0x00AE86) // Color
-    .addField(`Message`, data, true) // Servercount
-    .setFooter(` `) // Footer
-    // Send Embed
-    message.channel.send({
-        embed
-    });
-    
-}
-
 //Sound commands
 client.on('message', async message => {
 
@@ -206,29 +196,44 @@ client.on('message', async message => {
 
     if(command === 'stop') {
         
-        /* const broadcast = client.broadcasts;
-        console.dir(broadcast);
+        const broadcast = client.broadcasts;
         for(const connection of broadcast) {
             
             connection.end();
-        } */
+        }
     }
 
     if(command === 'pause') {
         
-        dispatcher.pause();
+        const broadcast = client.broadcasts;
+        for(const connection of broadcast) {
+            
+            connection.pause();
+        }
         
     }
 
     if(command === 'resume') {
-        if(dispatcher.pause) dispatcher.pause();
-        /* const broadcast = client.broadcasts;
+        const broadcast = client.broadcasts;
         for(const connection of broadcast) {
             connection.resume();
-        } */
+        }
     }
 
 });
+
+function showEmbed(data, message) {
+    const embed = new Discord.RichEmbed()
+    .setThumbnail(` `) // Icon
+    .setColor(0x00AE86) // Color
+    .addField(`Message`, data, true) // Servercount
+    .setFooter(` `) // Footer
+    // Send Embed
+    message.channel.send({
+        embed
+    });
+    
+}
 
 function getAllLog(message){
     for(const log of clientLog){
