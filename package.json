@@ -1,0 +1,43 @@
+{
+  "name": "discordjsbot",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "bufferutil": "^3.0.3",
+    "discord.js": "^11.2.1",
+    "enmap": "^0.4.2",
+    "enmap-level": "^1.0.0",
+    "erlpack": "github:hammerandchisel/erlpack",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-binaries": "^3.2.2",
+    "lodash": "^4.17.4",
+    "node-gyp": "^3.6.2",
+    "node-opus": "^0.2.7",
+    "opusscript": "0.0.4",
+    "rebuild": "^0.1.2",
+    "uws": "^0.14.5",
+    "youtube-search": "^1.0.10",
+    "ytdl-core": "^0.18.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaizNaew/discordJSBot.git"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "discordbot",
+    "js"
+  ],
+  "author": "Daiz Naew",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DaizNaew/discordJSBot/issues"
+  },
+  "homepage": "https://github.com/DaizNaew/discordJSBot#readme"
+}
