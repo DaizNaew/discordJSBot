@@ -143,19 +143,21 @@ client.on('message', async message => {
         const horn = './sound/Jamaican Horn Siren.wav';
         const broadcast = client.createVoiceBroadcast();
         broadcast.playFile(horn);
+
         if(!vChan) return message.channel.send(errorJoinMSG);
         vChan.join()
         .then(connection => {
             const dispatcher = connection.playFile(horn);
         })
         .catch(console.error);
+
     }
 
     if(command === 'play') {
         let input = args.slice(0).join(" ");
         const streamOptions = { seek: 0, volume: 1 };
         const broadcast = client.createVoiceBroadcast();
-        
+      
         var opts = {
             maxResults: 1,
             key: config.ytKey,
@@ -223,6 +225,7 @@ function showEmbed(data, message) {
     });
     
 }
+
 
 function getAllLog(message){
     for(const log of clientLog){
