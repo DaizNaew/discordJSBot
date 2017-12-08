@@ -26,8 +26,10 @@ exports.help = {
 }
 
     function showUserLog(message, clientLog){
-        let mention =  message.mentions.members.first();
-        let author = message.author;
+        const guildName = message.guild.name;
+        const mention =  message.mentions.members.first();
+        const author = message.author;
+
         let id;
         if(!mention) {
             id = author.id;
@@ -37,13 +39,13 @@ exports.help = {
         var response;
             //showEmbed(clientLog[id].usertag, message);
             console.log(`Show command used by: ${author.id} to show data about: ${id}`);
-            if(clientLog[id]) {
-                response = `Jeg har en log på denne person : ${clientLog[id].usertag}`;
-                message.author.send(`${clientLog[id].usertag} Blev oprættet: ${clientLog[id].usercreatedate} med disse stats:
-                \nNavn på serveren: ${clientLog[id].firstNick} 
-                Om bot eller ej: ${clientLog[id].clientisbot} 
-                Har sendt: ${clientLog[id].messagesSent} beskeder
-                Har kicket: ${clientLog[id].kickhammer} brugere, og bannet: ${clientLog[id].banhammer} brugere`)
+            if(clientLog[guildName][id]) {
+                response = `Jeg har en log på denne person : ${clientLog[guildName][id].usertag}`;
+                message.author.send(`${clientLog[guildName][id].usertag} Blev oprættet: ${clientLog[guildName][id].usercreatedate} med disse stats:
+                \nNavn på serveren: ${clientLog[guildName][id].firstNick} 
+                Om bot eller ej: ${clientLog[guildName][id].clientisbot} 
+                Har sendt: ${clientLog[guildName][id].messagesSent} beskeder
+                Har kicket: ${clientLog[guildName][id].kickhammer} brugere, og bannet: ${clientLog[guildName][id].banhammer} brugere`)
                 .then(message => console.log(`sent Message: ${message.content}`))
                 .catch(console.error);
             } else {

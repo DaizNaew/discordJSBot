@@ -2,7 +2,7 @@ const settings = require('../config.json');
 
 const logging = require('../enum/logging');
 
-module.exports = message => {
+module.exports = (message) => {
 
         logging(message);
 
