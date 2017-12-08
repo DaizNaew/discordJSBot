@@ -29,7 +29,7 @@ exports.help = {
         const guildName = message.guild.name;
         const mention =  message.mentions.members.first();
         const author = message.author;
-
+        
         let id;
         if(!mention) {
             id = author.id;
@@ -45,7 +45,8 @@ exports.help = {
                 \nNavn på serveren: ${clientLog[guildName][id].firstNick} 
                 Om bot eller ej: ${clientLog[guildName][id].clientisbot} 
                 Har sendt: ${clientLog[guildName][id].messagesSent} beskeder
-                Har kicket: ${clientLog[guildName][id].kickhammer} brugere, og bannet: ${clientLog[guildName][id].banhammer} brugere`)
+                Har kicket: ${clientLog[guildName][id].kickhammer} brugere, og bannet: ${clientLog[guildName][id].banhammer} brugere
+                Denne bruger har rollen: ${author}`)
                 .then(message => console.log(`sent Message: ${message.content}`))
                 .catch(console.error);
             } else {
