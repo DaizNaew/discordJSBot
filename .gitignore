@@ -1,5 +1,6 @@
 node_modules/
-storage/
+storage/clientLog.json
+storage/playlist.json
 nodemon.json
 package-lock.json
 config.json

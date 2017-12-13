@@ -1,18 +1,10 @@
 //NPM Node modules
 const Discord = require("discord.js");
 const fs = require("fs");
-const ytdl = require("ytdl-core");
-const search = require("youtube-search");
 
 var _ = require("lodash");
 var _ = require("lodash/core");
 var fp = require("lodash/fp");
-
-var array = require('lodash/array');
-var object = require('lodash/fp/object');
-
-const Enmap = require('enmap');
-const EnmapLevel = require('enmap-level');
 
 const chalk = require('chalk');
 const moment = require('moment');
@@ -45,8 +37,6 @@ const log = message => {
       });
     });
   });
-
-
 
   /*
 client.on("ready", () => {
@@ -96,50 +86,11 @@ client.on("message", async message => {
         message.delete();
         message.channel.send(text);
     }
-
-    if (command === 'clear') {
-        if(!parseInt(args[0])) return;
-        let messagecount = parseInt(args[0]) + 1;
-        if(messagecount > 25 || messagecount === 0) return;
-        await message.channel.fetchMessages({limit: messagecount})
-        .then(messages => message.channel.bulkDelete(messages));
-        let msgobj;
-
-        setTimeout(function(){ msgobj = message.channel.send(`Done :) I have deleted ${messagecount-1} messages, `); }, 500);
-
-        //setTimeout(function(){ message.channel.send(`this message will self destruct in 5 seconds`) }, 500);
-        //setTimeout(function(){ message.channel.bulkDelete(2); }, 5000);
-    }
     
     if (command === 'log') {
         getAllLog(message);
     }
-    
-    //Fix formatting for dm
-    if(command === 'show') {
-        let mention = message.mentions.members.first();
-        let author = message.author;
-        let id;
-        if(!mention) {
-            id = author.id;
-        } else {
-            id = mention.id;
-        }
-            showEmbed(clientLog[id].usertag, message);
-            console.log(`Show command used by: ${author.id} to show data about: ${id}`);
-            if(clientLog[id]) {
-                message.reply(`Jeg har en log på denne person : ${clientLog[id].usertag}`);
-                message.author.send(`${clientLog[id].usertag} Blev oprættet: ${clientLog[id].usercreatedate} med disse stats:
-                \nNavn på serveren: ${clientLog[id].firstNick} 
-                Om bot eller ej: ${clientLog[id].clientisbot} 
-                Har sendt: ${clientLog[id].messagesSent} beskeder
-                Har kicket: ${clientLog[id].kickhammer} brugere, og bannet: ${clientLog[id].banhammer} brugere`)
-                .then(message => console.log(`sent Message: ${message.content}`))
-                .catch(console.error);
-            } else {
-                message.reply(`Nej, den person kender jeg ikke.`);
-            }
-    }
+
 });
 
 //Sound commands
@@ -178,43 +129,10 @@ client.on('message', async message => {
 
     }
 
-    if(command === 'play') {
-        let input = args.slice(0).join(" ");
-        const streamOptions = { seek: 0, volume: 1 };
-        const broadcast = client.createVoiceBroadcast();
-      
-        var opts = {
-            maxResults: 1,
-            key: config.ytKey,
-            type: 'video'
-        };
-
-        if(input) {
-            search(input, opts, function(err, results) {
-                if(err) return console.log(err);
-                let linkToPlay = results[0].link;
-                console.dir(results);
-                if(!vChan) return message.channel.send(errorJoinMSG);
-                message.reply(`Now playing: ${results[0].title}`);
-                vChan.join()
-                .then(connection => {
-                    const stream = ytdl(linkToPlay, { filter : 'audioonly'});
-                    broadcast.playStream(stream);
-                    const dispatcher = connection.playBroadcast(broadcast);
-                    
-                })
-                .catch(console.error);
-            });
-        } else {
-            return message.channel.send(`Du skal indtaste en sang eller give et link for at jeg virker.`);
-        }
-    }
-
     if(command === 'stop') {
         
         const broadcast = client.broadcasts;
         for(const connection of broadcast) {
-            
             connection.end();
         }
     }
@@ -248,7 +166,6 @@ function showEmbed(data, message) {
     message.channel.send({
         embed
     });
-    
 }
 
 
@@ -257,37 +174,6 @@ function getAllLog(message){
         console.log(log);
     }
     message.channel.send('There are '+i+' logged.');
-}
-
-function logging(message){
-
-    if (!clientLog[message.author.id]) clientLog[message.author.id] = {
-        
-        messagesSent: 0, 
-        usertag: message.author.id, 
-        usercreatedate: message.author.createdAt, 
-        clientisbot: message.author.bot, 
-        firstNick: message.author.tag, 
-        banhammer: 0, 
-        kickhammer: 0
-    }
-
-    if(clientLog[message.author.id].usertag != message.author.tag) {
-        clientLog[message.author.id].usertag = message.author.tag;
-    }
- 
-    if(clientLog[message.author.id].usercreatedate != message.author.createdAt) {
-        clientLog[message.author.id].usercreatedate = message.author.createdAt;
-    }
- 
-    if(clientLog[message.author.id].clientisbot != message.author.bot) {
-        clientLog[message.author.id].clientisbot = message.author.bot;
-    }
- 
-    clientLog[message.author.id].messagesSent++;
-
-    func.writeToFileAsync('storage/clientLog.json', func.beautifyJSON(clientLog));
-
 }
 */
 

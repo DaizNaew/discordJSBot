@@ -12,7 +12,7 @@ function checkAllDeps(FilePos) {
                 }
                 throw err;
             }
-            console.log(chalk.bgRed.black(`${FilePos} does not exist, creating it.`));
+            console.log(chalk.bgYellow.black(`${FilePos} does not exist, creating it.`));
             func.writeToFileSync(FilePos, " { } ");
             console.log(chalk.bgGreen.black(`Successfully created file at: ${FilePos}`));
             });
@@ -34,7 +34,10 @@ module.exports = client => {
 
         setTimeout(function() {
             checkAllDeps("./storage/clientLog.json");
+            checkAllDeps("./storage/playlist.json");
         }, 50);
+
+        
         //channel.send('I am ready to rock and roll');
 
     
