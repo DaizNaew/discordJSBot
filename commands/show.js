@@ -41,45 +41,28 @@ exports.help = {
             userToShow = mention;
         }
         var response;
-            //showEmbed(clientLog[id].usertag, message);
+
             console.log(`Show command used by: ${author.id} to show data about: ${id}`);
+
             const userRolesByID = userToShow._roles;
-            
-                /* console.log(userRolesByID); */
             
                 const index = message.guild.roles;
                 let rollePos = 0;
                 let arr;
 
-                //console.dir(index);
-            
                 userRolesByID.forEach(roleIDs => {
-                    //console.log(roleIDs);
-            
                     index.forEach(element => {
-                        
-                        //console.log(element);
-
                         if(element.id === roleIDs) {
-                            
-                            /* console.dir(element.position);
-                            console.dir(element.name); */
                             if(rollePos <= element.position) rollePos = element.position;
-
                         }
                     });
-                    
                 });
 
                 index.forEach(element => {
                     if(element.position === rollePos) arr = _.merge(element, arr);
 
                 });
-
-                //message.channel.send(`Role name is: ${arr.name} and its ID is :`);
-
-                //console.dir(arr);
-
+                
             if(clientLog[guildName][id]) {
                 response = `Jeg har en log på denne person : ${clientLog[guildName][id].usertag}`;
                 message.author.send(`${clientLog[guildName][id].usertag} Blev oprettet: ${clientLog[guildName][id].usercreatedate} med disse stats:

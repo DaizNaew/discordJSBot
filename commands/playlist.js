@@ -3,16 +3,6 @@ exports.run = (client, message) => {
     /* const queue = this.queue.get(message.guild.id);
     console.dir(queue); */
 
-    //console.dir(message.guild.roles);
-
-    
-
-    //console.dir(index);
-
-    
-
-    
-
     
 
 }
