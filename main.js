@@ -20,50 +20,26 @@ require('./util/eventLoader')(client);
 
 const log = message => {
     console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
-  };
+    };
 
-  client.commands = new Discord.Collection();
-  client.aliases = new Discord.Collection();
+    client.commands = new Discord.Collection();
+    client.aliases = new Discord.Collection();
 
-  fs.readdir('./commands/', (err, files) => {
-    if (err) console.error(err);
-    log(`Loading a total of ${files.length} commands.`);
-    files.forEach(f => {
-      const props = require(`./commands/${f}`);
-      log(`Loading Command: ${props.help.name}. 👌`);
-      client.commands.set(props.help.name, props);
-      props.conf.aliases.forEach(alias => {
-        client.aliases.set(alias, props.help.name);
-      });
-    });
-  });
-
-  /*
-client.on("ready", () => {
-    
-    console.log("I am ready!" + ' And currently running in: '+client.guilds.size+' Servers');
-
-    func.checkDirectory("./storage/", function(err) {
-        if(err) {
-            console.log("Something went wrong: ",err);
-        } else {
-            console.log("No errors detected and I am good to go.");
-        }
+    fs.readdir('./commands/', (err, files) => {
+        if (err) console.error(err);
+        log(`Loading a total of ${files.length} commands.`);
+        files.forEach(f => {
+            const props = require(`./commands/${f}`);
+            log(`Loading Command: ${props.help.name}. 👌`);
+            client.commands.set(props.help.name, props);
+            props.conf.aliases.forEach(alias => {
+                client.aliases.set(alias, props.help.name);
+            });
+        });
     });
 
-    checkAllDeps("storage/clientLog.json");
 
-    setTimeout(function() {
-        clientLog = JSON.parse(fs.readFileSync("storage/clientLog.json", "utf8"));
-    }, 750);
-
-    var channel = client.channels.get('385782063887941632');
-    var date = new Date(channel.createdTimestamp);
-    console.log(`I am ${channel.client.user.tag} residing in ${channel.type} channel created at ${date}`);
-    //channel.send('Bot deployed and ready for action.');
-
-});
-
+/*
 client.on("message", async message => {
     logging(message);
     if (!message.content.startsWith(config.prefix) || message.author.bot) return;

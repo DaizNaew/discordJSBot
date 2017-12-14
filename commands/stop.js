@@ -12,6 +12,8 @@ exports.run = (client, message) => {
     for(const connection of broadcast) {
         connection.end();
     }
+
+    message.channel.send('I stopped playing sounds. :mute:');
 }
 
 exports.conf = {

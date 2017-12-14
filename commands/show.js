@@ -9,7 +9,7 @@ exports.run = (client, message, params) => {
         console.dir(params);
     })
     .catch(error => {
-        message.channel.send('Der gik noget galt inde i mig. :( : \n '+ error);
+        message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
     });
 }
 
@@ -62,19 +62,19 @@ exports.help = {
                     if(element.position === rollePos) arr = _.merge(element, arr);
 
                 });
-                
+
             if(clientLog[guildName][id]) {
-                response = `Jeg har en log på denne person : ${clientLog[guildName][id].usertag}`;
-                message.author.send(`${clientLog[guildName][id].usertag} Blev oprettet: ${clientLog[guildName][id].usercreatedate} med disse stats:
-                \nNavn på serveren: ${clientLog[guildName][id].firstNick} 
-                Om bot eller ej: ${clientLog[guildName][id].clientisbot} 
-                Har sendt: ${clientLog[guildName][id].messagesSent} beskeder
-                Har kicket: ${clientLog[guildName][id].kickhammer} brugere, og bannet: ${clientLog[guildName][id].banhammer} brugere
-                Denne bruger har højeste rolle: ${arr.name} som har ID: ${arr.id}`)
+                response = `I have a log on this person : ${clientLog[guildName][id].usertag}`;
+                message.author.send(`${clientLog[guildName][id].usertag} Was created at: ${clientLog[guildName][id].usercreatedate} with theese stats:
+                \nName on server: ${clientLog[guildName][id].firstNick} 
+                If bot or not: ${clientLog[guildName][id].clientisbot} 
+                Has sent: ${clientLog[guildName][id].messagesSent} messages
+                Has kicked: ${clientLog[guildName][id].kickhammer} users and banned: ${clientLog[guildName][id].banhammer} users
+                This user has the top role of: ${arr.name} which has the ID of: ${arr.id}`)
                 .then(message => console.log(`sent Message: ${message.content}`))
                 .catch(console.error);
             } else {
-                response = `Nej, den person kender jeg ikke.`;
+                response = `I cannot find this person in my records. 😞`;
             }
             return response;
     }

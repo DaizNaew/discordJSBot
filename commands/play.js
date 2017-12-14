@@ -42,7 +42,7 @@ exports.help = {
                 //console.dir(results);
                 if(!voiceChannel) return message.channel.send(errorJoinMSG);
                 //
-                message.reply(`Now playing: ${song.name}`);
+                message.channel.send(`🎵 Now playing: ${song.name} 🎵`);
                 voiceChannel.join()
                 .then(connection => {
                     const stream = ytdl(linkToPlay, { filter : 'audioonly'});

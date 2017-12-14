@@ -6,7 +6,7 @@ exports.run = (client, message, params) => {
     .then(msg => {
 
         message.channel.bulkDelete(msg);
-        message.channel.send(`Deleted: ${messagecount} messages.`)
+        message.channel.send(`Deleted: ${messagecount} messages.👌`)
         .then(msg => {
             setTimeout(function(){
                 msg.delete();
@@ -14,11 +14,11 @@ exports.run = (client, message, params) => {
             
         })
         .catch(error => {
-            console.log('Could not find my own message anymore :( : \n' + error);
+            console.log('Could not find my own message anymore 😞 : \n' + error);
         });
     })
     .catch(error => {
-        message.channel.send('Something went wrong in me belly. :( : \n '+ error);
+        message.channel.send('Something went wrong in me belly. 😞 : \n '+ error);
     });
 }
 
