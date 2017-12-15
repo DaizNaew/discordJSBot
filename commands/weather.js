@@ -4,7 +4,6 @@ exports.run = (client, message, params) => {
 
     let input = params.slice(0).join(" ");
     
-
     message.channel.send('Fetchin the weather...')
     .then( msg => {
 
@@ -31,9 +30,13 @@ exports.help = {
 
 function findWeather(client, message, input, msg) {
 
+    let defaultLocal; ;
+
     let localArr;
     let location;
     let current;
+
+    if(!input) {defaultLocal = "London, UK"; input = defaultLocal;}
 
     weather.find({search: input, degreeType: 'C'}, function(err, result) {
         if(err) console.log(err);
@@ -41,7 +44,14 @@ function findWeather(client, message, input, msg) {
         localArr = result[0];
         location = localArr.location;
         current = localArr.current;
-        msg.edit(` ${location.name} it's currently ${current.skytext} at ${current.temperature} Celsius and it feels like ${current.feelslike} Celsius `);
+        let response = ` **${location.name}** it's currently **${current.skytext}** at **${current.temperature}** Celsius and it feels like **${current.feelslike}** Celsius `;
+        let defaultMessage = `Showing the weather for the default location: `;
+        if(defaultLocal) {
+            msg.edit(defaultMessage += response);
+        } else {
+            msg.edit(response);
+        }
+        
       });
     
 }
