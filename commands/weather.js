@@ -3,33 +3,17 @@ var weather = require('weather-js');
 exports.run = (client, message, params) => {
 
     let input = params.slice(0).join(" ");
-    findWeather(client, message, input);
+    
 
-    /* message.channel.send('Fetchin...')
+    message.channel.send('Fetchin the weather...')
     .then( msg => {
 
+        findWeather(client, message, input, msg);
 
-        
-        console.dir(findWeather(client, message, input));
-
-        let arr = findWeather(client, message, input);
-
-            
-
-        msg.edit(`
-
-            ${location.name} it's currently ${current.skytext} 
-            
-            at ${current.temperature} ${location.degreeType} 
-            
-            but it feels like ${current.feelslike} ${location.degreeType}
-
-        `);
-        
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
-    }); */
+    });
 }
 
 exports.conf = {
@@ -45,7 +29,7 @@ exports.help = {
     usage: 'Weather <location>'
 }
 
-function findWeather(client, message, input) {
+function findWeather(client, message, input, msg) {
 
     let localArr;
     let location;
@@ -57,7 +41,7 @@ function findWeather(client, message, input) {
         localArr = result[0];
         location = localArr.location;
         current = localArr.current;
-        message.channel.send(` ${location.name} it's currently ${current.skytext} at ${current.temperature} Celsius but it feels like ${current.feelslike} Celsius `);
+        msg.edit(` ${location.name} it's currently ${current.skytext} at ${current.temperature} Celsius and it feels like ${current.feelslike} Celsius `);
       });
     
 }

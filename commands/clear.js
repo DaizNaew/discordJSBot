@@ -1,5 +1,6 @@
 exports.run = (client, message, params) => {
-    const messagecount = parseInt(params.join(' '));
+    let messagecount = parseInt(params.join(' '));
+    if(!messagecount) messagecount = 1;
     message.channel.fetchMessages({
         limit:messagecount+1
     })

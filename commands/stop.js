@@ -4,15 +4,12 @@ exports.run = (client, message) => {
     const vChan = message.member.voiceChannel;
 
     //console.dir(vChan);
-    console.dir(client);
     //console.dir(client.commands);
-    console.dir(client.broadcast);
     const broadcast = client.broadcasts;
 
     for(const connection of broadcast) {
         connection.end();
     }
-
     message.channel.send('I stopped playing sounds. :mute:');
 }
 

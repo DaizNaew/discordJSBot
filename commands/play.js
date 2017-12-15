@@ -5,9 +5,18 @@ const search = require("youtube-search");
 const Song = require('../util/song');
 
 exports.run = (client, message, params) => {
-    const vChan = message.member.voiceChannel;
-    let input = params.slice(0).join(" ");
-    playSong(client, message, vChan, input);
+
+    message.channel.send("Fetching a song to play...")
+    .then(msg => {
+        const vChan = message.member.voiceChannel;
+        let input = params.slice(0).join(" ");
+        playSong(client, message, vChan, input, msg);
+        
+    })
+    .catch(error => {
+        message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
+    });
+    
 }
 
 exports.conf = {
@@ -23,10 +32,11 @@ exports.help = {
     usage: 'Play <songname / URL> to play a specific song, or supply no arguments to play the playlist'
 }
 
-    function playSong(client, message, voiceChannel, input) {
+    function playSong(client, message, voiceChannel, input, msg) {
         
         const streamOptions = { seek: 0, volume: 0.2 };
         const broadcast = client.createVoiceBroadcast();
+        let response;
 
         var opts = {
             maxResults: 1,
@@ -40,18 +50,21 @@ exports.help = {
                 const song = new Song(results[0], message.member);
                 let linkToPlay = song.link;
                 //console.dir(results);
-                if(!voiceChannel) return message.channel.send(errorJoinMSG);
+                if(!voiceChannel) msg.edit(errorJoinMSG);
                 //
-                message.channel.send(`🎵 Now playing: ${song.name} 🎵`);
+                response = `🎵 Now playing: ${song.name} 🎵`;
                 voiceChannel.join()
                 .then(connection => {
+                    msg.edit(response);
                     const stream = ytdl(linkToPlay, { filter : 'audioonly'});
                     broadcast.playStream(stream);
                     const dispatcher = connection.playBroadcast(broadcast);
+                    
                 })
                 .catch(console.error);
             });
         } else {
-            message.reply('Play <songname / URL> to play a specific song, or supply no arguments to play the playlist');
+            response = 'Play <songname / URL> to play a specific song, or supply no arguments to play the playlist';
         }
+        msg.edit(response);
     }
