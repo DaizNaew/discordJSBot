@@ -10,12 +10,12 @@ exports.run = (client, message) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['playlist', 'Queue', 'queue', 'songs', 'Songs'],
+    aliases: ['Playlist', 'Queue', 'queue', 'songs', 'Songs'],
     permLevel: 0
 }
 
 exports.help = {
-    name: 'Playlist',
+    name: 'playlist',
     description: 'Lists all the songs in the playlist',
-    usage: 'Playlist'
+    usage: 'playlist'
 }

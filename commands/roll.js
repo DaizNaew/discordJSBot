@@ -38,12 +38,12 @@ exports.run = (client, message, params) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['roll', 'flip'],
+    aliases: ['Roll', 'flip'],
     permLevel: 0
 }
 
 exports.help = {
-    name: 'Roll a die',
+    name: 'roll',
     description: 'Rolls a specified amount of dice with the given sides',
-    usage: 'Roll <amount>d<sides>'
+    usage: 'roll <amount>d<sides>'
 }

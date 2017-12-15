@@ -19,20 +19,20 @@ exports.run = (client, message, params) => {
         });
     })
     .catch(error => {
-        message.channel.send('Something went wrong in me belly. 😞 : \n '+ error);
+        message.channel.send(`Something doesn't feel quite right. 😞 : \n `+ error);
     });
 }
 
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['clear','purge','Purge'],
+    aliases: ['Clear','purge','Purge'],
     permLevel: 2
 }
 
 exports.help = {
-    name: 'Clear',
+    name: 'clear',
     description: 'Clears <n> messages in the current chat, informs the users, then deletes its own message',
-    usage: 'Clear <amount>  where amount is between 1 and 25 for now'
+    usage: 'Clear <n>'
 }
     

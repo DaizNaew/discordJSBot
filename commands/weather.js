@@ -1,10 +1,11 @@
 var weather = require('weather-js');
+const Discord = require("discord.js");
 
 exports.run = (client, message, params) => {
 
     let input = params.slice(0).join(" ");
     
-    message.channel.send('Fetchin the weather...')
+    message.channel.send('Fetchin the weather...', {code: 'asciidoc'})
     .then( msg => {
 
         findWeather(client, message, input, msg);
@@ -18,14 +19,14 @@ exports.run = (client, message, params) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['weather', 'forecast'],
+    aliases: ['Weather', 'forecast'],
     permLevel: 0
 }
 
 exports.help = {
-    name: 'Weather',
+    name: 'weather',
     description: 'Weather to show how the weather is in your location of choice',
-    usage: 'Weather <location>'
+    usage: 'weather <location>'
 }
 
 function findWeather(client, message, input, msg) {
@@ -36,6 +37,8 @@ function findWeather(client, message, input, msg) {
     let location;
     let current;
 
+    const embed = new Discord.RichEmbed();
+
     if(!input) {defaultLocal = "London, UK"; input = defaultLocal;}
 
     weather.find({search: input, degreeType: 'C'}, function(err, result) {
@@ -44,14 +47,15 @@ function findWeather(client, message, input, msg) {
         localArr = result[0];
         location = localArr.location;
         current = localArr.current;
-        let response = ` **${location.name}** it's currently **${current.skytext}** at **${current.temperature}** Celsius and it feels like **${current.feelslike}** Celsius `;
-        let defaultMessage = `Showing the weather for the default location: `;
-        if(defaultLocal) {
-            msg.edit(defaultMessage += response);
-        } else {
-            msg.edit(response);
-        }
         
+        if(defaultLocal) { embed.setTitle("Showing the weather for the default location");} 
+        embed.setThumbnail(current.imageUrl);
+        embed.addField("Location 🏙",location.name, false);
+        embed.addField("Current Weather 🌤",current.skytext,true);
+        embed.addField("Wind speed 💨",current.windspeed,true);
+        embed.addField("Temperature 🌡",current.temperature + ' Degrees Celsius',true);
+        embed.addField("Feels like 🌡",current.feelslike + ' Degrees Celsius',true);
+        msg.edit({embed});
       });
     
 }

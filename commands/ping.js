@@ -14,12 +14,12 @@ exports.run = (client, message) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['ping', 'delay'],
+    aliases: ['Ping', 'delay'],
     permLevel: 0
 }
 
 exports.help = {
-    name: 'Ping',
+    name: 'ping',
     description: 'Gets the current delay to the discord server from the bot',
-    usage: 'Ping'
+    usage: 'ping'
 }

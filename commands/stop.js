@@ -16,12 +16,12 @@ exports.run = (client, message) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['stop', 'endme', 'shutup'],
+    aliases: ['Stop', 'endme', 'shutup'],
     permLevel: 0
 }
 
 exports.help = {
-    name: 'Stop',
+    name: 'stop',
     description: 'Stop playing music in the voice channel',
-    usage: 'Stop'
+    usage: 'stop'
 }

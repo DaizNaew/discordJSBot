@@ -16,14 +16,14 @@ exports.run = (client, message, params) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['show'],
+    aliases: ['Show'],
     permLevel: 0
 }
 
 exports.help = {
-    name: 'Show',
+    name: 'show',
     description: 'Show command to show the full log about a user',
-    usage: 'Show <user>  /Supply no user to check yo self '
+    usage: 'show <user>  /Supply no user to check yo self '
 }
 
     function showUserLog(message, clientLog){

@@ -22,14 +22,14 @@ exports.run = (client, message, params) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['play'],
+    aliases: ['play', 'song', 'Song'],
     permLevel: 0
 }
 
 exports.help = {
-    name: 'Play',
+    name: 'play',
     description: 'Plays a defined song, or just resumes the playlist',
-    usage: 'Play <songname / URL> to play a specific song, or supply no arguments to play the playlist'
+    usage: 'play <songname / URL> to play a specific song, or supply no arguments to play the playlist'
 }
 
     function playSong(client, message, voiceChannel, input, msg) {
