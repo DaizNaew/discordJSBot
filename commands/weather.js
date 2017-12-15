@@ -1,5 +1,4 @@
-var weather = require('weather-js');
-const Discord = require("discord.js");
+const findWeather = require("../enum/weatherFunc");
 
 exports.run = (client, message, params) => {
 
@@ -29,7 +28,7 @@ exports.help = {
     usage: 'weather <location>'
 }
 
-function findWeather(client, message, input, msg) {
+/* function findWeather(client, message, input, msg) {
 
     let defaultLocal; ;
 
@@ -58,4 +57,4 @@ function findWeather(client, message, input, msg) {
         msg.edit({embed});
       });
     
-}
+} */
