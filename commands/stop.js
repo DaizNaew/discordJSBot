@@ -1,4 +1,4 @@
-const Song = require('../util/song');
+const Song = require('../model/song');
 
 exports.run = (client, message) => {
     const vChan = message.member.voiceChannel;

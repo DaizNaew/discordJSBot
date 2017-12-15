@@ -2,7 +2,7 @@ const errorJoinMSG = `You need to be in a voice channel for me to join you`;
 const config = require('../config.json');
 const ytdl = require("ytdl-core");
 const search = require("youtube-search");
-const Song = require('../util/song');
+const Song = require('../model/song');
 
 exports.run = (client, message, params) => {
 

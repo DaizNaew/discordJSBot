@@ -1,4 +1,4 @@
-const func = require('./propFunctions');
+const func = require('../func/propFunctions');
 const fs = require('fs');
 
 module.exports = (message) => {

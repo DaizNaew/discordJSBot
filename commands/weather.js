@@ -1,4 +1,4 @@
-const findWeather = require("../enum/weatherFunc");
+const findWeather = require("../func/weatherFunc");
 
 exports.run = (client, message, params) => {
 

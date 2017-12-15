@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const func = require('../enum/propFunctions');
+const func = require('../func/propFunctions');
 const fs = require('fs');
 
 function checkAllDeps(FilePos) {
