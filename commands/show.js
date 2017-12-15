@@ -1,11 +1,12 @@
 var _ = require("lodash");
 var fp = require("lodash/fp");
+const Discord = require("discord.js");
 
 exports.run = (client, message, params) => {
-    message.channel.send('Fetching...')
+    message.channel.send('Fetching...', {code: 'asciidoc'})
     .then(msg => {
         const clientLog = require('../storage/clientLog.json');
-        msg.edit(showUserLog(message, clientLog));
+        msg.edit(showUserLog(message, clientLog), {code: 'asciidoc'});
         console.dir(params);
     })
     .catch(error => {
@@ -30,6 +31,7 @@ exports.help = {
         const guildName = message.guild.name;
         const mention =  message.mentions.members.first();
         const author = message.author;
+        const embed = new Discord.RichEmbed();
         
         let userToShow;
         let id;

@@ -1,4 +1,8 @@
+const Discord = require('discord.js');
+
 exports.run = (client, message, params) => {
+    let canManageMessages = message.member.permissions.has("MANAGE_MESSAGES", true);
+    if(!canManageMessages) return message.channel.send("I believe you don't have the power to do this.");
     let messagecount = parseInt(params.join(' '));
     if(!messagecount) messagecount = 1;
     message.channel.fetchMessages({
