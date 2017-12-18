@@ -2,7 +2,7 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 
-//Modules to style the console.log
+//Modules to format timestamps in logging
 const moment = require('moment');
 
 //Design the client
@@ -11,6 +11,7 @@ const client = new Discord.Client();
 //Local files
 const config = require("./config.json");
 require('./util/eventLoader')(client);
+const m = require('./enum/consoleColour');
 
 const log = message => {
     console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
@@ -24,7 +25,7 @@ const log = message => {
         log(`Loading a total of ${files.length} commands.`);
         files.forEach(f => {
             const props = require(`./commands/${f}`);
-            log(`Loading Command: ${props.help.name}. 👌`);
+            log(m.cmdLoad(`Loading Command: ${props.help.name}.`));
             client.commands.set(props.help.name, props);
             props.conf.aliases.forEach(alias => {
                 client.aliases.set(alias, props.help.name);

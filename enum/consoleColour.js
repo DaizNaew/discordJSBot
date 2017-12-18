@@ -13,7 +13,12 @@ module.exports = {
     errorMsg: function(input) {
         return(chalk.bgred.black(input));
     },
+    
     splitter:function(input) {
         return(chalk.magenta(`--${input}--`));
+    },
+
+    cmdLoad:function(input) {
+        return(chalk.blue(`## ${input} ## 👌`));
     }
 }
