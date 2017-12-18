@@ -1,5 +1,5 @@
-const chalk = require('chalk');
 const func = require('../func/propFunctions');
+const m = require('../enum/consoleColour');
 const fs = require('fs');
 
 function checkAllDeps(FilePos) {
@@ -7,32 +7,37 @@ function checkAllDeps(FilePos) {
         fs.open(FilePos, 'wx', (err, fd) => {
             if (err) {
                 if (err.code === 'EEXIST') {
-                    console.log(chalk.bgGreen.black(`${FilePos} already exists.`));
+                    console.log(m.successMsg(`${FilePos} already exists.`));
                     return;
                 }
                 throw err;
             }
-            console.log(chalk.bgYellow.black(`${FilePos} does not exist, creating it.`));
+            console.log(m.warningMsg(`${FilePos} does not exist, creating it.`));
             func.writeToFileSync(FilePos, " { } ");
-            console.log(chalk.bgGreen.black(`Successfully created file at: ${FilePos}`));
+            console.log(m.successMsg(`Successfully created file at: ${FilePos}`));
             });
 }
 
 module.exports = client => {
     const channel = client.channels.get('385782063887941632');
     const date = new Date(channel.createdTimestamp);
-    console.log(chalk.bgGreen.black('I am ready! And currently running in: '+client.guilds.size + ' Servers\n'
-    + `I am ${channel.client.user.tag} residing in ${channel.type} channel created at ${date}`))
+    let guildList = client.guilds.map( (g) => g.name + ' Created at: ' + g.createdAt + ' Owned by: ' + g.owner.user.tag ).join(' \n');
 
+    console.log(m.splitter('Init Bot'));
+    console.log(m.successMsg('I am ready! And currently running in: '+client.guilds.size + ' Servers\n'
+    + `I am ${client.user.tag} residing in servers: \n${guildList} \n`));
+
+    console.log(m.splitter('Error Checking'));
         func.checkDirectory("./storage/", function(err) {
             if(err) {
-                console.log(chalk.bgRed.black("Something went wrong: ",err));
+                console.log(m.errorMsg("Something went wrong: ",err));
             } else {
-                console.log(chalk.bgGreen.black("No errors detected and I am good to go."));
+                console.log(m.successMsg("No errors detected and I am good to go.\n"));
             }
         });
 
         setTimeout(function() {
+            console.log(m.splitter('Populated Directories'));
             checkAllDeps("./storage/clientLog.json");
             checkAllDeps("./storage/playlist.json");
         }, 50);

@@ -1,5 +1,4 @@
 const { Util } = require('discord.js');
-const { oneLineTrim } = require('common-tags');
 
 module.exports = class Song {
 	constructor(video, member) {

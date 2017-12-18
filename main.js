@@ -3,7 +3,6 @@ const Discord = require("discord.js");
 const fs = require("fs");
 
 //Modules to style the console.log
-const chalk = require('chalk');
 const moment = require('moment');
 
 //Design the client
@@ -32,7 +31,6 @@ const log = message => {
             });
         });
     });
-
 
 /*
 
