@@ -8,7 +8,7 @@ exports.run = (client, message) => {
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
-    }); 
+    });
 }
 
 exports.conf = {
