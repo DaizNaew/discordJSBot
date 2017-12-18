@@ -1,8 +1,7 @@
-const errorJoinMSG = `You need to be in a voice channel for me to join you`;
-const config = require('../config.json');
-const ytdl = require("ytdl-core");
-const search = require("youtube-search");
-const Song = require('../model/song');
+const config = require('../config.json'),
+      ytdl = require("ytdl-core"),
+      search = require("youtube-search"),
+      Song = require('../model/song');
 
 exports.run = (client, message, params) => {
 
@@ -33,7 +32,6 @@ exports.help = {
 }
 
     function playSong(client, message, voiceChannel, input, msg) {
-        
         const streamOptions = { seek: 0, volume: 0.2 };
         const broadcast = client.createVoiceBroadcast();
         let response;
@@ -50,7 +48,7 @@ exports.help = {
                 const song = new Song(results[0], message.member);
                 let linkToPlay = song.link;
                 //console.dir(results);
-                if(!voiceChannel) msg.edit(errorJoinMSG);
+                if(!voiceChannel) msg.edit(`You need to be in a voice channel for me to join you`);
                 //
                 response = `🎵 Now playing: ${song.name} 🎵`;
                 voiceChannel.join()

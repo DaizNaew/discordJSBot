@@ -1,13 +1,17 @@
 var _ = require("lodash");
 var fp = require("lodash/fp");
 const Discord = require("discord.js");
+const moment = require('moment');
+const { Util } = require('discord.js');
+
+const log = message => { console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`); };
 
 exports.run = (client, message, params) => {
     message.channel.send('Fetching...', {code: 'asciidoc'})
     .then(msg => {
         const clientLog = require('../storage/clientLog.json');
         msg.edit(showUserLog(message, clientLog), {code: 'asciidoc'});
-        console.dir(params);
+        //console.dir(params);
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
@@ -17,7 +21,7 @@ exports.run = (client, message, params) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['Show'],
+    aliases: ['Show, whois'],
     permLevel: 0
 }
 
@@ -31,7 +35,6 @@ exports.help = {
         const guildName = message.guild.name;
         const mention =  message.mentions.members.first();
         const author = message.author;
-        const embed = new Discord.RichEmbed();
         
         let userToShow;
         let id;
@@ -44,40 +47,46 @@ exports.help = {
         }
         var response;
 
-            console.log(`Show command used by: ${author.id} to show data about: ${id}`);
+        log(`Show command used by: ${author.tag} to show data about: ${userToShow.user.tag}`);
 
-            const userRolesByID = userToShow._roles;
-            
-                const index = message.guild.roles;
-                let rollePos = 0;
-                let arr;
+        const userRolesByID = userToShow._roles;
+        const index = message.guild.roles;
+        let rollePos = 0;
+        let arr;
 
-                userRolesByID.forEach(roleIDs => {
-                    index.forEach(element => {
-                        if(element.id === roleIDs) {
-                            if(rollePos <= element.position) rollePos = element.position;
-                        }
-                    });
-                });
+        userRolesByID.forEach(roleIDs => {
+            index.forEach(element => {
+                if(element.id === roleIDs) {
+                    if(rollePos <= element.position) rollePos = element.position;
+                }
+            });
+        });
 
-                index.forEach(element => {
-                    if(element.position === rollePos) arr = _.merge(element, arr);
+        index.forEach(element => {
+            if(element.position === rollePos) arr = _.merge(element, arr);
+            });
 
-                });
+        const embed = new Discord.RichEmbed();
 
-            if(clientLog[guildName][id]) {
-                response = `I have a log on this person : ${clientLog[guildName][id].usertag}`;
-                message.author.send(`${clientLog[guildName][id].usertag} Was created at: ${clientLog[guildName][id].usercreatedate} with theese stats:
-                \nName on server: ${clientLog[guildName][id].firstNick} 
-                If bot or not: ${clientLog[guildName][id].clientisbot} 
-                Has sent: ${clientLog[guildName][id].messagesSent} messages
-                Has kicked: ${clientLog[guildName][id].kickhammer} users and banned: ${clientLog[guildName][id].banhammer} users
-                This user has the top role of: ${arr.name} which has the ID of: ${arr.id}`)
-                .then(message => console.log(`sent Message: ${message.content}`))
-                .catch(console.error);
-            } else {
-                response = `I cannot find this person in my records. 😞`;
-            }
+        if(clientLog[guildName][id]) {
+
+            embed.setColor(userToShow.displayHexColor);
+            embed.setTitle(clientLog[guildName][id].usertag);
+            embed.setThumbnail(userToShow.user.avatarURL);
+            embed.addField('Server Name', Util.escapeMarkdown(guildName), false);
+            embed.addField('isBot', clientLog[guildName][id].clientisbot, true );
+            embed.addField('Amount of sent messages',clientLog[guildName][id].messagesSent, true )
+            embed.addField('Highest role on server',arr.name, true);
+            embed.addField('Role ID', arr.id, true);
+            embed.setFooter('User created at: ' + clientLog[guildName][id].usercreatedate);
+
+            response = `I have a log on this person : ${clientLog[guildName][id].usertag}`;
+
+            message.author.send(({embed})).then(msg => log(`Sent Message to: ${message.author.tag}`)).catch(console.error);
+
+        } else {
+            response = `I cannot find this person in my records. 😞`;
+        }
             return response;
     }
     

@@ -22,7 +22,7 @@ module.exports = (client, message, input, msg) => {
             if(defaultLocal) { embed.setTitle("Showing the weather for the default location");} 
             embed.setThumbnail(current.imageUrl);
             embed.addField("Location 🏙",location.name, true);
-            embed.addField("Timezone 🕒","UTC: "+location.timezone,true)
+            embed.addField("Timezone 🕒","UTC: "+location.timezone,true);
             embed.addField("Current Weather 🌤",current.skytext,true);
             embed.addField("Wind speed 💨",current.winddisplay,true);
             embed.addField("Temperature 🌡",current.temperature + ' Degrees Celsius',true);

@@ -39,4 +39,3 @@ exports.help = {
     description: 'Clears <n> messages in the current chat, informs the users, then deletes its own message',
     usage: 'Clear <n>'
 }
-    

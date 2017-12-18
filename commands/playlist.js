@@ -1,4 +1,4 @@
-exports.run = (client, message) => {
+exports.run = (client, message, song) => {
 
     /* const queue = this.queue.get(message.guild.id);
     console.dir(queue); */

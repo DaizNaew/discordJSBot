@@ -25,7 +25,7 @@ const log = message => {
         log(`Loading a total of ${files.length} commands.`);
         files.forEach(f => {
             const props = require(`./commands/${f}`);
-            log(m.cmdLoad(`Loading Command: ${props.help.name}.`));
+            log(m.cmdLoad(`Loading Command: ${props.help.name}. `)+" 👌");
             client.commands.set(props.help.name, props);
             props.conf.aliases.forEach(alias => {
                 client.aliases.set(alias, props.help.name);
@@ -105,6 +105,5 @@ client.on('warn', e => {
 client.on('error', e => {
   console.log(chalk.bgRed(e.replace(regToken, 'that was redacted')));
 });
-
 
 client.login(config.token);

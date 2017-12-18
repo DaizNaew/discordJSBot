@@ -19,6 +19,6 @@ module.exports = {
     },
 
     cmdLoad:function(input) {
-        return(chalk.blue(`## ${input} ## 👌`));
+        return(chalk.blue(`## ${input} ##`));
     }
 }
