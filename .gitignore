@@ -4,3 +4,4 @@ storage/playlist.json
 nodemon.json
 package-lock.json
 config.json
+storage/defaultTwitch.json
