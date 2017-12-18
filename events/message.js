@@ -4,8 +4,6 @@ const logging = require('../enum/logging');
 
 module.exports = (message) => {
 
-        logging(message);
-
     const client = message.client;
     if (message.author.bot) return;
     if (!message.content.startsWith(settings.prefix)) return;
@@ -23,5 +21,7 @@ module.exports = (message) => {
     if (cmd) {
         cmd.run(client, message, params);
     }
+
+    logging(message);
 
 };
