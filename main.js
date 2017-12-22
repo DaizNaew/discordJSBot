@@ -33,6 +33,8 @@ const log = message => {
         });
     });
 
+//Test
+
 /*
 
 //Sound commands
