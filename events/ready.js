@@ -30,6 +30,7 @@ module.exports = client => {
             log(m.splitter('Populated Directories'));
             checkAllDeps("./storage/clientLog.json");
             checkAllDeps("./storage/playlist.json");
+            checkAllDeps("./storage/defaultTwitch.json");
         }, 50);
 }
 

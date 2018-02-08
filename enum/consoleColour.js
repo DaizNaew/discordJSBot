@@ -11,7 +11,7 @@ module.exports = {
     },
 
     errorMsg: function(input) {
-        return(chalk.bgred.black(input));
+        return(chalk.bgRed.black(input));
     },
     
     splitter:function(input) {
