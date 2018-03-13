@@ -1,17 +1,15 @@
 //NPM Node modules
-const Discord = require("discord.js");
-const fs = require("fs");
-
+const Discord = require("discord.js"),
+      fs = require("fs"),
 //Modules to format timestamps in logging
-const moment = require('moment');
-
+      moment = require('moment'),
 //Design the client
-const client = new Discord.Client();
-
+      client = new Discord.Client(),
 //Local files
-const config = require("./config.json");
+      config = require("./config.json"),
+      m = require('./enum/consoleColour');
+
 require('./util/eventLoader')(client);
-const m = require('./enum/consoleColour');
 
 const log = message => {
     console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
@@ -43,7 +41,6 @@ client.on('message', async message => {
     const vChan = message.member.voiceChannel;
     const errorJoinMSG = `Jeg kan ikke joine dig min ven, du er ikke i nogen voice. :(`;
     
-
     if(command === 'join') {
         //console.log(vChan);
         if(!vChan) return message.channel.send(errorJoinMSG);
@@ -65,11 +62,9 @@ client.on('message', async message => {
             const dispatcher = connection.playFile(horn);
         })
         .catch(console.error);
-
     }
 
     if(command === 'stop') {
-        
         const broadcast = client.broadcasts;
         for(const connection of broadcast) {
             connection.end();
@@ -77,13 +72,10 @@ client.on('message', async message => {
     }
 
     if(command === 'pause') {
-        
         const broadcast = client.broadcasts;
         for(const connection of broadcast) {
-            
             connection.pause();
         }
-        
     }
 
     if(command === 'resume') {
