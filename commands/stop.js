@@ -6,10 +6,9 @@ exports.run = (client, message) => {
     //console.dir(vChan);
     //console.dir(client.commands);
     const broadcast = client.broadcasts;
-
-    for(const connection of broadcast) {
-        connection.end();
-    }
+    
+    vChan.connection.dispatcher.pause();
+    
     message.channel.send('I stopped playing sounds. :mute:');
 }
 
