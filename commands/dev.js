@@ -4,13 +4,15 @@ exports.run = (client, message) => {
 
     message.channel.send("Fetching Developer list...")
     .then(msg => {
+        
         const embed = new Discord.RichEmbed();
         
         embed.setTitle('Developer list');
         embed.addField('I were created by these lovely people over at the L&B server', `@DaizNaew - Main Developer \n@THICCBOI - Trusty Partner In Science`, false);
-        embed.addField('Special thanks to', 'The Turtle Gaming Community - for ideas and help testing', false)
+        embed.addField('Special thanks to', 'The Turtle Gaming Community - for ideas and help testing', false);
 
         msg.edit({embed});
+        
         
     })
     .catch(error => {

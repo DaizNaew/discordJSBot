@@ -7,9 +7,9 @@ const log = message => { console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}
 
 module.exports = client => {
 
-    client.user.setGame('Plotting world domination');
+    client.user.setActivity('Plotting world domination');
 
-    const channel = client.channels.get('385782063887941632');
+    const channel = client.channels.get('411571330585067530');
     const date = new Date(channel.createdTimestamp);
     let guildList = client.guilds.map( (g) => `${g.name} Created at: ${g.createdAt} Owned by: ${g.owner.user.tag}` ).join(' \n');
 
