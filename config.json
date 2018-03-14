@@ -3,5 +3,9 @@
   "prefix": "!",
   "mprefix": "m",
   "ytKey": "AIzaSyCNpoU0uZWJUADUG0pwIc_l2xUMqTc4Kf4",
-  "nothing" : 0
+  "nothing" : 0,
+  "consumer_key": "",
+  "consumer_secret": "",
+  "access_token_key": "",
+  "access_token_secret": ""
 }

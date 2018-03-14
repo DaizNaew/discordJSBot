@@ -1,11 +1,15 @@
 const func = require('../func/propFunctions');
 const m = require('../enum/consoleColour');
+const twit = require('../enum/twitter.js');
 const fs = require('fs');
 const moment = require('moment');
+
 
 const log = message => { console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`); };
 
 module.exports = client => {
+
+    twit.initStream(client);
 
     client.user.setActivity('Plotting world domination');
 
@@ -25,12 +29,12 @@ module.exports = client => {
                 log(m.successMsg("No errors detected and I am good to go.\n"));
             }
         });
-
         setTimeout(function() {
             log(m.splitter('Populated Directories'));
+            checkAllDeps("./storage/defaultTwitch.json");
             checkAllDeps("./storage/clientLog.json");
             checkAllDeps("./storage/playlist.json");
-            checkAllDeps("./storage/defaultTwitch.json");
+            
         }, 50);
 }
 
