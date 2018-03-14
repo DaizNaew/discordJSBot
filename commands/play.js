@@ -56,8 +56,13 @@ exports.help = {
                     msg.edit(response);
                     const stream = ytdl(linkToPlay, { filter : 'audioonly'});
                     broadcast.playStream(stream);
-                    const dispatcher = connection.playBroadcast(broadcast);
                     
+                    const dispatcher = connection.playBroadcast(broadcast,streamOptions);
+                    dispatcher.once('end', console.trace);
+                    dispatcher.player.once('error', console.trace);
+                    dispatcher.on('end', () => {
+                    voiceChannel.leave();
+                    });
                 })
                 .catch(console.error);
             });
