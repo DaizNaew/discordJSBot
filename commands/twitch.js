@@ -1,5 +1,6 @@
 const fs = require('fs');
 const defTwitch = JSON.parse(fs.readFileSync("./storage/defaultTwitch.json", "utf8"));
+const twit = require('../enum/twitter.js');
 exports.run = (client, message) => {
 
     message.channel.send('Fetching Twitch link..')
