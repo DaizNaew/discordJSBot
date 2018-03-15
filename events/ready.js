@@ -6,7 +6,7 @@ const   func = require('../func/propFunctions'),
 
 module.exports = client => {
 
-    //twit.initStream(client);
+    twit.initStream(client);
 
     client.user.setActivity('Plotting world domination');
 

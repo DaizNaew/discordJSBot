@@ -1,17 +1,26 @@
-const Discord = require('discord.js');
+const   Discord = require('discord.js'),
+        embed = require('../model/embeds');
 
 exports.run = (client, message) => {
 
     message.channel.send("Fetching Developer list...")
     .then(msg => {
         
+        /*
         const embed = new Discord.RichEmbed();
         
         embed.setTitle('Developer list');
         embed.addField('I were created by these lovely people over at the L&B server', `@DaizNaew - Main Developer \n@THICCBOI - Trusty Partner In Science`, false);
-        embed.addField('Special thanks to', 'The Turtle Gaming Community - for ideas and help testing', false);
+        //embed.addField('Special thanks to', 'The Turtle Gaming Community - for ideas and help testing', false);
+        embed.setFooter('Powered by DiscordJS', 'https://i.imgur.com/wy9kt6e.png');
 
         msg.edit({embed});
+        */
+        msg.edit(embed.RichEmbed(
+            null,
+            ['Developer list'],
+            ['I were created by these lovely people over at the L&B server', `@DaizNaew - Main Developer \n@THICCBOI - Trusty Partner In Science`]
+        ));
         
         
     })

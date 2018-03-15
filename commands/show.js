@@ -1,7 +1,8 @@
 const   _ = require("lodash"),
         Discord = require("discord.js"),
         {Util} = require('discord.js'),
-        log = require('../enum/consoleLogging');
+        log = require('../enum/consoleLogging'),
+        embed = require('../model/embeds');
 
 exports.run = (client, message, params) => {
     message.channel.send('Fetching...', {code: 'asciidoc'})
@@ -62,10 +63,10 @@ exports.help = {
             if(element.position === rollePos) arr = _.merge(element, arr);
             });
 
-        const embed = new Discord.RichEmbed();
-
         if(clientLog[guildName][id]) {
+            let avatar = userToShow.user.avatarURL;
 
+            /*
             embed.setColor(userToShow.displayHexColor);
             embed.setTitle(clientLog[guildName][id].usertag);
             embed.setThumbnail(userToShow.user.avatarURL);
@@ -75,10 +76,27 @@ exports.help = {
             embed.addField('Highest role on server',arr.name, true);
             embed.addField('Role ID', arr.id, true);
             embed.setFooter('User created at: ' + clientLog[guildName][id].usercreatedate);
-
+*/
             response = `I have a log on this person : ${clientLog[guildName][id].usertag}`;
 
-            message.author.send(({embed})).then(msg => log(`Sent Message to: ${message.author.tag}`)).catch(console.error);
+            log(userToShow.displayHexColor);
+
+            message.author.send(
+                embed.RichEmbed(
+                    null,
+                    clientLog[guildName][id].usertag,
+                    ['Server Name', Util.escapeMarkdown(guildName),false,
+                    'isBot',clientLog[guildName][id].clientisbot,true,
+                    'Amount of sent messages',clientLog[guildName][id].messagesSent,true,
+                    'Highest role on server',arr.name,true,
+                    'Role ID', arr.id,true],
+                    userToShow.displayHexColor,
+                    ['User created at: ' + clientLog[guildName][id].usercreatedate],
+                    null,
+                    null,
+                    userToShow.user.avatarURL
+                )
+            ).then(msg => log(`Sent Message to: ${message.author.tag}`)).catch(console.error);
 
         } else {
             response = `I cannot find this person in my records. 😞`;

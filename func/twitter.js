@@ -1,7 +1,8 @@
 const   Twitter = require('twitter'),
         config = require("../../config.json"),
         Discord = require("discord.js"),
-        log = require("../enum/consoleLogging");
+        log = require("../enum/consoleLogging"),
+        embed = require('../model/embeds');
 
 module.exports = {
   
@@ -32,29 +33,38 @@ module.exports = {
             stream.on('data', function(tweet) {
 
                 let tempText = '';
-                let tempArr = tweet.display_text_range;
+                let tempArr; 
+                if(tweet.display_text_range) tempArr = tweet.display_text_range;
+                //console.dir(tweet);
+                //log(tweet.display_text_range);
 
-                log(tweet.display_text_range);
+                log(`I have detected a tweet from: ${tweet.user.screen_name}`);
 
-                for(i = tempArr[0]; i <= tempArr[1]; i++){
-                    tempText += tweet.text[i];
+                if(tempArr){
+                    for(i = tempArr[0]; i <= tempArr[1]; i++){
+                        tempText += tweet.text[i];
+                    }
+                } else {
+                    tempText = tweet.text;
+                }
+                
+                let tempImg = null;
+                if(tweet.entities.media){
+                    if(tweet.entities.media[0].media_url_https) tempImg = tweet.entities.media[0].media_url_https;
+                    log(`The tweet contained an image: ${tempImg}`);
                 }
 
-                log(tempText);
-                dir(tweet.entities.media[0].media_url_https);
-
-                const embed = new Discord.RichEmbed();
-                embed.setAuthor(tweet.user.screen_name, tweet.user.profile_image_url_https);
-                embed.setTitle(tweet.user.screen_name + " on Twitter");
-                embed.setURL('http://www.twitter.com/'+tweet.user.screen_name);
-                embed.setDescription(tempText);
-                embed.setColor(0x1dcaff);
-                embed.setTimestamp();
-                if(tweet.entities.media[0].media_url_https) embed.setImage(tweet.entities.media[0].media_url_https);
-                embed.setThumbnail("https://abs.twimg.com/icons/apple-touch-icon-192x192.png");
-                embed.setFooter('Powered by DiscordJS and Twitter NPM');
-                
-                tempChan.send({embed});
+                tempChan.send(embed.RichEmbed(
+                    [tweet.user.screen_name, "https://abs.twimg.com/icons/apple-touch-icon-192x192.png"],
+                    `${tweet.user.name} on Twitter`,
+                    null,
+                    0x1dcaff,
+                    null,
+                    `http://www.twitter.com/${tweet.user.screen_name}`,
+                    tempImg,
+                    `${tweet.user.profile_image_url_https}`,
+                    `${tempText}`
+                ));
             });
         
             stream.on('error', function(error) {

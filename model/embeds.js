@@ -1,7 +1,7 @@
 const   Discord = require('discord.js'),
         log = require('../enum/consoleLogging');
 
-module.exports.RichEmbed = (author,title,fieldStrings,color,footer,url,image,thumbnail) => {
+module.exports.RichEmbed = (author,title,fieldStrings,color,footer,url,image,thumbnail,description) => {
 
     //Define the embed to use.
     const embed = new Discord.RichEmbed();
@@ -10,10 +10,8 @@ module.exports.RichEmbed = (author,title,fieldStrings,color,footer,url,image,thu
     if(author){
         let lengthar;
         if(lengthar = author.length % 2){
-            log(`I am modulus ${lengthar}`);
             embed.setAuthor(author);
         } else {
-            log(`I am modulus ${lengthar}`);
             embed.setAuthor(author[0],author[1]);
         }
     }
@@ -32,12 +30,14 @@ module.exports.RichEmbed = (author,title,fieldStrings,color,footer,url,image,thu
         if(url) embed.setURL(url);
         if(image) embed.setImage(image);
         if(thumbnail) embed.setThumbnail(thumbnail);
+        
         if(!footer) {
             embed.setFooter('Powered by DiscordJS', 'https://i.imgur.com/wy9kt6e.png');
         } else {
             embed.setFooter(footer[0], footer[1]);
         }
-
+        embed.setTimestamp();
+        if(description) embed.setDescription(description);
     return {embed};
 
 }
