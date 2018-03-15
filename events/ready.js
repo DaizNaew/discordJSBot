@@ -1,33 +1,34 @@
 const   func = require('../func/propFunctions'),
-        m = require('../enum/consoleColour'),
         twit = require('../func/twitter.js'),
         fs = require('fs'),
-        log = require('../enum/consoleLogging');
+        log = require('../enum/consoleLogging'),
+        settings = require('../../config.json');
 
 module.exports = client => {
 
-    twit.initStream(client);
+    if(settings.enableTwitterModule)twit.initStream(client);
 
-    client.user.setActivity('Plotting world domination');
+    client.user.setActivity(settings.botActivity);
 
     const channel = client.channels.get('411571330585067530');
     const date = new Date(channel.createdTimestamp);
     let guildList = client.guilds.map( (g) => `${g.name} Created at: ${g.createdAt} Owned by: ${g.owner.user.tag}` ).join(' \n');
 
-    log(m.splitter('Init Bot'));
-    log(m.successMsg('I am ready! And currently running in: '+client.guilds.size + ' Servers\n'
-    + `I am ${client.user.tag} residing in servers: \n${guildList} \n`));
+    log.splitter('Init Bot');
+    log.success('I am ready! And currently running in: '+client.guilds.size + ' Servers');
+    log.success(`I am ${client.user.tag} residing in servers`);
+    log.success(`${guildList}\n`);
 
-    log(m.splitter('Error Checking'));
+    log.splitter('Error Checking');
         func.checkDirectory("./storage/", function(err) {
             if(err) {
-                log(m.errorMsg("Something went wrong: ",err));
+                log.error("Something went wrong: ",err);
             } else {
-                log(m.successMsg("No errors detected and I am good to go.\n"));
+                log.success("No errors detected and I am good to go.\n");
             }
         });
         setTimeout(function() {
-            log(m.splitter('Populated Directories'));
+            log.splitter('Populated Directories');
             checkAllDeps("./storage/defaultTwitch.json");
             checkAllDeps("./storage/clientLog.json");
             checkAllDeps("./storage/playlist.json");
@@ -40,13 +41,13 @@ function checkAllDeps(FilePos) {
     fs.open(FilePos, 'wx', (err, fd) => {
         if (err) {
             if (err.code === 'EEXIST') {
-                log(m.successMsg(`${FilePos} already exists.`));
+                log.success(`${FilePos} already exists and is valid.`);
                 return;
             }
             throw err;
         }
-        log(m.warningMsg(`${FilePos} does not exist, creating it.`));
+        log.warningMsg(`${FilePos} does not exist, creating it.`);
         func.writeToFileSync(FilePos, " { } ");
-        log(m.successMsg(`Successfully created file at: ${FilePos}`));
+        log.successMsg(`Successfully created file at: ${FilePos}`);
         });
 }

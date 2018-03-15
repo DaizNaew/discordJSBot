@@ -3,19 +3,19 @@ const chalk = require('chalk');
 module.exports = {
 
     successMsg:function(input){
-        return(chalk.bgGreen.black(input));
+        return(chalk.green(input));
     },
 
     warningMsg:function(input){
-        return(chalk.bgYellow.black(input));
+        return(chalk.yellow(input));
     },
 
     errorMsg: function(input) {
-        return(chalk.bgRed.black(input));
+        return(chalk.red(input));
     },
     
     splitter:function(input) {
-        return(chalk.magenta(`--${input}--`));
+        return(chalk.magenta(`-- ${input} --`));
     },
 
     cmdLoad:function(input) {

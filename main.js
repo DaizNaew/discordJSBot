@@ -6,7 +6,6 @@ const Discord = require("discord.js"),
       client = new Discord.Client(),
 //Local files
       config = require("../config.json"),
-      m = require('./enum/consoleColour'),
       log = require('./enum/consoleLogging');
 
 require('./util/eventLoader')(client);
@@ -16,10 +15,10 @@ require('./util/eventLoader')(client);
 
     fs.readdir('./commands/', (err, files) => {
         if (err) console.error(err);
-        log(`Loading a total of ${files.length} commands.`);
+        log.splitter(`Loading a total of ${files.length} commands.`);
         files.forEach(f => {
             const props = require(`./commands/${f}`);
-            log(m.cmdLoad(`Loading Command: ${props.help.name}. `)+" 👌");
+            log.cmd(`Loading Command: ${props.help.name}. `);
             client.commands.set(props.help.name, props);
             props.conf.aliases.forEach(alias => {
                 client.aliases.set(alias, props.help.name);
