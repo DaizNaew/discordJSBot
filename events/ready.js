@@ -12,12 +12,13 @@ module.exports = client => {
 
     const channel = client.channels.get('411571330585067530');
     const date = new Date(channel.createdTimestamp);
-    let guildList = client.guilds.map( (g) => `${g.name} Created at: ${g.createdAt} Owned by: ${g.owner.user.tag}` ).join(' \n');
 
     log.splitter('Init Bot');
     log.success('I am ready! And currently running in: '+client.guilds.size + ' Servers');
     log.success(`I am ${client.user.tag} residing in servers`);
-    log.success(`${guildList}\n`);
+    client.guilds.map( (g) => log.success(`${g.name} Created at: ${g.createdAt} Owned by: ${g.owner.user.tag}`));
+
+    console.log();
 
     log.splitter('Error Checking');
         func.checkDirectory("./storage/", function(err) {
@@ -32,8 +33,12 @@ module.exports = client => {
             checkAllDeps("./storage/defaultTwitch.json");
             checkAllDeps("./storage/clientLog.json");
             checkAllDeps("./storage/playlist.json");
-            
         }, 50);
+
+        setTimeout(function() {
+            console.log();
+            log.splitter("Starting normal usage logging");            
+        }, 75);
 }
 
 function checkAllDeps(FilePos) {
@@ -46,8 +51,8 @@ function checkAllDeps(FilePos) {
             }
             throw err;
         }
-        log.warningMsg(`${FilePos} does not exist, creating it.`);
+        log.warning(`${FilePos} does not exist, creating it.`);
         func.writeToFileSync(FilePos, " { } ");
-        log.successMsg(`Successfully created file at: ${FilePos}`);
+        log.success(`Successfully created file at: ${FilePos}`);
         });
 }
