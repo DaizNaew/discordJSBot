@@ -1,5 +1,6 @@
-var _ = require("lodash");
-var fp = require("lodash/fp");
+const   _ = require("lodash"),
+        fp = require("lodash/fp"),
+        log = require("../enum/consoleLogging");
 
 exports.run = (client, message, params) => {
 

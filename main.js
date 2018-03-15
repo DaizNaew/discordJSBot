@@ -2,19 +2,14 @@
 const Discord = require("discord.js"),
       fs = require("fs"),
       ytdl = require("ytdl-core"),
-//Modules to format timestamps in logging
-      moment = require('moment'),
 //Design the client
       client = new Discord.Client(),
 //Local files
       config = require("../config.json"),
-      m = require('./enum/consoleColour');
+      m = require('./enum/consoleColour'),
+      log = require('./enum/consoleLogging');
 
 require('./util/eventLoader')(client);
-
-const log = message => {
-    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
-    };
 
     client.commands = new Discord.Collection();
     client.aliases = new Discord.Collection();
@@ -32,7 +27,9 @@ const log = message => {
         });
     });
 
-    const connections = new Map();
+/*
+
+const connections = new Map();
 
 var d, b;
     client.on('message', m => {
@@ -60,7 +57,7 @@ var d, b;
           }
         }
       });
-
+*/
 //Test
 
 /*

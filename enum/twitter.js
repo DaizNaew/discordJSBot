@@ -1,7 +1,7 @@
 const   Twitter = require('twitter'),
         config = require("../../config.json"),
-        Discord = require("discord.js");
-        //
+        Discord = require("discord.js"),
+        log = require("../enum/consoleLogging");
 
 module.exports = {
   
@@ -23,28 +23,26 @@ module.exports = {
        DClient.guilds.forEach(element => {
            element.channels.forEach(channel => {
                if(channel.id === defChan["Testing Grounds"].defaultChannel) {
-                   //console.log(channel);
                    tempChan = channel;
                }
            });
-       });
-       //console.log(DClient.guilds);
-       
+       });       
        
         client.stream('statuses/filter', {follow: '205717291,923770736,828062956864864256' },  function(stream) {
             stream.on('data', function(tweet) {
 
                 let tempText = '';
                 let tempArr = tweet.display_text_range;
-                console.log(tweet.display_text_range);
+
+                log(tweet.display_text_range);
 
                 for(i = tempArr[0]; i <= tempArr[1]; i++){
                     tempText += tweet.text[i];
                 }
-                console.log(tempText);
-                
-                //console.log(tweet);
-                console.dir(tweet.entities.media[0].media_url_https);
+
+                log(tempText);
+                dir(tweet.entities.media[0].media_url_https);
+
                 const embed = new Discord.RichEmbed();
                 embed.setAuthor(tweet.user.screen_name, tweet.user.profile_image_url_https);
                 embed.setTitle(tweet.user.screen_name + " on Twitter");
@@ -60,7 +58,7 @@ module.exports = {
             });
         
             stream.on('error', function(error) {
-            console.log(error);
+            log(error);
             });
         });
         

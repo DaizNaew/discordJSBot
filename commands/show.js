@@ -1,10 +1,7 @@
-var _ = require("lodash");
-var fp = require("lodash/fp");
-const Discord = require("discord.js");
-const moment = require('moment');
-const { Util } = require('discord.js');
-
-const log = message => { console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`); };
+const   _ = require("lodash"),
+        Discord = require("discord.js"),
+        {Util} = require('discord.js'),
+        log = require('../enum/consoleLogging');
 
 exports.run = (client, message, params) => {
     message.channel.send('Fetching...', {code: 'asciidoc'})

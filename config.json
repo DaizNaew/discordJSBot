@@ -1,11 +1,11 @@
 {
-  "token": "DYlPrA.0CLyhYwHAZHAIkvmiSfFe5aMsfA",
+  "token": "###",
   "prefix": "!",
   "mprefix": "m",
-  "ytKey": "AIzaSyCNpoU0uZWJUADUG0pwIc_l2xUMqTc4Kf4",
+  "ytKey": "###",
   "nothing" : 0,
-  "consumer_key": "",
-  "consumer_secret": "",
-  "access_token_key": "",
-  "access_token_secret": ""
+  "consumer_key": "###",
+  "consumer_secret": "###",
+  "access_token_key": "###",
+  "access_token_secret": "###"
 }

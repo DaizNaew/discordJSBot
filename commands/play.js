@@ -47,9 +47,7 @@ exports.help = {
                 if(err) return console.log(err);
                 const song = new Song(results[0], message.member);
                 let linkToPlay = song.link;
-                //console.dir(results);
                 if(!voiceChannel) msg.edit(`You need to be in a voice channel for me to join you`);
-                //
                 response = `🎵 Now playing: ${song.name} 🎵`;
                 voiceChannel.join()
                 .then(connection => {

@@ -19,7 +19,7 @@ exports.run = (client, message, params) => {
             
         })
         .catch(error => {
-            console.log('Could not find my own message anymore 😞 : \n' + error);
+            message.channel.send('Could not find my own message anymore 😞 : \n' + error);
         });
     })
     .catch(error => {

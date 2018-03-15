@@ -1,5 +1,6 @@
-const Discord = require("discord.js");
-var weather = require('weather-js');
+const   Discord = require("discord.js"),
+        weather = require('weather-js');
+        
 module.exports = (client, message, input, msg) => {
 
     let defaultLocal; ;

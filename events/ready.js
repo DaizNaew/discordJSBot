@@ -1,15 +1,12 @@
-const func = require('../func/propFunctions');
-const m = require('../enum/consoleColour');
-const twit = require('../enum/twitter.js');
-const fs = require('fs');
-const moment = require('moment');
-
-
-const log = message => { console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`); };
+const   func = require('../func/propFunctions'),
+        m = require('../enum/consoleColour'),
+        twit = require('../enum/twitter.js'),
+        fs = require('fs'),
+        log = require('../enum/consoleLogging');
 
 module.exports = client => {
 
-    twit.initStream(client);
+    //twit.initStream(client);
 
     client.user.setActivity('Plotting world domination');
 

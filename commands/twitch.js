@@ -1,6 +1,6 @@
-const fs = require('fs');
-//
-const twit = require('../enum/twitter.js');
+const   fs = require('fs'),
+        twit = require('../enum/twitter.js');
+
 exports.run = (client, message) => {
 
     message.channel.send('Fetching Twitch link..')
