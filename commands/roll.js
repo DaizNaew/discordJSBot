@@ -33,6 +33,7 @@ exports.run = (client, message, params) => {
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
+        log(error);
     });
 }
 

@@ -8,7 +8,6 @@ exports.run = (client, message, params) => {
     .then(msg => {
         const clientLog = require('../storage/clientLog.json');
         msg.edit(showUserLog(message, clientLog), {code: 'asciidoc'});
-        //console.dir(params);
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);

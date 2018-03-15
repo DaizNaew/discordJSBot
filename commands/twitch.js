@@ -1,5 +1,4 @@
-const   fs = require('fs'),
-        twit = require('../enum/twitter.js');
+const   fs = require('fs');
 
 exports.run = (client, message) => {
 

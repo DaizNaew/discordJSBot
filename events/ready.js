@@ -1,6 +1,6 @@
 const   func = require('../func/propFunctions'),
         m = require('../enum/consoleColour'),
-        twit = require('../enum/twitter.js'),
+        twit = require('../func/twitter.js'),
         fs = require('fs'),
         log = require('../enum/consoleLogging');
 
