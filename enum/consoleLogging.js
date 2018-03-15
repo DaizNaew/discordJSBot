@@ -7,19 +7,19 @@ module.exports = (string) => {
 }
 
 module.exports.success = (string) => {
-    return log(m.successMsg(string));
+    return log("✔️  "+m.successMsg(string));
 }
 module.exports.warning = (string) => {
-    return log(m.warningMsg(string));
+    return log("🔔  "+m.warningMsg(string));
 }
 module.exports.error = (string) => {
-    return log(m.errorMsg(string));
+    return log("❌  "+m.errorMsg(string));
 }
 module.exports.splitter = (string) => {
     return log(m.splitter(string));
 }
 module.exports.cmd = (string) => {
-    return log(m.cmdLoad(string)+" 👌");
+    return log("👌  "+m.cmdLoad(string));
 }
 
 function log(string) {
