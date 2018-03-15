@@ -31,11 +31,15 @@ module.exports = {
        
         client.stream('statuses/filter', {follow: '205717291,923770736,828062956864864256' },  function(stream) {
             stream.on('data', function(tweet) {
+                if(config.check_reply_to_tweets == false){
+                    if(tweet.in_reply_to_status_id ) return;
+                }
+                
 
                 let tempText = '';
                 let tempArr; 
                 if(tweet.display_text_range) tempArr = tweet.display_text_range;
-                //console.dir(tweet);
+                console.dir(tweet);
                 //log(tweet.display_text_range);
 
                 log(`I have detected a tweet from: ${tweet.user.screen_name}`);
