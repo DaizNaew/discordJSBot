@@ -44,11 +44,7 @@ module.exports.RichEmbed = (author,title,fieldStrings,color,footer,url,image,thu
 
 module.exports.Embed = (author,title,fieldStrings,color,url,description) => {
 
-    let embed = {
-
-    };
-
-    
+    const embed = { };
 
     if(author){
         let tempAuth = {
@@ -58,24 +54,11 @@ module.exports.Embed = (author,title,fieldStrings,color,url,description) => {
         embed.author = tempAuth;
     } 
     if(title) embed.title = title;
-    if(color) embed.color = color;
+    embed.color = color;
+    if(!color) embed.color = 0xFFFFFF;
     if(url) embed.url = url;
     if(description) embed.description = description;
     if(fieldStrings) embed.fields = fieldStrings;
-
-/*
-    let embed={
-        author: {
-            name: author[0],
-            icon_url: author[1]
-        },
-        title: title,
-        description: description,
-        color: color,
-        url: url
-       
-    };
-*/
 
     return {embed};
 }
