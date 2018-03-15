@@ -1,4 +1,5 @@
-const Discord = require('discord.js');
+const Discord = require('discord.js'),
+      _ = require('lodash');
 
 exports.run = (client, message, params) => {
     let canManageMessages = message.member.permissions.has("MANAGE_MESSAGES", true);
@@ -9,6 +10,14 @@ exports.run = (client, message, params) => {
         limit:messagecount+1
     })
     .then(msg => {
+
+        let adminIDs = [
+            "128235918418116608",
+            "124256687992340484",
+            "151228724430241792"
+        ]
+
+        if(!_.includes(adminIDs,message.author.id)) return message.channel.send("You do not have permission to use this command");
 
         message.channel.bulkDelete(msg);
         message.channel.send(`Deleted: ${messagecount} messages.👌`)
