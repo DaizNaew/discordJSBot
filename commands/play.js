@@ -1,4 +1,4 @@
-const config = require('../config.json'),
+const config = require('../../config.json'),
       ytdl = require("ytdl-core"),
       search = require("youtube-search"),
       Song = require('../model/song'),
@@ -44,7 +44,14 @@ exports.help = {
     
         if(input) {
             search(input, opts, function(err, results) {
-                if(err) return console.log(err);
+                
+                if(err) {
+                    response = `❌ The command wasn't executed propperly [${err}] ❌`;
+                    log.error("I have failed in a horrible way");
+                    log.error(err);
+                    return msg.edit(response);
+                };
+                
                 const song = new Song(results[0], message.member);
                 let linkToPlay = song.link;
                 if(!voiceChannel) msg.edit(`You need to be in a voice channel for me to join you`);
@@ -62,11 +69,7 @@ exports.help = {
                     voiceChannel.leave();
                     });
                 })
-                .catch(err => {
-                    response = `❌ You have done something you shouldn't. ❌`;
-                    log.error("I have failed in a horrible way");
-                    log.error(err);
-                });
+                .catch(console.error);
             });
         } else {
             response = 'Play <songname / URL> to play a specific song, or supply no arguments to play the playlist';
