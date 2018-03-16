@@ -39,7 +39,7 @@ module.exports = client => {
         setTimeout(function() {
             console.log();
             log.splitter("Starting normal usage logging");            
-        }, 75);
+        }, 100);
 }
 
 function checkAllDeps(FilePos) {

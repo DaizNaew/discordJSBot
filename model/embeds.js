@@ -34,7 +34,12 @@ module.exports.RichEmbed = (author,title,fieldStrings,color,footer,url,image,thu
         if(!footer) {
             embed.setFooter('Powered by DiscordJS', 'https://i.imgur.com/wy9kt6e.png');
         } else {
-            embed.setFooter(footer[0], footer[1]);
+            if(footer.length > 1){
+                embed.setFooter(footer[0], footer[1]);
+            } else {
+                embed.setFooter(footer);
+            }
+            
         }
         embed.setTimestamp();
         if(description) embed.setDescription(description);
