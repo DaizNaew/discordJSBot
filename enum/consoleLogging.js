@@ -21,6 +21,9 @@ module.exports.splitter = (string) => {
 module.exports.cmd = (string) => {
     return log("👌  "+m.cmdLoad(string));
 }
+module.exports.mcmd = (string) => {
+    return log("🎼  "+m.cmdLoad(string));
+}
 
 module.exports.tweet = (string) => {
     return log("🐦  "+m.twitter(string));
