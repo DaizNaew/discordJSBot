@@ -24,6 +24,9 @@ module.exports.cmd = (string) => {
 module.exports.mcmd = (string) => {
     return log("🎼  "+m.cmdLoad(string));
 }
+module.exports.gcmd = (string) => {
+    return log("🎲  "+m.cmdLoad(string));
+}
 
 module.exports.tweet = (string) => {
     return log("🐦  "+m.twitter(string));
