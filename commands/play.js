@@ -1,7 +1,8 @@
 const config = require('../config.json'),
       ytdl = require("ytdl-core"),
       search = require("youtube-search"),
-      Song = require('../model/song');
+      Song = require('../model/song'),
+      log = require('../enum/consoleLogging');
 
 exports.run = (client, message, params) => {
 
@@ -15,7 +16,6 @@ exports.run = (client, message, params) => {
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
     });
-    
 }
 
 exports.conf = {
@@ -62,7 +62,11 @@ exports.help = {
                     voiceChannel.leave();
                     });
                 })
-                .catch(console.error);
+                .catch(err => {
+                    response = `❌ You have done something you shouldn't. ❌`;
+                    log.error("I have failed in a horrible way");
+                    log.error(err);
+                });
             });
         } else {
             response = 'Play <songname / URL> to play a specific song, or supply no arguments to play the playlist';
