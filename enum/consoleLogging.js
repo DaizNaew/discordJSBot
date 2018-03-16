@@ -22,6 +22,10 @@ module.exports.cmd = (string) => {
     return log("👌  "+m.cmdLoad(string));
 }
 
+module.exports.tweet = (string) => {
+    return log("🐦  "+m.twitter(string));
+}
+
 function log(string) {
     return console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${string}`);
 }

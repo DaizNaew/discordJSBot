@@ -13,6 +13,10 @@ module.exports = {
     errorMsg: function(input) {
         return(chalk.red(input));
     },
+
+    twitter:function(input) {
+        return(chalk.cyan(`${input}`));
+    },
     
     splitter:function(input) {
         return(chalk.magenta(`-- ${input} --`));

@@ -34,8 +34,9 @@ module.exports = {
                 ];
 
                 let tempChan,
-                    channelsToPostInById;
-                
+                    channelsToPostInById,
+                    defChan = require("../storage/defaultChannel.json");
+
                 switch(tweet.user.id_str) {
                     case tempID[0]:
                         channelsToPostInById = defChan["Testing Grounds"].defaultChannel;
@@ -46,7 +47,7 @@ module.exports = {
                     case tempID[2]:
                         channelsToPostInById = defChan["Weef's hang out"].memeChannel;
                 }
-                defChan = require("../storage/defaultChannel.json");
+                
                 DClient.guilds.forEach(element => {
                     element.channels.forEach(channel => {
                         if(channel.id === channelsToPostInById) {
@@ -62,7 +63,7 @@ module.exports = {
                 //console.dir(tweet);
                 //log(tweet.display_text_range);
 
-                log(`I have detected a tweet from: ${tweet.user.screen_name}`);
+                log.tweet(`I have detected a tweet from: ${tweet.user.screen_name}`);
 
                 if(tempArr){
                     for(i = tempArr[0]; i <= tempArr[1]; i++){
@@ -75,7 +76,7 @@ module.exports = {
                 let tempImg = null;
                 if(tweet.entities.media){
                     if(tweet.entities.media[0].media_url_https) tempImg = tweet.entities.media[0].media_url_https;
-                    log(`The tweet contained an image: ${tempImg}`);
+                    log.tweet(`The tweet contained an image: ${tempImg}`);
                 }
 
                 tempChan.send(embed.RichEmbed(
@@ -92,7 +93,7 @@ module.exports = {
             });
         
             stream.on('error', function(error) {
-            log(error);
+            log.error(error);
             });
         });
         
