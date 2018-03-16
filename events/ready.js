@@ -18,6 +18,7 @@ module.exports = client => {
     log.success(`I am ${client.user.tag} residing in servers`);
     client.guilds.map( (g) => log.success(`${g.name} Created at: ${g.createdAt} Owned by: ${g.owner.user.tag}`));
 
+    //Just a dirty linebreak
     console.log();
 
     log.splitter('Error Checking');

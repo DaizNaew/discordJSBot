@@ -3,7 +3,7 @@ const   moment = require('moment'),
         m = require('./consoleColour');
 
 module.exports = (string) => {
-    log(string);
+    log("📄  "+string);
 }
 
 module.exports.success = (string) => {
