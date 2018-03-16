@@ -19,27 +19,47 @@ module.exports = {
         * Stream statuses filtered by keyword
         * number of tweets per second depends on topic popularity
         **/
-       let tempChan;
-       defChan = require("../storage/defaultChannel.json");
-       DClient.guilds.forEach(element => {
-           element.channels.forEach(channel => {
-               if(channel.id === defChan["Testing Grounds"].defaultChannel) {
-                   tempChan = channel;
-               }
-           });
-       });       
+       
        
         client.stream('statuses/filter', {follow: '205717291,923770736,828062956864864256' },  function(stream) {
             stream.on('data', function(tweet) {
                 if(config.check_reply_to_tweets == false){
                     if(tweet.in_reply_to_status_id ) return;
                 }
-                
 
-                let tempText = '';
-                let tempArr; 
+                let tempID = [  
+                    '205717291'             //DaizNaew
+                    ,'923770736'            //Weefreemen
+                    ,'828062956864864256'   //Memetwitter
+                ];
+
+                let tempChan,
+                    channelsToPostInById;
+                
+                switch(tweet.user.id_str) {
+                    case tempID[0]:
+                        channelsToPostInById = defChan["Testing Grounds"].defaultChannel;
+                        break;
+                    case tempID[1]:
+                        channelsToPostInById = defChan["Weef's hang out"].tweetChannel;
+                        break;
+                    case tempID[2]:
+                        channelsToPostInById = defChan["Weef's hang out"].memeChannel;
+                }
+                defChan = require("../storage/defaultChannel.json");
+                DClient.guilds.forEach(element => {
+                    element.channels.forEach(channel => {
+                        if(channel.id === channelsToPostInById) {
+                            tempChan = channel;
+                        }
+                    });
+                });
+
+                let tempText = '',
+                    tempArr;
                 if(tweet.display_text_range) tempArr = tweet.display_text_range;
-                console.dir(tweet);
+
+                //console.dir(tweet);
                 //log(tweet.display_text_range);
 
                 log(`I have detected a tweet from: ${tweet.user.screen_name}`);
@@ -62,9 +82,9 @@ module.exports = {
                     [tweet.user.screen_name, "https://abs.twimg.com/icons/apple-touch-icon-192x192.png"],
                     `${tweet.user.name} on Twitter`,
                     null,
-                    0x1dcaff,
+                    0x1da1f2, //Maybe change this to tweet.user.profile_link_color
                     null,
-                    `http://www.twitter.com/${tweet.user.screen_name}`,
+                    `http://www.twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
                     tempImg,
                     `${tweet.user.profile_image_url_https}`,
                     `${tempText}`
