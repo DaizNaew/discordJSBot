@@ -1,6 +1,7 @@
 const   _ = require("lodash"),
         fp = require("lodash/fp"),
-        log = require("../enum/consoleLogging");
+        log = require("../enum/consoleLogging"),
+        m = require('chalk');
 
 exports.run = (client, message, params) => {
 
@@ -30,10 +31,11 @@ exports.run = (client, message, params) => {
         msg.edit(`${message.author} I just rolled: ` 
         + numbers
         + "." );
+        log(`Roll command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
-        log(error);
+        log(`Roll command failed to execute [${error}]`);
     });
 }
 

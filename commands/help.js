@@ -1,4 +1,7 @@
-const settings = require('../config.json');
+const settings = require('../config.json'),
+      log = require('../enum/consoleLogging'),
+      m = require('chalk');
+
 exports.run = (client, message, params) => {
   if (!params[0]) {
     const commandNames = Array.from(client.commands.keys());
@@ -13,6 +16,7 @@ exports.run = (client, message, params) => {
       message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage::${command.help.usage}\naliases::${aliases}`, {code:'asciidoc'});
     }
   }
+  log(`Help command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
 };
 
 exports.conf = {

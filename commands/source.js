@@ -1,15 +1,18 @@
-const Discord = require('discord.js');
+const Discord = require('discord.js'),
+      log = require('../enum/consoleLogging'),
+      m = require('chalk');
 
 exports.run = (client, message) => {
 
     message.channel.send("Fetching Sources...")
     .then(msg => {
 
-        msg.edit(`Source can be found on my github over at: https://github.com/DaizNaew/discordJSBot`)
-        
+        msg.edit(`Source can be found on my github over at: https://github.com/DaizNaew/discordJSBot`);
+        log(`Source command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
+        log.error(`Source command failed to execute [${error}]`);
     });
 }
 

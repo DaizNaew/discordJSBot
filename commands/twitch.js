@@ -1,5 +1,6 @@
 const   fs = require('fs'),
-        embed = require('../model/embeds');
+        embed = require('../model/embeds'),
+        log = require('../enum/consoleLogging');
 
 exports.run = (client, message) => {
 
@@ -29,6 +30,7 @@ exports.run = (client, message) => {
     })
     .catch( error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
+        log.error(`Twitch command failed to execute [${error}]`);
     });
 
 }

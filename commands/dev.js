@@ -1,4 +1,6 @@
 const   Discord = require('discord.js'),
+        log = require('../enum/consoleLogging'),
+        m = require('chalk');
         embed = require('../model/embeds');
 
 exports.run = (client, message) => {
@@ -11,9 +13,12 @@ exports.run = (client, message) => {
             ['Developer list'],
             ['I were created by these lovely people over at the L&B server', `🔹@DaizNaew - Main Developer \n🔸@THICCBOI - Trusty Partner In Science`]
         ));
+        log(`Dev command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
+
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
+        log.error(`Dev command failed to execute [${error}]`);
     });
     
 }

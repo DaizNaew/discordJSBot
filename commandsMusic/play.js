@@ -2,7 +2,8 @@ const config = require('../../config.json'),
       ytdl = require("ytdl-core"),
       search = require("youtube-search"),
       Song = require('../model/song'),
-      log = require('../enum/consoleLogging');
+      log = require('../enum/consoleLogging'),
+      m = require('chalk');
 
 exports.run = (client, message, params) => {
 
@@ -14,6 +15,7 @@ exports.run = (client, message, params) => {
         
     })
     .catch(error => {
+        log.error(`The Play command failed with [${error}]`);
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
     });
 }
@@ -63,11 +65,11 @@ exports.help = {
                     broadcast.playStream(stream);
                     
                     var dispatcher = connection.playBroadcast(broadcast,streamOptions);
-                    dispatcher.once('end', console.trace);
-                    dispatcher.player.once('error', console.trace);
+
                     dispatcher.on('end', () => {
                     voiceChannel.leave();
                     });
+                    log(`Play command used by ${m.cyan.bold(message.author.tag)} to play the song ${m.cyan.bold(song.name)} in ${m.cyan.bold(voiceChannel.name)} on ${m.cyan.bold(message.guild.name)}`);
                 })
                 .catch(console.error);
             });

@@ -1,5 +1,7 @@
 const   Discord = require("discord.js"),
-        weather = require('weather-js');
+        weather = require('weather-js'),
+        log = require('../enum/consoleLogging'),
+        m = require('chalk');
 
 module.exports = (client, message, input, msg) => {
 
@@ -29,5 +31,6 @@ module.exports = (client, message, input, msg) => {
         embed.addField("Feels like 🌡",current.feelslike + ' Degrees Celsius',true);
         embed.setFooter('Last updated: ' + current.observationtime);
         msg.edit({embed});
+        log(`Weather command used by ${m.cyan.bold(message.author.tag)} to show the weather in ${m.cyan.bold(location.name)} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
     });
 }

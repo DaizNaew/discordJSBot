@@ -1,4 +1,5 @@
-const findWeather = require("../func/weatherFunc");
+const findWeather = require("../func/weatherFunc"),
+      log = require('../enum/consoleLogging');
 
 exports.run = (client, message, params) => {
 
@@ -12,6 +13,7 @@ exports.run = (client, message, params) => {
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
+        log.error(`Weather command failed to execute [${error}]`);
     });
 }
 
