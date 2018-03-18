@@ -15,12 +15,6 @@ module.exports = {
                 access_token_secret: config.access_token_secret
             });
             
-        /**
-        * Stream statuses filtered by keyword
-        * number of tweets per second depends on topic popularity
-        **/
-       
-       
         client.stream('statuses/filter', {follow: '205717291,923770736,828062956864864256' },  function(stream) {
             stream.on('data', function(tweet) {
                 if(config.check_reply_to_tweets == false){
@@ -44,7 +38,7 @@ module.exports = {
                     case tempID[1]:
                         channelsToPostInById = defChan["Weef's hang out"].tweetChannel;
                         break;
-                    case tempID[2]:
+                    default:
                         channelsToPostInById = defChan["Weef's hang out"].memeChannel;
                 }
                 
