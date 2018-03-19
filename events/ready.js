@@ -1,6 +1,5 @@
 const   func = require('../func/propFunctions'),
         twit = require('../func/twitter.js'),
-        fs = require('fs'),
         log = require('../enum/consoleLogging'),
         settings = require('../../config.json'),
         twitch = require('../func/twitchGetter');
@@ -48,8 +47,6 @@ module.exports = client => {
             console.log();
             log.splitter("Starting normal usage logging");            
         }, 120);
-
-
 
     /////////////
     //  ####   //
