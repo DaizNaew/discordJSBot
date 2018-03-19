@@ -2,11 +2,19 @@ const   func = require('../func/propFunctions'),
         twit = require('../func/twitter.js'),
         fs = require('fs'),
         log = require('../enum/consoleLogging'),
-        settings = require('../../config.json');
+        settings = require('../../config.json'),
+        twitch = require('../func/twitchGetter');
 
 module.exports = client => {
 
     if(settings.enableTwitterModule)twit.initStream(client);
+
+    let timerTime = 1;
+
+    let calced_time = (1 * 1000) * 60;
+
+    //setInterval(twitch(msg,'16964788'), calced_time);
+
 
     client.user.setActivity(settings.botActivity);
 

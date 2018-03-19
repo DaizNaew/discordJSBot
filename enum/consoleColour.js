@@ -24,5 +24,9 @@ module.exports = {
 
     cmdLoad:function(input) {
         return(chalk.blue(`## ${input}`));
+    },
+    
+    custom:function(input) {
+        return(chalk.magenta(input));
     }
 }

@@ -1,8 +1,10 @@
-const   fs = require('fs'),
+const   TwitchGet = require('../func/twitchGetter'),
+        fs = require('fs'),
         embed = require('../model/embeds'),
+        m = require('../enum/consoleColour'),
         log = require('../enum/consoleLogging');
 
-exports.run = (client, message) => {
+exports.run = (client, message, params) => {
 
     message.channel.send('Fetching Twitch link..')
     .then( msg => {
@@ -21,11 +23,9 @@ exports.run = (client, message) => {
             'https://i.imgur.com/wy9kt6e.png'
         ));
         */
-       msg.edit(embed.Embed(
+       if(!params[0]) {TwitchGet(msg,'16964788');} else {TwitchGet(msg, '16964788')}
 
-        ['AuthorName','https://i.imgur.com/wy9kt6e.png']
-
-       ));
+        
 
     })
     .catch( error => {

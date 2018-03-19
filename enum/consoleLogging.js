@@ -9,23 +9,33 @@ module.exports = (string) => {
 module.exports.success = (string) => {
     return log("✔️  "+m.successMsg(string));
 }
+
 module.exports.warning = (string) => {
     return log("🔔  "+m.warningMsg(string));
 }
+
 module.exports.error = (string) => {
     return log("❌  "+m.errorMsg(string));
 }
+
 module.exports.splitter = (string) => {
     return log(m.splitter(string));
 }
+
 module.exports.cmd = (string) => {
     return log("👌  "+m.cmdLoad(string));
 }
+
 module.exports.mcmd = (string) => {
     return log("🎼  "+m.cmdLoad(string));
 }
+
 module.exports.gcmd = (string) => {
     return log("🎲  "+m.cmdLoad(string));
+}
+
+module.exports.twitch = (string) => {
+    return log("🎮  ")+m.custom(string);
 }
 
 module.exports.tweet = (string) => {
