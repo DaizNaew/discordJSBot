@@ -23,10 +23,9 @@ exports.run = (client, message) => {
                 if(element.id == subscribeRole.id) {
                     msg.edit(embed.Embed(null,null,null,null,null,`You have been removed from the notification role`))
                     role_removed = true;
+                    log(`Unsubscribed ${m.cyan.bold(message.author.tag)} on ${m.cyan.bold(message.guild.name)} to ${m.cyan.bold(subscribeRole.name)}`);
                     return message.member.removeRole(subscribeRole);
                 }
-                
-                
             });            
         
         message.member.addRole(subscribeRole)
@@ -37,7 +36,7 @@ exports.run = (client, message) => {
         .catch(error => {
             log.error(`Subscribe command failed to execute [${error}]`);
         });
-            log(`Subscribe command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
+        log(`Subscribed ${m.cyan.bold(message.author.tag)} on ${m.cyan.bold(message.guild.name)} to ${m.cyan.bold(subscribeRole.name)}`);
         } else {
             message.member.guild.createRole({
                 name: 'Notify_List',
@@ -50,7 +49,7 @@ exports.run = (client, message) => {
                     message.member.addRole(role);
                     msg.edit(embed.Embed(null,null,null,null,null,`You have been added to the notification role`));
                 },500);
-                log(`Subscribe command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
+                log(`Subscribed ${m.cyan.bold(message.author.tag)} on ${m.cyan.bold(message.guild.name)} to ${m.cyan.bold(subscribeRole.name)}`);
             })
             .catch(error => log.error(error));
         }
