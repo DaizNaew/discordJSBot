@@ -53,8 +53,8 @@ module.exports = (message, twitchChannel) => {
 
                 message_to_embed = embed.RichEmbed(
                     [user_data.display_name,'http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c540.png'],
-                    'Title: '+stream_data.title,
-                    ['Currently Playing',game_data.name, true, 'Current Viewercount',stream_data.viewer_count,true, 'Live since',date,true],
+                    stream_data.title,
+                    [ 'Currently Playing',game_data.name, true, 'Current Viewercount',stream_data.viewer_count,true, 'Live since',date,true],
                     0x6441a5,
                     null,
                     'http://twitch.tv/'+user_data.login,

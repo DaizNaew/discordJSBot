@@ -35,7 +35,7 @@ module.exports.gcmd = (string) => {
 }
 
 module.exports.twitch = (string) => {
-    return log("🎮  ")+m.custom(string);
+    return log("🎮  "+m.custom(string));
 }
 
 module.exports.tweet = (string) => {
