@@ -28,6 +28,56 @@ module.exports = {
                 callback(err)
             }
         });
+    },
+
+    checkAllDeps: function(FilePos) {
+    
+        fs.open(FilePos, 'wx', (err, fd) => {
+            if (err) {
+                if (err.code === 'EEXIST') {
+                    log.success(`${FilePos} already exists and is valid.`);
+                    return;
+                }
+                throw err;
+            }
+            log.warning(`${FilePos} does not exist, creating it.`);
+            this.writeToFileSync(FilePos, " { } ");
+            log.success(`Successfully created file at: ${FilePos}`);
+            });
+    },
+
+    constructConfig:function(FilePos) {
+        let conf;
+
+        conf = fs.open(FilePos, 'wx', (err, fd) => {
+            if (err) {
+                if (err.code === 'EEXIST') {
+                    log.success(`${FilePos} already exists and is valid.`);
+                    return;
+                }
+                throw err;
+            }
+            log.warning(`${FilePos} does not exist, creating it.`);
+            this.writeToFileSync(FilePos, ` { 
+
+                "token": "###",
+                "prefix": "!",
+                "mprefix": "m",
+                "ytKey": "###",
+                "nothing" : 0,
+                "consumer_key": "###",
+                "consumer_secret": "###",
+                "access_token_key": "###",
+                "access_token_secret": "###",
+                "enableTwitterModule": false,
+                "check_reply_to_tweets" : false,
+                "botActivity": "Being a wee lil bitch"
+
+            } `);
+            func.writeToFileAsync(FilePos, this.beautifyJSON(FilePos));
+            log.success(`Successfully created file at: ${FilePos}`);
+            });
+
     }
 
     
