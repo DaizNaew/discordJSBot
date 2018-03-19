@@ -19,8 +19,6 @@ exports.run = (client, message, params) => {
             //"151228724430241792"
         ]
 
-        
-
         if(!_.includes(adminIDs,message.author.id)) {
             log(`Clear command tried to be used by ${m.cyan.bold(message.author.tag)} to clear ${m.cyan.bold(messagecount)} messages in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
             return message.channel.send("You do not have permission to use this command");
