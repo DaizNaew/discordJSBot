@@ -39,7 +39,6 @@ module.exports.RichEmbed = (author,title,fieldStrings,color,footer,url,image,thu
             } else {
                 embed.setFooter(footer);
             }
-            
         }
         embed.setTimestamp();
         if(description) embed.setDescription(description);

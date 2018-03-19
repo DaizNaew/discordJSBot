@@ -1,9 +1,8 @@
 
 const   Discord = require('discord.js'),
+        m = require('chalk'),
         log = require('../enum/consoleLogging'),
-        m = require('chalk');
-        embed = require('../model/embeds'),
-        _ = require('lodash');
+        embed = require('../model/embeds');
 
 exports.run = (client, message) => {
 

@@ -1,7 +1,4 @@
 const   TwitchGet = require('../func/twitchGetter'),
-        fs = require('fs'),
-        embed = require('../model/embeds'),
-        m = require('../enum/consoleColour'),
         log = require('../enum/consoleLogging');
 
 exports.run = (client, message, params) => {
