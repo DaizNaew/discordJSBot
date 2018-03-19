@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
+    "axios": "^0.18.0",
     "bufferutil": "^3.0.3",
     "chalk": "^2.3.2",
     "common-tags": "^1.7.2",
@@ -11,7 +12,6 @@
     "erlpack": "github:hammerandchisel/erlpack",
     "ffmpeg": "0.0.4",
     "ffmpeg-binaries": "^3.2.2",
-    "https": "^1.0.0",
     "lodash": "^4.17.5",
     "moment": "^2.21.0",
     "nock": "^9.2.3",
@@ -21,7 +21,6 @@
     "prism-media": "github:hydrabolt/prism-media",
     "rebuild": "^0.1.2",
     "request": "^2.85.0",
-    "tmi.js": "^1.2.1",
     "twitter": "^1.7.1",
     "uws": "^0.14.5",
     "weather-js": "^2.0.0",
