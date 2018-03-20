@@ -1,4 +1,5 @@
 const   Twitter = require('twitter'),
+        _ = require('lodash'),
         config = require("../../config.json"),
         log = require("../enum/consoleLogging"),
         embed = require('../model/embeds');
@@ -13,11 +14,15 @@ module.exports = {
                 access_token_key: config.access_token_key,
                 access_token_secret: config.access_token_secret
             });
+        const who_to_follow = [
+            205717291,923770736,828062956864864256
+        ];
             
         client.stream('statuses/filter', {follow: '205717291,923770736,828062956864864256' },  function(stream) {
             stream.on('data', function(tweet) {
                 if(config.check_reply_to_tweets == false){
                     if(tweet.in_reply_to_status_id ) return;
+                    if(tweet.retweeted_status && !_.includes(who_to_follow,tweet.user.id)) return /* log('Pop den booty bitch') */;
                 }
 
                 let tempID = [  
