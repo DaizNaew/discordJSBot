@@ -14,32 +14,28 @@ module.exports = {
                 access_token_key: config.access_token_key,
                 access_token_secret: config.access_token_secret
             });
-        const who_to_follow = [
-            205717291,923770736,828062956864864256
-        ];
             
         client.stream('statuses/filter', {follow: '205717291,923770736,828062956864864256' },  function(stream) {
             stream.on('data', function(tweet) {
-                if(config.check_reply_to_tweets == false){
-                    if(tweet.in_reply_to_status_id ) return;
-                    if(tweet.retweeted_status && !_.includes(who_to_follow,tweet.user.id)) return /* log('Pop den booty bitch') */;
-                }
-
-                let tempID = [  
+                const who_to_follow = [  
                     '205717291'             //DaizNaew
                     ,'923770736'            //Weefreemen
                     ,'828062956864864256'   //Memetwitter
                 ];
+                if(config.check_reply_to_tweets == false){
+                    if(tweet.in_reply_to_status_id ) return;
+                    if(tweet.retweeted_status && !_.includes(who_to_follow,tweet.user.id_str)) return /* log('Pop den booty bitch') */;
+                }
 
                 let tempChan,
                     channelsToPostInById,
                     defChan = require("../storage/defaultChannel.json");
 
                 switch(tweet.user.id_str) {
-                    case tempID[0]:
+                    case who_to_follow[0]:
                         channelsToPostInById = defChan["Testing Grounds"].defaultChannel;
                         break;
-                    case tempID[1]:
+                    case who_to_follow[1]:
                         channelsToPostInById = defChan["Weef's hang out"].tweetChannel;
                         break;
                     default:
