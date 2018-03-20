@@ -45,10 +45,8 @@ exports.run = (client, message) => {
                 color: 'GREY',
                 mentionable: true,
                 hoist: true,
-                managed: true
             })
             .then(role => {
-                role.managed=true;
                 log.warning(`Created new role with name ${role.name} and color ${role.color}`);
                 msg.edit(embed.Embed(null,null,null,null,null,`Created a new role to suit your needs, adding you to it now`));
                 setTimeout(function(){
