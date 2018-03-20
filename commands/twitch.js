@@ -6,7 +6,7 @@ exports.run = (client, message, params) => {
     message.channel.send('Fetching Twitch link..')
     .then( msg => {
         
-       if(!params[0]) {TwitchGet(msg,'16964788');} else {TwitchGet(msg, '16964788')}
+       if(!params[0]) {TwitchGet(msg,'51496027')} else {TwitchGet(msg, '16964788')}
 
     })
     .catch( error => {

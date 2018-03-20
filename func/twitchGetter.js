@@ -1,16 +1,12 @@
-const 
-        https = require('https'),
-            m = require('../enum/consoleColour'),
-                log = require('../enum/consoleLogging'),
-                    embed = require('../model/embeds');
-                        ax = require('axios');
-                            prop = require('../func/propFunctions');
+const m = require('../enum/consoleColour'),
+      log = require('../enum/consoleLogging'),
+      embed = require('../model/embeds');
+      ax = require('axios');
+      prop = require('../func/propFunctions');
 
 module.exports = (message, twitchChannel) => {
 
     if(!twitchChannel) twitchChannel = '16964788';
-
-    
 
     let stream_data,
         user_data_promise,
@@ -47,14 +43,15 @@ module.exports = (message, twitchChannel) => {
                 //console.dir(game_data)
                 //console.dir(stream_data)
 
-                date = new Date(stream_data.started_at);
+                started_at_dateFormat = new Date(stream_data.started_at);
+                live_since = ((Date.now() - new Date(stream_data.started_at)));
                 let thumb = stream_data.thumbnail_url.replace(/{width}/i, '1280');
                 thumb = thumb.replace(/{height}/i,'720');
 
                 message_to_embed = embed.RichEmbed(
                     [user_data.display_name,'http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c540.png'],
                     stream_data.title,
-                    [ 'Currently Playing',game_data.name, true, 'Current Viewercount',stream_data.viewer_count,true, 'Live since',date,true],
+                    [ 'Currently Playing',game_data.name, true, 'Current Viewercount',stream_data.viewer_count,true, 'Live Since',formatDate(started_at_dateFormat), false, 'Uptime',secondsToHms(live_since/1000),true],
                     0x6441a5,
                     null,
                     'http://twitch.tv/'+user_data.login,
@@ -123,6 +120,23 @@ module.exports = (message, twitchChannel) => {
                 log.error(err);
             });
             
+        }
+
+        function secondsToHms(d) {
+            d = Number(d);
+            var h = Math.floor(d / 3600);
+            var m = Math.floor(d % 3600 / 60);
+            var s = Math.floor(d % 3600 % 60);
+        
+            var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+            var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "0 minutes";
+            var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "0 seconds";
+            return hDisplay + mDisplay + sDisplay; 
+        }
+
+        function formatDate(value)
+        {
+            return  (value.getDate()+1) + "/" + (value.getMonth()+1) + "/" + (value.getYear()+1900) + " - " + value.getHours() + ":" + value.getMinutes();
         }
 
 }
