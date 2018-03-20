@@ -7,7 +7,7 @@ const   _ = require('lodash'),
         embed = require('../model/embeds');
         
 
-exports.run = (client, message, params) => {
+exports.run = (client, message) => {
     message.channel.send('Fetching...', {code: 'asciidoc'})
     .then(msg => {
         const clientLog = require('../storage/clientLog.json');

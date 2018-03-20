@@ -12,43 +12,50 @@ exports.run = (client, message) => {
     .then(msg => {
 
         const subscribeRole = message.member.guild.roles.find('name', 'Notify_List');
+        const mention =  message.mentions.members.first();
+        var user_to_notify;
+
+        if(mention && message.member.permissions.has("MANAGE_ROLES", true)) {user_to_notify = mention;} else {user_to_notify = message.member;}
 
         if(subscribeRole) {
             //console.dir(subscribeRole.id);
             //console.dir(message.member.roles);
 
-            message.member.roles.forEach(element => {
+            user_to_notify.roles.forEach(element => {
 
                 if(element.id == subscribeRole.id) {
-                    msg.edit(embed.Embed(null,null,null,null,null,`You have been removed from the notification role`))
+                    msg.edit(embed.Embed(null,null,null,null,null,`**${user_to_notify.user.username}** has been removed from the notification role`))
                     role_removed = true;
-                    log(`Unsubscribed ${m.cyan.bold(message.author.tag)} on ${m.cyan.bold(message.guild.name)} to ${m.cyan.bold(subscribeRole.name)}`);
-                    return message.member.removeRole(subscribeRole);
+                    log(`Unsubscribed ${m.cyan.bold(user_to_notify.user.tag)} on ${m.cyan.bold(message.guild.name)} to ${m.cyan.bold(subscribeRole.name)} by ${m.cyan.bold(message.author.tag)}`);
+                    return user_to_notify.removeRole(subscribeRole);
                 }
             });            
         
-        message.member.addRole(subscribeRole)
+            user_to_notify.addRole(subscribeRole)
         .then( function() {
-            if (!role_removed)msg.edit(embed.Embed(null,null,null,null,null,`You have been added to the notification role`));
-            
+            if (!role_removed){msg.edit(embed.Embed(null,null,null,null,null,`**${user_to_notify.user.username}** has been added to the notification role`));
+            log(`Subscribed ${m.cyan.bold(user_to_notify.user.tag)} on ${m.cyan.bold(message.guild.name)} to ${m.cyan.bold(subscribeRole.name)} by ${m.cyan.bold(message.author.tag)}`);}
         })
         .catch(error => {
             log.error(`Subscribe command failed to execute [${error}]`);
         });
-        log(`Subscribed ${m.cyan.bold(message.author.tag)} on ${m.cyan.bold(message.guild.name)} to ${m.cyan.bold(subscribeRole.name)}`);
         } else {
-            message.member.guild.createRole({
+            user_to_notify.guild.createRole({
                 name: 'Notify_List',
                 color: 'GREY',
+                mentionable: true,
+                hoist: true,
+                managed: true
             })
             .then(role => {
+                role.managed=true;
                 log.warning(`Created new role with name ${role.name} and color ${role.color}`);
                 msg.edit(embed.Embed(null,null,null,null,null,`Created a new role to suit your needs, adding you to it now`));
                 setTimeout(function(){
-                    message.member.addRole(role);
-                    msg.edit(embed.Embed(null,null,null,null,null,`You have been added to the notification role`));
+                    user_to_notify.addRole(role);
+                    msg.edit(embed.Embed(null,null,null,null,null,`**${user_to_notify.user.username}** has been added to the notification role`));
                 },500);
-                log(`Subscribed ${m.cyan.bold(message.author.tag)} on ${m.cyan.bold(message.guild.name)} to ${m.cyan.bold(subscribeRole.name)}`);
+                log(`Subscribed ${m.cyan.bold(user_to_notify.user.tag)} on ${m.cyan.bold(message.guild.name)} to ${m.cyan.bold(role.name)} by ${m.cyan.bold(message.author.tag)}`);
             })
             .catch(error => log.error(error));
         }

@@ -87,7 +87,7 @@ module.exports = {
             });
         
             stream.on('error', function(error) {
-            log.error(error);
+            log.error('Twitter module failed with the error of: '+error);
             });
         });
         
