@@ -1,5 +1,7 @@
-const Song = require('../model/song'),
+        //Local Files
+const   Song = require('../model/song'),
         log = require('../enum/consoleLogging'),
+        //NodeJS modules
         m = require('chalk');
 
 exports.run = (client, message) => {

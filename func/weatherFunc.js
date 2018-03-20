@@ -1,6 +1,8 @@
-const   Discord = require("discord.js"),
+        //Local files
+const   log = require('../enum/consoleLogging'),
+        //NodeJS Modules
+        Discord = require("discord.js"),
         weather = require('weather-js'),
-        log = require('../enum/consoleLogging'),
         m = require('chalk');
 
 module.exports = (client, message, input, msg) => {

@@ -1,6 +1,6 @@
-
-const   Discord = require('discord.js'),
-        m = require('chalk'),
+        //NodeJS modules
+const   m = require('chalk'),
+        //Local files
         log = require('../enum/consoleLogging'),
         embed = require('../model/embeds');
 

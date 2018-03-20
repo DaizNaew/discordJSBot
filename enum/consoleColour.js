@@ -1,3 +1,4 @@
+//Modules to return coloured outputs for the console
 const chalk = require('chalk');
 
 module.exports = {

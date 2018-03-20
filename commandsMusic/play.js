@@ -1,8 +1,10 @@
+        //Local Files
 const config = require('../../config.json'),
-      ytdl = require("ytdl-core"),
-      search = require("youtube-search"),
       Song = require('../model/song'),
       log = require('../enum/consoleLogging'),
+        //NodeJS Modules
+      search = require("youtube-search"),
+      ytdl = require("ytdl-core"),
       m = require('chalk');
 
 exports.run = (client, message, params) => {

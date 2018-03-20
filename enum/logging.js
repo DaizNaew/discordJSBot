@@ -1,4 +1,6 @@
+        //Local Files
 const   func = require('../func/propFunctions'),
+        //NodeJS modules
         fs = require('fs');
 
 module.exports = (message) => {

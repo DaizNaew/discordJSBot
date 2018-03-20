@@ -1,6 +1,5 @@
 const   Twitter = require('twitter'),
         config = require("../../config.json"),
-        Discord = require("discord.js"),
         log = require("../enum/consoleLogging"),
         embed = require('../model/embeds');
 

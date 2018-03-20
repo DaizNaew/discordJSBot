@@ -1,4 +1,6 @@
+        //NodeJS Modules
 const   Discord = require('discord.js'),
+        //Local Files
         log = require('../enum/consoleLogging');
 
 module.exports.RichEmbed = (author,title,fieldStrings,color,footer,url,image,thumbnail,description) => {

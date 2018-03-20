@@ -2,7 +2,6 @@
 const m = require('../enum/consoleColour'),
       log = require('../enum/consoleLogging'),
       embed = require('../model/embeds'),
-      prop = require('../func/propFunctions'),
         //nodeJS plugins
       ax = require('axios'),
       moment = require('moment');

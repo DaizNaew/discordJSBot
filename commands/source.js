@@ -1,5 +1,6 @@
-const Discord = require('discord.js'),
-      log = require('../enum/consoleLogging'),
+        //Local files
+const log = require('../enum/consoleLogging'),
+        //nodeJS modules
       m = require('chalk');
 
 exports.run = (client, message) => {

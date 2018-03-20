@@ -1,6 +1,7 @@
-const   _ = require("lodash"),
-        fp = require("lodash/fp"),
-        log = require("../enum/consoleLogging"),
+        //Local files
+const   log = require("../enum/consoleLogging"),
+        //NodeJS Modules
+        _ = require("lodash"),
         m = require('chalk');
 
 exports.run = (client, message, params) => {

@@ -1,3 +1,4 @@
+        //Local files
 const   TwitchGet = require('../func/twitchGetter'),
         log = require('../enum/consoleLogging');
 

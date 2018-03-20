@@ -1,7 +1,6 @@
 //NPM Node modules
 const Discord = require("discord.js"),
       fs = require("fs"),
-      ytdl = require("ytdl-core"),
 //Design the client
       client = new Discord.Client(),
 //Local files
