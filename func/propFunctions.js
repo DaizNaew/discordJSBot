@@ -76,7 +76,7 @@ module.exports = {
             } `);
             func.writeToFileAsync(FilePos, this.beautifyJSON(FilePos));
             log.success(`Successfully created file at: ${FilePos}`);
-            });
+        });
 
     }
 

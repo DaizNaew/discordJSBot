@@ -1,8 +1,11 @@
+        //Local Files
 const m = require('../enum/consoleColour'),
       log = require('../enum/consoleLogging'),
-      embed = require('../model/embeds');
-      ax = require('axios');
-      prop = require('../func/propFunctions');
+      embed = require('../model/embeds'),
+      prop = require('../func/propFunctions'),
+        //nodeJS plugins
+      ax = require('axios'),
+      moment = require('moment');
 
 module.exports = (message, twitchChannel) => {
 
@@ -43,15 +46,17 @@ module.exports = (message, twitchChannel) => {
                 //console.dir(game_data)
                 //console.dir(stream_data)
 
-                started_at_dateFormat = new Date(stream_data.started_at);
+                let startDate = moment(stream_data.started_at).format('YYYY-MM-DD HH:mm:ss');
+                let now = moment().format('YYYY-MM-DD HH:mm:ss');
                 live_since = ((Date.now() - new Date(stream_data.started_at)));
+
                 let thumb = stream_data.thumbnail_url.replace(/{width}/i, '1280');
                 thumb = thumb.replace(/{height}/i,'720');
 
                 message_to_embed = embed.RichEmbed(
                     [user_data.display_name,'http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c540.png'],
                     stream_data.title,
-                    [ 'Currently Playing',game_data.name, true, 'Current Viewercount',stream_data.viewer_count,true, 'Live Since',formatDate(started_at_dateFormat), false, 'Uptime',secondsToHms(live_since/1000),true],
+                    [ 'Currently Playing',game_data.name, true, 'Current Viewercount',stream_data.viewer_count,true, 'Live Since',startDate, false, 'Uptime',secondsToHms(live_since/1000),true],
                     0x6441a5,
                     null,
                     'http://twitch.tv/'+user_data.login,
@@ -133,10 +138,4 @@ module.exports = (message, twitchChannel) => {
             var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "0 seconds";
             return hDisplay + mDisplay + sDisplay; 
         }
-
-        function formatDate(value)
-        {
-            return  (value.getDate()+1) + "/" + (value.getMonth()+1) + "/" + (value.getYear()+1900) + " - " + value.getHours() + ":" + value.getMinutes();
-        }
-
 }
