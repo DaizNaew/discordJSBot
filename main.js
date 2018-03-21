@@ -54,38 +54,6 @@ require('./util/eventLoader')(client);
         });
         console.log();
     });
-
-/*
-
-const connections = new Map();
-
-var d, b;
-    client.on('message', m => {
-        if (!m.guild) return;
-        
-        if (m.author.id !== '128235918418116608') return;
-        if (m.content.startsWith('/join')) {
-          const channel = m.guild.channels.get(m.content.split(' ')[1]) || m.member.voiceChannel;
-          if (channel && channel.type === 'voice') {
-              console.log('Det er da vist en voice channel det der');
-            channel.join().then(conn => {
-              const receiver = conn.createReceiver();
-              receiver.createStream(m.author, true).on('data', b => console.log(b.toString()));
-              conn.player.on('error', (...e) => console.log('player', ...e));
-              if (!connections.has(m.guild.id)) connections.set(m.guild.id, { conn, queue: [] });
-              m.reply('ok!');
-              
-              // conn.playOpusStream(fs.createReadStream('C:/users/amish/downloads/z.ogg').pipe(new prism.OggOpusDemuxer()));
-              
-              d = conn.play(ytdl('https://www.youtube.com/watch?v=_XXOSf0s2nk', { filter: 'audioonly' }, { passes: 3 }));
-              console.log(d);
-            });
-          } else {
-            m.reply('Specify a voice channel!');
-          }
-        }
-      });
-*/
 //Test
 
 /*
