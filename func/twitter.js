@@ -2,7 +2,7 @@ const   Twitter = require('twitter'),
         _ = require('lodash'),
         config = require("../../config.json"),
         log = require("../enum/consoleLogging"),
-        embed = require('../model/embeds');
+        cEmbed = require('../model/embeds');
 
 module.exports = {
   
@@ -54,7 +54,7 @@ module.exports = {
                     tempArr;
                 if(tweet.display_text_range) tempArr = tweet.display_text_range;
 
-                //console.dir(tweet);
+                //console.dir(tweet.entities.urls[0]['expanded_url']);
                 //log(tweet.display_text_range);
 
                 log.tweet(`I have detected a tweet from: ${tweet.user.screen_name}`);
@@ -66,14 +66,46 @@ module.exports = {
                 } else {
                     tempText = tweet.text;
                 }
-                
+
+                let tempVideo = null;
                 let tempImg = null;
                 if(tweet.entities.media){
-                    if(tweet.entities.media[0].media_url_https) tempImg = tweet.entities.media[0].media_url_https;
-                    log.tweet(`The tweet contained an image: ${tempImg}`);
+                    if(tweet.entities.media[0].media_url_https) {
+                        tempImg = tweet.entities.media[0].media_url_https;
+                        log.tweet(`The tweet contained an image: ${tempImg}`);
+                    }
+                }
+                if(tweet.entities.urls[0]){
+                    if(tweet.entities.urls[0]['expanded_url'].includes('youtu')) {
+                        tempVideo = tweet.entities.urls[0]['expanded_url'];
+                        log.tweet(`The tweet contained an Youtube: ${tempVideo}`);
+                    }
+                }
+                
+                if(tempVideo) {
+                    return tempChan.send({
+                        embed: {
+                            title: `${tweet.user.name} on Twitter`,
+                            description: tempText + `\nThe Above link is a youtube video`,
+                            thumbnail:{
+                                url: tweet.user.profile_image_url_https
+                            },
+                            author: {
+                                name: tweet.user.screen_name,
+                                url: `http://www.twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
+                                icon_url: "https://abs.twimg.com/icons/apple-touch-icon-192x192.png"
+                            },
+                            footer: {
+                                text:'Powered by DiscordJS', 
+                                icon_url:'https://i.imgur.com/wy9kt6e.png'
+                            },
+                            color: 0x1da1f2,
+                            timestamp: new Date()
+                        }
+                    });
                 }
 
-                tempChan.send(embed.RichEmbed(
+                tempChan.send(cEmbed.RichEmbed(
                     [tweet.user.screen_name, "https://abs.twimg.com/icons/apple-touch-icon-192x192.png"],
                     `${tweet.user.name} on Twitter`,
                     null,
