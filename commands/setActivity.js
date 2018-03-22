@@ -27,7 +27,7 @@ exports.run = (client, message, params) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ['setGame','SetGame','Setgame','setActivity','SetActivity','setactivity','Setactivity'],
+    aliases: ['setGame','SetGame','Setgame', 'setgame','SetActivity','setactivity','Setactivity'],
     permLevel: 0
 }
 

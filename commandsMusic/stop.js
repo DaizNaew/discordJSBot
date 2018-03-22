@@ -1,8 +1,6 @@
         //Local Files
 const   Song = require('../model/song'),
-        log = require('../enum/consoleLogging'),
-        //NodeJS modules
-        m = require('chalk');
+        log = require('../enum/consoleLogging');
 
 exports.run = (client, message) => {
 
