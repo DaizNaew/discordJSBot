@@ -31,7 +31,7 @@ exports.run = (client, message, params) => {
         .then(msg => {
             setTimeout(function(){
                 msg.delete();
-            }, 5000);
+            }, 1750);
             
         })
         .catch(error => {
