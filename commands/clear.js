@@ -1,5 +1,4 @@
-const Discord = require('discord.js'),
-      _ = require('lodash'),
+const _ = require('lodash'),
       log = require('../enum/consoleLogging'),
       m = require('chalk');
 

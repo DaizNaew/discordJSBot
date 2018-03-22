@@ -18,13 +18,13 @@ module.exports = {
         client.stream('statuses/filter', {follow: '205717291,923770736,828062956864864256' },  function(stream) {
             stream.on('data', function(tweet) {
 
-                const who_to_follow = [  
+                const who_to_follow = [
                     '205717291'             //DaizNaew
                     ,'923770736'            //Weefreemen
                     ,'828062956864864256'   //Memetwitter
                 ];
 
-                if(config.check_reply_to_tweets == false){
+                if(config['twitter_module'].check_reply_to_tweets == false){
                     if(tweet.in_reply_to_status_id ) return;
                     if(tweet.retweeted_status && !_.includes(who_to_follow,tweet.user.id_str)) return /* log('Pop den booty bitch') */;
                 }

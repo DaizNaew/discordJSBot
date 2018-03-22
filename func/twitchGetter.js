@@ -66,21 +66,15 @@ module.exports = (message, twitchChannel) => {
                     null
                 );
 
-                //message.edit(user_data.login + '\n' +game_data.name + '\n' + stream_data.type);
-
                 if(message) {
                     message.edit(message_to_embed);
                 } else {
                     message.send(message_to_embed);
                 }
-                
                 log.twitch(`A stream has been detected: user ${user_data.display_name} currently playing ${game_data.name}`);
-
             },1000);
-
         })
         .catch(err => {
-            log('First Command');
             log.error(err);
             message.edit(embed.Embed(null,null,null,0x6441a5,null,'❌ The requested user is currently offline ❌'));
         });
@@ -100,7 +94,6 @@ module.exports = (message, twitchChannel) => {
                 return result;
             })
             .catch(err => {
-                log('Second Command')
                 log.error(err);
             });
 
@@ -122,7 +115,6 @@ module.exports = (message, twitchChannel) => {
                 return result;
             })
             .catch(err => {
-                log('Third Command')
                 log.error(err);
             });
             
