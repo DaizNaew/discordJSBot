@@ -28,6 +28,6 @@ module.exports = (message) => {
         if(message.channel.name) channelName = message.channel.name;
         log(`${m.cyan.bold(cmd.help.name)} command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(channelName)} ${guildName}`);
         logging(message);
-        message.react(command_success);
+        //message.react(command_success);
     }
 };
