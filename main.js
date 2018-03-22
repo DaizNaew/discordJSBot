@@ -20,45 +20,6 @@ client.aliases = new Discord.Collection();
 
 require('./util/commandLoader')(client);
 
-
-/*
-
-//Sound commands
-client.on('message', async message => {
-
-    if(command === 'leave') {
-        vChan.leave();console.log(`left channel ${vChan.name}`);
-    }
-
-    if(command === 'airhorn') {
-        const horn = './sound/Jamaican Horn Siren.wav';
-        const broadcast = client.createVoiceBroadcast();
-        broadcast.playFile(horn);
-
-        if(!vChan) return message.channel.send(errorJoinMSG);
-        vChan.join()
-        .then(connection => {
-            const dispatcher = connection.playFile(horn);
-        })
-        .catch(console.error);
-    }
-
-    if(command === 'pause') {
-        const broadcast = client.broadcasts;
-        for(const connection of broadcast) {
-            connection.pause();
-        }
-    }
-
-    if(command === 'resume') {
-        const broadcast = client.broadcasts;
-        for(const connection of broadcast) {
-            connection.resume();
-        }
-    }
-
-*/
-
 client.on('warn', e => {
   console.log(m.bgYellow(e.replace(regToken, 'that was redacted')));
 });
