@@ -1,6 +1,5 @@
         //Local Files
-const config = require('../../config.json'),
-      Song = require('../model/song'),
+const Song = require('../model/song'),
       log = require('../enum/consoleLogging'),
         //NodeJS Modules
       search = require("youtube-search"),
@@ -9,11 +8,13 @@ const config = require('../../config.json'),
 
 exports.run = (client, message, params) => {
 
+    const config = require('../config.json');
+
     message.channel.send("Fetching a song to play...")
     .then(msg => {
         const vChan = message.member.voiceChannel;
         let input = params.slice(0).join(" ");
-        playSong(client, message, vChan, input, msg);
+        playSong(client, message, vChan, input, msg, config);
         
     })
     .catch(error => {
@@ -35,7 +36,7 @@ exports.help = {
     usage: 'play <songname / URL> to play a specific song, or supply no arguments to play the playlist'
 }
 
-    function playSong(client, message, voiceChannel, input, msg) {
+    function playSong(client, message, voiceChannel, input, msg, config) {
         const streamOptions = { seek: 0, volume: 0.2 };
         const broadcast = client.createVoiceBroadcast();
         let response;

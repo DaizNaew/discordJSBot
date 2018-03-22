@@ -1,9 +1,9 @@
-const   settings = require('../config.json'),
-        logging = require('../enum/logging'),
+const   logging = require('../enum/logging'),
         m = require('chalk'),
         log = require('../enum/consoleLogging');
 
 module.exports = (message) => {
+    const settings = require('../config.json');
 
     const client = message.client;
     if (message.author.bot) return;

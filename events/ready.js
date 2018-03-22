@@ -1,10 +1,11 @@
 const   func = require('../func/propFunctions'),
         twit = require('../func/twitter.js'),
         log = require('../enum/consoleLogging'),
-        settings = require('../../config.json'),
         twitch = require('../func/twitchGetter');
 
 module.exports = client => {
+
+    settings = require('../config.json');
 
     //Sets a default channel and creates a timestamp from that
     const channel = client.channels.get('411571330585067530');

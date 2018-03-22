@@ -1,12 +1,14 @@
 const   Twitter = require('twitter'),
         _ = require('lodash'),
-        config = require("../../config.json"),
         log = require("../enum/consoleLogging"),
         cEmbed = require('../model/embeds');
 
 module.exports = {
+
+    
   
         initStream: function(DClient) {
+            config = require("../config.json");
             
             var client = new Twitter({
                 consumer_key: config.consumer_key,

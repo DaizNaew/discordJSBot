@@ -54,30 +54,26 @@ module.exports = {
             if (err) {
                 if (err.code === 'EEXIST') {
                     log.success(`${FilePos} already exists and is valid.`);
-                    return false;
+                    return true;
                 }
                 throw err;
             }
             log.warning(`${FilePos} does not exist, creating it.`);
-            this.writeToFileSync(FilePos, ` { 
-
-                "token": "###",
-                "prefix": "!",
-                "mprefix": "m",
-                "ytKey": "###",
-                "nothing" : 0,
-                "consumer_key": "###",
-                "consumer_secret": "###",
-                "access_token_key": "###",
-                "access_token_secret": "###",
-                "enableTwitterModule": false,
-                "check_reply_to_tweets" : false,
-                "botActivity": "Being a wee lil bitch"
-
-            } `);
-            this.writeToFileAsync(FilePos, this.beautifyJSON(FilePos));
+            this.writeToFileSync(FilePos, ` {
+                    \n"token": "###",
+                    \n"prefix": "!",
+                    \n"mprefix": "m",
+                    \n"ytKey": "###",
+                    \n"nothing" : 0,
+                    \n"consumer_key": "###",
+                    \n"consumer_secret": "###",
+                    \n"access_token_key": "###",
+                    \n"access_token_secret": "###",
+                    \n"enableTwitterModule": false,
+                    \n"check_reply_to_tweets" : false,
+                    \n"botActivity": "Being a wee lil bitch"
+                \n} `);
             log.success(`Successfully created file at: ${FilePos}`);
-            return true;
         });
 
     }
