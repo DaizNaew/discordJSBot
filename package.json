@@ -1,0 +1,56 @@
+{
+  "name": "discordjsbot",
+  "version": "5.4.2",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bufferutil": "^3.0.3",
+    "chalk": "^2.3.2",
+    "common-tags": "^1.7.2",
+    "discord.js": "^11.3.2",
+    "erlpack": "github:hammerandchisel/erlpack",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-binaries": "^3.2.2",
+    "lodash": "^4.17.5",
+    "moment": "^2.21.0",
+    "nock": "^9.2.3",
+    "node-gyp": "^3.6.2",
+    "node-opus": "^0.2.7",
+    "opusscript": "0.0.4",
+    "prism-media": "github:hydrabolt/prism-media",
+    "rebuild": "^0.1.2",
+    "request": "^2.85.0",
+    "twitter": "^1.7.1",
+    "uws": "^0.14.5",
+    "weather-js": "^2.0.0",
+    "youtube-search": "^1.0.10",
+    "ytdl": "^0.10.1",
+    "ytdl-core": "github:fent/node-ytdl-core"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaizNaew/discordJSBot.git"
+  },
+  "keywords": [
+    "nodejs",
+    "node",
+    "discord",
+    "bot",
+    "discordbot",
+    "js"
+  ],
+  "author": "Daiz Naew",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DaizNaew/discordJSBot/issues"
+  },
+  "homepage": "https://github.com/DaizNaew/discordJSBot#readme"
+}

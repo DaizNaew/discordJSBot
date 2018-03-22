@@ -1,1 +1,9 @@
-.node_modules/*
+node_modules/
+storage/clientLog.json
+storage/playlist.json
+nodemon.json
+package-lock.json
+config.json
+storage/defaultTwitch.json
+commands/test.js
+config.json
