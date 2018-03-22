@@ -67,7 +67,7 @@ exports.run = (client, message) => {
 
 exports.conf = {
    enabled: true,
-   guildOnly: false,
+   guildOnly: true,
    aliases: ['Subscribe','notify','Notify'],
    permLevel: 0
 }
