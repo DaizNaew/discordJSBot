@@ -1,6 +1,5 @@
         //Local Files
-const   Song = require('../model/song'),
-        log = require('../enum/consoleLogging');
+const   log = require('../enum/consoleLogging');
 
 exports.run = (client, message) => {
 
@@ -8,7 +7,7 @@ exports.run = (client, message) => {
     .then(msg => {
         try {
             message.member.voiceChannel.connection.dispatcher.end();
-            msg.edit('I stopped playing sounds. :mute:');
+            msg.edit('I stopped playing music. :mute:');
         } catch(err) {
             
             log.error(`The Stop command failed with [${err}]`);
