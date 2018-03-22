@@ -4,8 +4,10 @@ const   logging = require('../enum/logging'),
 
 module.exports = (message) => {
     const settings = require('../config.json');
-
     const client = message.client;
+    const command_success = client.emojis.find("name", "command_successful");
+    
+
     if (message.author.bot) return;
     if (!message.content.startsWith(settings.prefix)) return logging(message);
     const command = message.content.split(' ')[0].slice(settings.prefix.length);
@@ -26,5 +28,6 @@ module.exports = (message) => {
         if(message.channel.name) channelName = message.channel.name;
         log(`${m.cyan.bold(cmd.help.name)} command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(channelName)} ${guildName}`);
         logging(message);
+        message.react(command_success);
     }
 };

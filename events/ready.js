@@ -38,6 +38,7 @@ module.exports = client => {
             func.checkAllDeps("./storage/defaultTwitch.json");
             func.checkAllDeps("./storage/clientLog.json");
             func.checkAllDeps("./storage/playlist.json");
+            func.checkAllDeps("./storage/suggestionBox.json");
         }, 50);
 
         setTimeout(function() {
