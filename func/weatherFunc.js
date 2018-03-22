@@ -2,8 +2,7 @@
 const   log = require('../enum/consoleLogging'),
         //NodeJS Modules
         Discord = require("discord.js"),
-        weather = require('weather-js'),
-        m = require('chalk');
+        weather = require('weather-js');
 
 module.exports = (client, message, input, msg) => {
 
@@ -17,11 +16,11 @@ module.exports = (client, message, input, msg) => {
     if(!input) {defaultLocal = "London, UK"; input = defaultLocal;}
     
     weather.find({search: input, degreeType: 'C'}, function(err, result) {
-        let guildName = `a private message`;
 
-        if(message.channel.name && message.guild) guildname = `${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`;
+        //let guildName = `a private message`;
+        //if(message.channel.name && message.guild) guildname = `${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`;
 
-        if(err) console.log(err);
+        if(err) log.error(err);
         localArr = result[0];
         if(localArr === undefined) return msg.edit('I have failed to find: ' + input + ' on this planet.', {code: 'asciidoc'});
         location = localArr.location;

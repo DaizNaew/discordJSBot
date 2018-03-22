@@ -5,8 +5,6 @@ const   Twitter = require('twitter'),
 
 module.exports = {
 
-    
-  
         initStream: function(DClient) {
             config = require("../config.json");
             
