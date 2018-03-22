@@ -8,11 +8,8 @@ exports.run = (client, message, params) => {
     const commandNames = Array.from(client.commands.keys());
 
     const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
-    message.channel.send(`= Command List =\n\n[Use ${settings.prefix}help <commandname> for details]\n\n
-      ${client.commands.map(
-        c => `${settings.prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`).join('\n')}`, {code:'asciidoc'}
-    );
-      
+    message.channel.send(`= Command List =\n\n[Use ${settings.prefix}help <commandname> for details]\n\n${client.commands.map(
+    c => `${settings.prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`).join('\n')}`, {code:'asciidoc'});
     log(`Help command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
   } else {
     let command = params[0];

@@ -4,15 +4,17 @@ const Discord = require("discord.js"),
 //Design the client
       client = new Discord.Client(),
 //Local files
-      m = require("chalk");
+      m = require("chalk"),
       config = require("../config.json"),
-      log = require('./enum/consoleLogging');
+      regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
 
 require('./util/eventLoader')(client);
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
+
 require('./util/commandLoader')(client);
+
 
 /*
 
@@ -50,10 +52,7 @@ client.on('message', async message => {
         }
     }
 
-});
 */
-
-var regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
 
 client.on('warn', e => {
   console.log(m.bgYellow(e.replace(regToken, 'that was redacted')));

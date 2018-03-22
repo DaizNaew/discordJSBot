@@ -1,4 +1,5 @@
-const fs = require("fs");
+const fs = require("fs"),
+      log = require('../enum/consoleLogging');
 
 module.exports = {
   
@@ -53,7 +54,7 @@ module.exports = {
             if (err) {
                 if (err.code === 'EEXIST') {
                     log.success(`${FilePos} already exists and is valid.`);
-                    return;
+                    return false;
                 }
                 throw err;
             }
@@ -74,8 +75,9 @@ module.exports = {
                 "botActivity": "Being a wee lil bitch"
 
             } `);
-            func.writeToFileAsync(FilePos, this.beautifyJSON(FilePos));
+            this.writeToFileAsync(FilePos, this.beautifyJSON(FilePos));
             log.success(`Successfully created file at: ${FilePos}`);
+            return true;
         });
 
     }
