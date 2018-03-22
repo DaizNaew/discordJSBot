@@ -24,7 +24,7 @@ exports.run = (client, message, params) => {
 
 exports.conf = {
     enabled: true,
-    guildOnly: false,
+    guildOnly: true,
     aliases: ['play', 'song', 'Song'],
     permLevel: 0
 }
@@ -51,8 +51,7 @@ exports.help = {
                 
                 if(err) {
                     response = `❌ The command wasn't executed propperly [${err}] ❌`;
-                    log.error("I have failed in a horrible way");
-                    log.error(err);
+                    log.error(`I failed to execute this [${err}]`);
                     return msg.edit(response);
                 };
                 
@@ -71,7 +70,7 @@ exports.help = {
                     dispatcher.on('end', () => {
                     voiceChannel.leave();
                     });
-                    log(`Play command used by ${m.cyan.bold(message.author.tag)} to play the song ${m.cyan.bold(song.name)} in ${m.cyan.bold(voiceChannel.name)} on ${m.cyan.bold(message.guild.name)}`);
+                    log.warning(`Playing the song ${m.cyan.bold(song.name)}`);
                 })
                 .catch(console.error);
             });

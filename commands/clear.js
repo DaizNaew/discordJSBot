@@ -24,7 +24,7 @@ exports.run = (client, message, params) => {
             return message.channel.send("You do not have permission to use this command");
         }
 
-        log(`Clear command used by ${m.cyan.bold(message.author.tag)} to clear ${m.cyan.bold(messagecount)} messages in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
+        log.warning(`Cleared ${m.cyan.bold(messagecount)} messages in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
 
         message.channel.bulkDelete(msg);
         message.channel.send(`Deleted: ${messagecount} messages.👌`)
@@ -47,7 +47,7 @@ exports.run = (client, message, params) => {
 
 exports.conf = {
     enabled: true,
-    guildOnly: false,
+    guildOnly: true,
     aliases: ['Clear','purge','Purge'],
     permLevel: 2
 }

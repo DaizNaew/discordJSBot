@@ -1,8 +1,7 @@
         //Local files
 const   log = require("../enum/consoleLogging"),
         //NodeJS Modules
-        _ = require("lodash"),
-        m = require('chalk');
+        _ = require("lodash");
 
 exports.run = (client, message, params) => {
 
@@ -32,7 +31,6 @@ exports.run = (client, message, params) => {
         msg.edit(`${message.author} I just rolled: ` 
         + numbers
         + "." );
-        log(`Roll command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);

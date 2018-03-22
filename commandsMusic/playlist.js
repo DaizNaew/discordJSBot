@@ -9,7 +9,7 @@ exports.run = (client, message, song) => {
 
 exports.conf = {
     enabled: true,
-    guildOnly: false,
+    guildOnly: true,
     aliases: ['Playlist', 'Queue', 'queue', 'songs', 'Songs'],
     permLevel: 0
 }

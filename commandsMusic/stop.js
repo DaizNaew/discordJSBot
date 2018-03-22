@@ -9,14 +9,8 @@ exports.run = (client, message) => {
     message.channel.send("Trying to stop playing music")
     .then(msg => {
         try {
-            const vChan = message.member.voiceChannel;
-            //console.dir(vChan);
-            //console.dir(client.commands);
-            const broadcast = client.broadcasts;
-            vChan.connection.dispatcher.end();
-            
+            message.member.voiceChannel.connection.dispatcher.end();
             msg.edit('I stopped playing sounds. :mute:');
-            log(`Play command used by ${m.cyan.bold(message.author.tag)} to stop playing music in ${m.cyan.bold(vChan.name)} on ${m.cyan.bold(message.guild.name)}`);
         } catch(err) {
             
             log.error(`The Stop command failed with [${err}]`);
@@ -30,7 +24,7 @@ exports.run = (client, message) => {
 
 exports.conf = {
     enabled: true,
-    guildOnly: false,
+    guildOnly: true,
     aliases: ['Stop', 'endme', 'shutup'],
     permLevel: 0
 }

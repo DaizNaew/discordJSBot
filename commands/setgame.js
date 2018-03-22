@@ -15,7 +15,7 @@ exports.run = (client, message, params) => {
         client.user.setActivity(input)
         .then( presence =>  {
             msg.edit(`Activity set to ${presence.localPresence.game ? presence.localPresence.game.name : 'none'}`);
-            log(`Setactivity command used by ${m.cyan.bold(message.author.tag)} to set the presense to ${m.cyan.bold(presence.localPresence.game ? presence.localPresence.game.name : 'none')}`);
+            log.warning(`Presence is now ${m.cyan.bold(presence.localPresence.game ? presence.localPresence.game.name : 'none')}`);
             settings.botActivity = presence.localPresence.game ? presence.localPresence.game.name : 'none';
             func.writeToFileAsync('../config.json', func.beautifyJSON(settings));
         })
@@ -26,7 +26,7 @@ exports.run = (client, message, params) => {
 
 exports.conf = {
     enabled: true,
-    guildOnly: false,
+    guildOnly: true,
     aliases: ['setGame','SetGame','Setgame','setActivity','SetActivity','setactivity','Setactivity'],
     permLevel: 0
 }

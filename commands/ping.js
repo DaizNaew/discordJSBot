@@ -1,14 +1,10 @@
-const   log = require('../enum/consoleLogging'),
-        m = require('chalk');
+const   log = require('../enum/consoleLogging');
 
 exports.run = (client, message) => {
 
      message.channel.send('Pinging...')
     .then( msg => {
-
         msg.edit(`I have reported a ***${client.ping}*** ms delay to the server.`);
-        log(`Ping command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
-        
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);

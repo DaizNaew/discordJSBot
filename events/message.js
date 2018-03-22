@@ -1,5 +1,7 @@
 const   settings = require('../config.json'),
-        logging = require('../enum/logging');
+        logging = require('../enum/logging'),
+        m = require('chalk'),
+        log = require('../enum/consoleLogging');
 
 module.exports = (message) => {
 
@@ -18,6 +20,11 @@ module.exports = (message) => {
     if (cmd) {
         if(cmd.conf.guildOnly && !message.guild) return message.author.send('This command only works in a server');
         cmd.run(client, message, params);
+        let guildName = ``;
+        let channelName = `a private message`;
+        if(message.guild) guildName = `on ${m.cyan.bold(message.guild.name)}`;
+        if(message.channel.name) channelName = message.channel.name;
+        log(`${m.cyan.bold(cmd.help.name)} command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(channelName)} ${guildName}`);
         logging(message);
     }
 };
