@@ -5,6 +5,7 @@ exports.run = (client, message) => {
 
     message.channel.send("Trying to resume the music")
     .then(msg => {
+        if(!message.member.voiceChannel.connection) return msg.edit('I need to be in a channel for that');
         try {
             message.member.voiceChannel.connection.dispatcher.resume();
             msg.edit('I resumed the music. :play_pause:');

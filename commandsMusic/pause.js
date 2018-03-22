@@ -5,6 +5,7 @@ exports.run = (client, message) => {
 
     message.channel.send("Trying to pause the music")
     .then(msg => {
+        if(!message.member.voiceChannel.connection) return msg.edit('I need to be in a channel for that');
         try {
             message.member.voiceChannel.connection.dispatcher.pause();
             msg.edit('I paused the music. :pause_button: ');
