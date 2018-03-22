@@ -1,5 +1,5 @@
 const   func = require('../func/propFunctions'),
-        twit = require('../func/twitter.js'),
+        twit = require('../func/twitterGetter.js'),
         log = require('../enum/consoleLogging'),
         twitch = require('../func/twitchGetter');
 
