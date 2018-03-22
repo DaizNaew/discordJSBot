@@ -8,6 +8,8 @@ const m = require('../enum/consoleColour'),
 
 module.exports = (message, twitchChannel) => {
 
+    const config = require('../config.json');
+
     if(!twitchChannel) twitchChannel = '16964788';
 
     let stream_data,
@@ -21,7 +23,7 @@ module.exports = (message, twitchChannel) => {
             baseURL: 'https://api.twitch.tv/helix/',
             url:'streams/?user_id='+twitchChannel,
             headers: {
-                'Client-ID': "gs0pucua7kdiegai0ps9h3z1t1bz94"
+                'Client-ID': config['twitch_module'].twitch_client_id
             }
         })
         .then( response => {

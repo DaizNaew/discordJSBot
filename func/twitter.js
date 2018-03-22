@@ -11,10 +11,10 @@ module.exports = {
             config = require("../config.json");
             
             var client = new Twitter({
-                consumer_key: config.consumer_key,
-                consumer_secret: config.consumer_secret,
-                access_token_key: config.access_token_key,
-                access_token_secret: config.access_token_secret
+                consumer_key: config['twitter_module'].twitter_consumer_key,
+                consumer_secret: config['twitter_module'].twitter_consumer_secret,
+                access_token_key: config['twitter_module'].twitter_access_token_key,
+                access_token_secret: config['twitter_module'].twitter_access_token_secret
             });
             
         client.stream('statuses/filter', {follow: '205717291,923770736,828062956864864256' },  function(stream) {

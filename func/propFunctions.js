@@ -60,19 +60,24 @@ module.exports = {
             }
             log.warning(`${FilePos} does not exist, creating it.`);
             this.writeToFileSync(FilePos, ` {
-                    \n"token": "###",
-                    \n"prefix": "!",
-                    \n"mprefix": "m",
-                    \n"ytKey": "###",
-                    \n"nothing" : 0,
-                    \n"consumer_key": "###",
-                    \n"consumer_secret": "###",
-                    \n"access_token_key": "###",
-                    \n"access_token_secret": "###",
-                    \n"enableTwitterModule": false,
-                    \n"check_reply_to_tweets" : false,
-                    \n"botActivity": "Being a wee lil bitch"
-                \n} `);
+                \n"token": "###",
+                \n"prefix": "!",
+                \n"mprefix": "m",
+                \n"ytKey": "###",
+                \n"nothing" : 0,
+                \n"botActivity": "Being a wee lil bitch",
+                \n\n"twitter_module" : {
+                    \n"twitter_consumer_key": "###",
+                    \n"twitter_consumer_secret": "###",
+                    \n"twitter_access_token_key": "###",
+                    \n"twitter_access_token_secret": "###",
+                    \n"enable_twitter_module": true,
+                    \n"check_reply_to_tweets": false
+                    \n},
+                    \n\n"twitch_module" : {
+                        \n"twitch_client_id" : "###"
+                        \n}
+                        \n} `);
             log.success(`Successfully created file at: ${FilePos}`);
         });
 
