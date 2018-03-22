@@ -74,11 +74,14 @@ module.exports = {
                     \n"enable_twitter_module": false,
                     \n"check_reply_to_tweets": false
                     \n},
-                    \n\n"twitch_module" : {
-                        \n"enable_twitch_module": false,
-                        \n"twitch_client_id" : "###"
-                        \n}
-                        \n} `);
+                \n\n"twitch_module" : {
+                    \n"enable_twitch_module": false,
+                    \n"twitch_client_id" : "###"
+                    \n},
+                    \n"imgur_module" : {
+                        \n"imgur_client_id" : "###"
+                    \n}
+                \n} `);
             log.success(`Successfully created file at: ${FilePos}`);
         });
 
