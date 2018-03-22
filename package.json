@@ -1,7 +1,7 @@
 {
   "name": "discordjsbot",
-  "version": "5.4.2",
-  "description": "",
+  "version": "5.5.0",
+  "description": "A discord bot writte in nodeJS to handle a lot of management and has some fun features",
   "main": "main.js",
   "dependencies": {
     "axios": "^0.18.0",
