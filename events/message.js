@@ -4,7 +4,6 @@ const   settings = require('../config.json'),
 module.exports = (message) => {
 
     const client = message.client;
-    if (!message.guild) return;
     if (message.author.bot) return;
     if (!message.content.startsWith(settings.prefix)) return logging(message);
     const command = message.content.split(' ')[0].slice(settings.prefix.length);
@@ -17,6 +16,7 @@ module.exports = (message) => {
         cmd = client.commands.get(client.aliases.get(command));
     }
     if (cmd) {
+        if(cmd.conf.guildOnly && !message.guild) return message.author.send('This command only works in a server');
         cmd.run(client, message, params);
         logging(message);
     }

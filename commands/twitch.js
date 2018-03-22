@@ -19,7 +19,7 @@ exports.run = (client, message, params) => {
 
 exports.conf = {
    enabled: true,
-   guildOnly: false,
+   guildOnly: true,
    aliases: ['Twitch', 'stream'],
    permLevel: 0
 }
