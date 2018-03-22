@@ -15,9 +15,9 @@ module.exports = client => {
 
     //Start of initialization logging
     log.splitter('Init Bot');
-    log.success(`I am ${client.user.tag} and I'm currently running in: `+client.guilds.size + ' Servers');
+    log.success(`I am ${client.user.tag} and I'm ready to be of use :) `);
     log.success(`My activity is currently set to be: ${settings.botActivity}`);
-    log.success(`Currently residing in servers: `);
+    log.success(`Currently residing in ${client.guilds.size} servers: `);
     client.guilds.map( (g) => log.success(`${g.name} Created at: ${g.createdAt} Owned by: ${g.owner.user.tag}`));
 
     //Just a dirty linebreak

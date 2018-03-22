@@ -17,11 +17,13 @@ module.exports = {
             
         client.stream('statuses/filter', {follow: '205717291,923770736,828062956864864256' },  function(stream) {
             stream.on('data', function(tweet) {
+
                 const who_to_follow = [  
                     '205717291'             //DaizNaew
                     ,'923770736'            //Weefreemen
                     ,'828062956864864256'   //Memetwitter
                 ];
+
                 if(config.check_reply_to_tweets == false){
                     if(tweet.in_reply_to_status_id ) return;
                     if(tweet.retweeted_status && !_.includes(who_to_follow,tweet.user.id_str)) return /* log('Pop den booty bitch') */;
@@ -57,8 +59,6 @@ module.exports = {
                 //console.dir(tweet.entities.urls[0]['expanded_url']);
                 //log(tweet.display_text_range);
 
-                log.tweet(`I have detected a tweet from: ${tweet.user.screen_name}`);
-
                 if(tempArr){
                     for(i = tempArr[0]; i <= tempArr[1]; i++){
                         tempText += tweet.text[i];
@@ -66,19 +66,19 @@ module.exports = {
                 } else {
                     tempText = tweet.text;
                 }
-
+                let twitter_log_response = '';
                 let tempVideo = null;
                 let tempImg = null;
                 if(tweet.entities.media){
                     if(tweet.entities.media[0].media_url_https) {
                         tempImg = tweet.entities.media[0].media_url_https;
-                        log.tweet(`The tweet contained an image: ${tempImg}`);
+                        twitter_log_response += ` This tweet contained an image: ${tempImg}`;
                     }
                 }
                 if(tweet.entities.urls[0]){
                     if(tweet.entities.urls[0]['expanded_url'].includes('youtu')) {
                         tempVideo = tweet.entities.urls[0]['expanded_url'];
-                        log.tweet(`The tweet contained an Youtube: ${tempVideo}`);
+                        twitter_log_response += ` This tweet contained an Youtube: ${tempVideo}`;
                     }
                 }
                 
@@ -105,6 +105,8 @@ module.exports = {
                     });
                 }
 
+                log.tweet(`I have detected a tweet from: ${tweet.user.screen_name}`+twitter_log_response);
+
                 tempChan.send(cEmbed.RichEmbed(
                     [tweet.user.screen_name, "https://abs.twimg.com/icons/apple-touch-icon-192x192.png"],
                     `${tweet.user.name} on Twitter`,
@@ -124,6 +126,7 @@ module.exports = {
         });
         
     },
+    
     getUserTweet:function(searchParam){
         var client = new Twitter({
             consumer_key: config.consumer_key,
