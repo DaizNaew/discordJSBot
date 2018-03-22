@@ -7,3 +7,4 @@ config.json
 storage/defaultTwitch.json
 commands/test.js
 config.json
+.vscode
