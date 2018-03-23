@@ -28,11 +28,13 @@ exports.run = (client, message, params) => {
     const image = require('../func/imgurGetter')(message, keywords, selection);
     image.then(result => {
         if(!result) return msg.edit('No result found, please try another search query');
+        let temp_img = result.images[0].link;
+        if(!result.images) temp_img = result.link;
         msg.edit({embed:{
             title: result.title,
             description: result.description,
             image : {
-                url: result.images[0].link
+                url: temp_img
             },
             author: {
                 name: result.account_url,
