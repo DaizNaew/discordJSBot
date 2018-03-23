@@ -4,7 +4,7 @@ const   m = require('chalk'),
         log = require('../enum/consoleLogging'),
         embed = require('../model/embeds');
 
-exports.run = (client, message) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
     var role_removed = false;
 

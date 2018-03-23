@@ -1,6 +1,6 @@
 const   log = require('../enum/consoleLogging');
 
-exports.run = (client, message) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
      message.channel.send('Pinging...')
     .then( msg => {

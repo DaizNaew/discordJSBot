@@ -2,7 +2,7 @@ const m = require('chalk'),
       log = require('../enum/consoleLogging'),
       _ = require('lodash');
 
-exports.run = (client, message, params) => {
+exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send('Fetching your search result...')
     .then(msg => {
 

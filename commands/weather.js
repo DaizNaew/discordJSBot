@@ -2,7 +2,7 @@
 const findWeather = require("../func/weatherFunc"),
       log = require('../enum/consoleLogging');
 
-exports.run = (client, message, params) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
     let input = params.slice(0).join(" ");
     

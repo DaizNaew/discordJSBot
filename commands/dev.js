@@ -2,7 +2,7 @@ const   Discord = require('discord.js'),
         log = require('../enum/consoleLogging'),
         embed = require('../model/embeds');
 
-exports.run = (client, message) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
     message.channel.send("Fetching Developer list...")
     .then(msg => {

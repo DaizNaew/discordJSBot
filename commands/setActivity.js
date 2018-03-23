@@ -3,7 +3,7 @@ const   log = require('../enum/consoleLogging'),
         m = require('chalk'),
         fs = require('fs');
 
-exports.run = (client, message, params) => {
+exports.run = (client, message, params, command_success, command_fail) => {
     if(!message.member.permissions.has("MANAGE_NICKNAMES", true)) return message.channel.send('You do not have the required permissions to do this.');
     if(!params[0]) return message.channel.send('You need to add some parameters for this to work.');
     let input = params.slice(0).join(" ");

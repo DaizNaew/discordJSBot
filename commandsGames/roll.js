@@ -3,7 +3,7 @@ const   log = require("../enum/consoleLogging"),
         //NodeJS Modules
         _ = require("lodash");
 
-exports.run = (client, message, params) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
     message.channel.send("Rolling...")
     .then(msg => {

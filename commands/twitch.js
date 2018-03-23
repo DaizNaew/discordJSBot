@@ -2,7 +2,7 @@
 const   TwitchGet = require('../func/twitchGetter'),
         log = require('../enum/consoleLogging');
 
-exports.run = (client, message, params) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
     message.channel.send('Fetching Twitch link..')
     .then( msg => {

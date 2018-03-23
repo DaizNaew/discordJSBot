@@ -1,7 +1,7 @@
         //Local Files
 const   log = require('../enum/consoleLogging');
 
-exports.run = (client, message) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
     message.channel.send("Trying to pause the music")
     .then(msg => {

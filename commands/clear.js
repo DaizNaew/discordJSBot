@@ -2,7 +2,7 @@ const _ = require('lodash'),
       log = require('../enum/consoleLogging'),
       m = require('chalk');
 
-exports.run = (client, message, params) => {
+exports.run = (client, message, params, command_success, command_fail) => {
     let canManageMessages = message.member.permissions.has("MANAGE_MESSAGES", true);
     if(!canManageMessages) return message.channel.send("I believe you don't have the power to do this.");
     let messagecount = parseInt(params.join(' '));
