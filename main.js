@@ -11,28 +11,28 @@ const Discord = require("discord.js"),
 func.constructConfig('./config.json')
 
 setTimeout(function(){
-    const config = require("./config.json");
 
-require('./util/eventLoader')(client);
+      const config = require("./config.json");
 
-client.commands = new Discord.Collection();
-client.aliases = new Discord.Collection();
+      require('./util/eventLoader')(client);
 
-require('./util/commandLoader')(client);
+      client.commands = new Discord.Collection();
+      client.aliases = new Discord.Collection();
 
-client.on('warn', e => {
-  console.log(m.bgYellow(e.replace(regToken, 'that was redacted')));
-});
+      require('./util/commandLoader')(client);
 
-client.on('error', e => {
-  console.log(m.bgRed(e.replace(regToken, 'that was redacted')));
-});
+      client.on('warn', e => {
+            console.log(m.bgYellow(e.replace(regToken, 'that was redacted')));
+      });
 
-client.login(config.token)
-.catch( error => {
-    console.log('You need to setup the config file before proceeding to run this bot');
-    process.exit();
-});
+      client.on('error', e => {
+            console.log(m.bgRed(e.replace(regToken, 'that was redacted')));
+      });
 
+      client.login(config.token)
+      .catch( error => {
+            console.log('You need to setup the config file before proceeding to run this bot');
+            process.exit();
+      });
 
 },25);

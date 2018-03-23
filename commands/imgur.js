@@ -13,30 +13,36 @@ exports.run = (client, message, params) => {
 
     let selection;
     let keywords;
-    let mes = '';
     
     if(params.length > 1) {
         selection = params[params.length-1];
         keywords = params.slice(0, params.length-1).join(',');
-        mes = ''+selection + ' :: Dette er selection';
         if(!_.includes(availSelections,selection)) {
             keywords += ' '+selection;
-            mes = 'No selection chosen ';
         }
-        mes += '\n'+keywords + ' :: Dette er keywords';
     } else {
         selection = 'time';
         keywords = params[0];
-        mes = keywords + ' :: Dette er keywords';
     }
-    
-    //console.log(selection);
-    //console.log(keywords);
 
     const image = require('../func/imgurGetter')(message, keywords, selection);
     image.then(result => {
-        //msg.edit(mes);
-        msg.edit(result.link);
+        if(!result) return msg.edit('No result found, please try another search query');
+        msg.edit({embed:{
+            title: result.title,
+            description: result.description,
+            image : {
+                url: result.images[0].link
+            },
+            author: {
+                name: result.account_url,
+                url: result.link,
+                icon_url: "https://cdn6.aptoide.com/imgs/e/3/f/e3f736f6c7997e9597b0be97a16b1be3_icon.png?w=120"
+            },
+            footer: {
+                text: `Views: ${result.views}, upvotes: ${result.ups}, downvotes: ${result.downs}\ntags: ${result.tags.map(t => `${t.name}`).join(', ')}`
+            }
+        }});
     })
     .catch(err => log.error(err));
     
