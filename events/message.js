@@ -5,8 +5,12 @@ const   logging = require('../enum/logging'),
 module.exports = (message) => {
     const settings = require('../config.json');
     const client = message.client;
-    const command_success = client.emojis.find("name", "command_successful");
-    
+
+    var command_success = client.emojis.find("name", "white_check_mark");
+    var command_fail = client.emojis.find("name", "negative_squared_cross_mark");
+
+    if(client.emojis.find("name", "command_successful")) command_success = client.emojis.find("name", "command_successful");
+    if(client.emojis.find("name", "command_failed")) command_fail = client.emojis.find("name", "command_failed");
 
     if (message.author.bot) return;
     if (!message.content.startsWith(settings.prefix)) return logging(message);
@@ -21,7 +25,7 @@ module.exports = (message) => {
     }
     if (cmd) {
         if(cmd.conf.guildOnly && !message.guild) return message.author.send('This command only works in a server');
-        cmd.run(client, message, params);
+        cmd.run(client, message, params, command_success, command_fail);
         let guildName = ``;
         let channelName = `a private message`;
         if(message.guild) guildName = `on ${m.cyan.bold(message.guild.name)}`;
