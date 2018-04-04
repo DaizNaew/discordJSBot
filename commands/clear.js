@@ -47,7 +47,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ['Clear','purge','Purge'],
+    aliases: ['purge'],
     permLevel: 2
 }
 

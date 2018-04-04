@@ -14,7 +14,7 @@ module.exports = (message) => {
 
     if (message.author.bot) return;
     if (!message.content.startsWith(settings.prefix)) return logging(message);
-    const command = message.content.split(' ')[0].slice(settings.prefix.length);
+    const command = message.content.split(' ')[0].slice(settings.prefix.length).toLowerCase();
     const params = message.content.split(' ').slice(1);
 
     let cmd;

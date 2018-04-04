@@ -20,7 +20,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
    enabled: require('../config.json')['twitch_module'].enable_twitch_module,
    guildOnly: true,
-   aliases: ['Twitch', 'stream'],
+   aliases: ['stream'],
    permLevel: 0
 }
 

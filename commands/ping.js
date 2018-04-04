@@ -15,7 +15,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['Ping', 'delay'],
+    aliases: ['delay'],
     permLevel: 0
 }
 

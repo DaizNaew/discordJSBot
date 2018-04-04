@@ -30,12 +30,12 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['request'],
+    aliases: ['suggestions'],
     permLevel: 0
 }
 
 exports.help = {
-    name: 'suggest',
+    name: 'suggestion',
     description: 'Adds a suggestion to the bot, please be reasonable',
     usage: 'suggest <suggestion>'
 }

@@ -16,7 +16,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
    enabled: true,
    guildOnly: false,
-   aliases: ['Source', 'Github', 'github'],
+   aliases: ['github'],
    permLevel: 0
 }
 

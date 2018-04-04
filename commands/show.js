@@ -22,7 +22,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ['Show, whois'],
+    aliases: ['whois'],
     permLevel: 0
 }
 

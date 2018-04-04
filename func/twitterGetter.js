@@ -26,7 +26,7 @@ module.exports = {
 
                 if(config['twitter_module'].check_reply_to_tweets == false){
                     if(tweet.in_reply_to_status_id ) return;
-                    if(tweet.retweeted_status && !_.includes(who_to_follow,tweet.user.id_str)) return /* log('Pop den booty bitch') */;
+                    if(tweet.retweeted_status && !_.includes(who_to_follow,tweet.user.id_str)) return;
                 }
 
                 let tempChan,
