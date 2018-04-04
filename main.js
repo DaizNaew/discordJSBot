@@ -36,6 +36,12 @@ setTimeout(function(){
             process.exit();
       });
 
+      /////////////
+      //  ####   //
+      // Modules //
+      //  ####   //
+      /////////////
+
       if(config['twitter_module'].enable_twitter_module)twit.initStream(client);
 
 },25);
