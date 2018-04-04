@@ -1,4 +1,4 @@
-exports.run = (client, message, params) => {
+exports.run = (client, message, params, command_success, command_fail) => {
   const settings = require('../config.json');
   if (!params[0]) {
 

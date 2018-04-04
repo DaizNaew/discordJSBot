@@ -1,6 +1,6 @@
 const   log = require('../enum/consoleLogging');
 
-exports.run = (client, message) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
      message.channel.send('Pinging...')
     .then( msg => {
@@ -15,7 +15,7 @@ exports.run = (client, message) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['Ping', 'delay'],
+    aliases: ['delay'],
     permLevel: 0
 }
 

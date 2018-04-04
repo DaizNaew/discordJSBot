@@ -4,11 +4,17 @@ const   logging = require('../enum/logging'),
 
 module.exports = (message) => {
     const settings = require('../config.json');
-
     const client = message.client;
+
+    var command_success = client.emojis.find("name", "white_check_mark");
+    var command_fail = client.emojis.find("name", "negative_squared_cross_mark");
+
+    if(client.emojis.find("name", "command_successful")) command_success = client.emojis.find("name", "command_successful");
+    if(client.emojis.find("name", "command_failed")) command_fail = client.emojis.find("name", "command_failed");
+
     if (message.author.bot) return;
     if (!message.content.startsWith(settings.prefix)) return logging(message);
-    const command = message.content.split(' ')[0].slice(settings.prefix.length);
+    const command = message.content.split(' ')[0].slice(settings.prefix.length).toLowerCase();
     const params = message.content.split(' ').slice(1);
 
     let cmd;
@@ -19,12 +25,13 @@ module.exports = (message) => {
     }
     if (cmd) {
         if(cmd.conf.guildOnly && !message.guild) return message.author.send('This command only works in a server');
-        cmd.run(client, message, params);
+        cmd.run(client, message, params, command_success, command_fail);
         let guildName = ``;
         let channelName = `a private message`;
         if(message.guild) guildName = `on ${m.cyan.bold(message.guild.name)}`;
         if(message.channel.name) channelName = message.channel.name;
         log(`${m.cyan.bold(cmd.help.name)} command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(channelName)} ${guildName}`);
         logging(message);
+        //message.react(command_success);
     }
 };

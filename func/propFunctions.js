@@ -3,6 +3,7 @@ const fs = require("fs"),
 
 module.exports = {
   
+    //Standard functions
     arrayifyJSON: function(arrayToJSON) {
         return JSON.parse(arrayToJSON, null, 4);
     },
@@ -18,6 +19,7 @@ module.exports = {
         fs.writeFileSync(file, input);
     },
     
+    //Function to check if a directory exists
     checkDirectory: function(directory, callback){
         fs.stat(directory, function(err, stats) {
         //Check if error defined and the error code is "not exists"
@@ -31,6 +33,7 @@ module.exports = {
         });
     },
 
+    //Function to check if a certain file exists
     checkAllDeps: function(FilePos) {
     
         fs.open(FilePos, 'wx', (err, fd) => {
@@ -44,13 +47,12 @@ module.exports = {
             log.warning(`${FilePos} does not exist, creating it.`);
             this.writeToFileSync(FilePos, " { } ");
             log.success(`Successfully created file at: ${FilePos}`);
-            });
+        });
     },
 
+    //Function to construct a standard config
     constructConfig:function(FilePos) {
-        let conf;
-
-        conf = fs.open(FilePos, 'wx', (err, fd) => {
+        fs.open(FilePos, 'wx', (err, fd) => {
             if (err) {
                 if (err.code === 'EEXIST') {
                     log.success(`${FilePos} already exists and is valid.`);
@@ -74,16 +76,16 @@ module.exports = {
                     \n"enable_twitter_module": false,
                     \n"check_reply_to_tweets": false
                     \n},
-                    \n\n"twitch_module" : {
-                        \n"enable_twitch_module": false,
-                        \n"twitch_client_id" : "###"
-                        \n}
-                        \n} `);
+                \n\n"twitch_module" : {
+                    \n"enable_twitch_module": false,
+                    \n"twitch_client_id" : "###"
+                    \n},
+                    \n"imgur_module" : {
+                        \n"imgur_client_id" : "###"
+                    \n}
+                \n} `);
             log.success(`Successfully created file at: ${FilePos}`);
         });
 
     }
-
-    
-
 }

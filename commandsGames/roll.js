@@ -3,7 +3,7 @@ const   log = require("../enum/consoleLogging"),
         //NodeJS Modules
         _ = require("lodash");
 
-exports.run = (client, message, params) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
     message.channel.send("Rolling...")
     .then(msg => {
@@ -41,7 +41,7 @@ exports.run = (client, message, params) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['Roll', 'flip'],
+    aliases: ['flip'],
     permLevel: 0
 }
 

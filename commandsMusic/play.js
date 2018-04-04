@@ -3,7 +3,7 @@ const log = require('../enum/consoleLogging'),
         //NodeJS Modules
       m = require('chalk');
 
-exports.run = (client, message, params) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
     message.channel.send("Fetching a song to play...")
     .then(msg => {
@@ -20,7 +20,7 @@ exports.run = (client, message, params) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ['play', 'song', 'Song'],
+    aliases: ['song'],
     permLevel: 0
 }
 
