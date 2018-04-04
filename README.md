@@ -17,7 +17,13 @@ This is a multipurpose Discord bot, written in Javascript/node using the Discord
 Originally written for [Weefreemen's Hangout](https://discord.gg/0h21N51zP3tCMMrh) but being refitted to be used on multiple servers.
 Entirely 100% open source, but please respect the license shipped with the source code, thank you.
 
+## Features
+- Server Administrative Commands
+- Gamey features, like dice games and blackjack
+- Youtube integration, to play music/noise in voice channels
+- Twitter integration to post when someone tweets
+- Twitch integration to post when someone goes online
+- Weather functionality
+
 ## Requirement
 **Node.js 8.0.0 or newer is required.**  
-
-## Features
