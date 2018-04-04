@@ -1,5 +1,5 @@
         //Local files
-const   TwitchGet = require('../func/twitchGetter'),
+const   TwitchGet = require('../getters/twitchGetter'),
         log = require('../enum/consoleLogging');
 
 exports.run = (client, message, params, command_success, command_fail) => {

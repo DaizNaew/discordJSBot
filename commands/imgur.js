@@ -22,7 +22,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
             keywords = params[0];
         }
 
-        const image = require('../func/imgurGetter')(message, keywords, selection);
+        const image = require('../getters/imgurGetter')(message, keywords, selection);
         image.then(result => {
             if(!result) return msg.edit('No result found, please try another search query');
             let temp_img = result.images[0].link;

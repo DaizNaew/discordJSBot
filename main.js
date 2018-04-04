@@ -5,7 +5,7 @@ const Discord = require("discord.js"),
 //Design the client
       client = new Discord.Client(),
 //Local files
-      twit = require('./func/twitterGetter.js'),
+      twit = require('./getters/twitterGetter.js'),
       func = require('./func/propFunctions'),
       regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
 

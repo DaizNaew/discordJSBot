@@ -1,6 +1,6 @@
 const   func = require('../func/propFunctions'),
         log = require('../enum/consoleLogging'),
-        twitch = require('../func/twitchGetter');
+        twitch = require('../getters/twitchGetter');
 
 module.exports = client => {
 

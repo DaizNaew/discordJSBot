@@ -9,7 +9,8 @@ exports.run = (client, message, params, command_success, command_fail) => {
     .then(msg => {
         const vChan = message.member.voiceChannel;
         let input = params.slice(0).join(" ");
-        require('../func/youtubeGetter')(client, message, vChan, input, msg);        
+        if(!input) {msg.edit('I need an input for this to work'); return message.react(command_fail);}
+        require('../getters/youtubeGetter')(client, message, vChan, input, msg);        
     })
     .catch(error => {
         log.error(`The Play command failed with [${error}]`);
