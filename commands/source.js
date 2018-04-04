@@ -1,7 +1,7 @@
         //Local files
 const log = require('../enum/consoleLogging');
 
-exports.run = (client, message) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
     message.channel.send("Fetching Sources...")
     .then(msg => {
@@ -16,7 +16,7 @@ exports.run = (client, message) => {
 exports.conf = {
    enabled: true,
    guildOnly: false,
-   aliases: ['Source', 'Github', 'github'],
+   aliases: ['github'],
    permLevel: 0
 }
 

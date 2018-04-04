@@ -1,5 +1,4 @@
 const   func = require('../func/propFunctions'),
-        twit = require('../func/twitterGetter.js'),
         log = require('../enum/consoleLogging'),
         twitch = require('../func/twitchGetter');
 
@@ -38,7 +37,9 @@ module.exports = client => {
             func.checkAllDeps("./storage/defaultTwitch.json");
             func.checkAllDeps("./storage/clientLog.json");
             func.checkAllDeps("./storage/playlist.json");
+            func.checkAllDeps("./storage/suggestionBox.json");
         }, 50);
+    //End of error checking on storage
 
         setTimeout(function() {
             func.constructConfig("./config.json");
@@ -54,9 +55,6 @@ module.exports = client => {
     // Modules //
     //  ####   //
     /////////////
-
-    //Twitter module
-    if(settings['twitter_module'].enable_twitter_module)twit.initStream(client);
 
     //Twitch module
     let timerTime = 1;

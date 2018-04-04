@@ -2,7 +2,7 @@
 const   TwitchGet = require('../func/twitchGetter'),
         log = require('../enum/consoleLogging');
 
-exports.run = (client, message, params) => {
+exports.run = (client, message, params, command_success, command_fail) => {
 
     message.channel.send('Fetching Twitch link..')
     .then( msg => {
@@ -20,7 +20,7 @@ exports.run = (client, message, params) => {
 exports.conf = {
    enabled: require('../config.json')['twitch_module'].enable_twitch_module,
    guildOnly: true,
-   aliases: ['Twitch', 'stream'],
+   aliases: ['stream'],
    permLevel: 0
 }
 

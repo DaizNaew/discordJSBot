@@ -7,7 +7,7 @@ const   _ = require('lodash'),
         embed = require('../model/embeds');
         
 
-exports.run = (client, message) => {
+exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send('Fetching...', {code: 'asciidoc'})
     .then(msg => {
         const clientLog = require('../storage/clientLog.json');
@@ -22,7 +22,7 @@ exports.run = (client, message) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ['Show, whois'],
+    aliases: ['whois'],
     permLevel: 0
 }
 
