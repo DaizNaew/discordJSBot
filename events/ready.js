@@ -57,7 +57,7 @@ module.exports = client => {
     /////////////
 
     //Twitter module
-    if(settings['twitter_module'].enable_twitter_module)twit.initStream(client);
+    //if(settings['twitter_module'].enable_twitter_module)twit.initStream(client);
 
     //Twitch module
     let timerTime = 1;

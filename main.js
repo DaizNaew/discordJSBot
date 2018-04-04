@@ -1,10 +1,11 @@
 //NPM Node modules
 const Discord = require("discord.js"),
       fs = require("fs"),
+      m = require("chalk"),
 //Design the client
       client = new Discord.Client(),
 //Local files
-      m = require("chalk"),
+      twit = require('./func/twitterGetter.js'),
       func = require('./func/propFunctions'),
       regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
 
@@ -34,5 +35,7 @@ setTimeout(function(){
             console.log('You need to setup the config file before proceeding to run this bot');
             process.exit();
       });
+
+      if(config['twitter_module'].enable_twitter_module)twit.initStream(client);
 
 },25);
