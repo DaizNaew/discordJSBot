@@ -23,7 +23,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ['Resume'],
+    aliases: [],
     permLevel: 0
 }
 

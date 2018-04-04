@@ -20,7 +20,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ['play', 'song', 'Song'],
+    aliases: ['song'],
     permLevel: 0
 }
 

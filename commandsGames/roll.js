@@ -41,7 +41,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['Roll', 'flip'],
+    aliases: ['flip'],
     permLevel: 0
 }
 

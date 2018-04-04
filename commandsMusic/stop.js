@@ -25,7 +25,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ['Stop', 'endme', 'shutup'],
+    aliases: ['endme', 'shutup'],
     permLevel: 0
 }
 
