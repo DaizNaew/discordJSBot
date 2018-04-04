@@ -12,4 +12,12 @@
   <br />
 </div>
 
-# DBot - Now a Discord.JS bot
+## DBot - Now a Discord.JS bot
+This is a multipurpose Discord bot, written in Javascript/node using the Discord.JS framework.
+Originally written for [Weefreemen's Hangout](https://discord.gg/0h21N51zP3tCMMrh) but being refitted to be used on multiple servers.
+Entirely 100% open source, but please respect the license shipped with the source code, thank you.
+
+## Requirement
+**Node.js 8.0.0 or newer is required.**  
+
+## Features
