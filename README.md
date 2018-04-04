@@ -6,7 +6,7 @@
     </p>
   <br />
   <p>
-    <a href="https://discord.gg/M9Ub7" title="DBot Discord Server"><img src="https://discordapp.com/api/guilds/222078108977594368/embed.png" alt="Discord server" /></a>
+    <a href="https://discord.gg/M9Ub7" title="DBot Discord Server"><img src="https://discordapp.com/api/guilds/431003390026186762/embed.png" alt="Discord server" /></a>
     <a href="https://david-dm.org/DaizNaew/discordJSBot" title="dependencies status"><img src="https://david-dm.org/DaizNaew/discordJSBot/status.svg"/></a>
     <a href="https://www.patreon.com/discordjs"><img src="https://img.shields.io/badge/donate-patreon-F96854.svg" alt="Patreon" /></a>
   </p>
