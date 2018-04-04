@@ -13,7 +13,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
             ['I were created by these lovely people over at the L&B server', `🔹@DaizNaew - Main Developer \n🔸@THICCBOI - Trusty Partner In Science`]
         ));
         
-
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
