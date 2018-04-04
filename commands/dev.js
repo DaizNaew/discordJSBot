@@ -12,11 +12,13 @@ exports.run = (client, message, params, command_success, command_fail) => {
             ['Developer list'],
             ['I were created by these lovely people over at the L&B server', `🔹@DaizNaew - Main Developer \n🔸@THICCBOI - Trusty Partner In Science`]
         ));
+        message.react(command_success);
         
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
         log.error(`Dev command failed to execute [${error}]`);
+        message.react(command_fail);
     });
     
 }

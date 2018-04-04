@@ -12,10 +12,12 @@ exports.run = (client, message, params, command_success, command_fail) => {
     .then(msg => {
         const clientLog = require('../storage/clientLog.json');
         msg.edit(showUserLog(message, clientLog), {code: 'asciidoc'});
+        message.react(command_success);
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
         log.error(`Show command failed to execute [${error}]`);
+        message.react(command_fail);
     });
 }
 

@@ -15,7 +15,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
       message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, {code:'asciidoc'});
     } 
   }
-  
+  message.react(command_success);
 };
 
 exports.conf = {

@@ -4,11 +4,14 @@ const m = require('chalk'),
 exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send('Googling...')
     .then(msg => {
-        const link = `http://lmgtfy.com/?q=${params}`
+        const link = `http://lmgtfy.com/?q=${params}`;
         msg.edit(link);
         message.react(command_success);
     })
-    .catch( error => {log.error(error); message.react(command_fail)} );
+    .catch( error => {
+        log.error(error); 
+        message.react(command_fail);
+    });
 }
 
 exports.conf = {

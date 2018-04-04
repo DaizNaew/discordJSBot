@@ -21,9 +21,11 @@ exports.run = (client, message, params, command_success, command_fail) => {
             }
         }
         func.writeToFileAsync('./storage/suggestionBox.json',func.beautifyJSON(suggestionBox) );
+        message.react(command_success);
     })
     .catch(err => {
         log.error(`Suggestion module failed with [${err}]`);
+        message.react(command_fail);
     })
 }
 
