@@ -49,7 +49,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 }
 
 exports.conf = {
-    enabled: true,
+    enabled: require('../config.json')['imgur_module'].enable_imgur_module,
     guildOnly: true,
     aliases: ['imgsearch','image','img'],
     permLevel: 0

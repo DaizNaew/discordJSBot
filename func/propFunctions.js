@@ -81,6 +81,7 @@ module.exports = {
                     \n"twitch_client_id" : "###"
                     \n},
                     \n"imgur_module" : {
+                        \n"enable_imgur_module" : false,
                         \n"imgur_client_id" : "###"
                     \n}
                 \n} `);
