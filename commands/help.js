@@ -7,15 +7,18 @@ exports.run = (client, message, params, command_success, command_fail) => {
     const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
     message.channel.send(`= Command List =\n\n[Use ${settings.prefix}help <commandname> for details]\n\n${client.commands.map(
     c => `${settings.prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`).join('\n')}`, {code:'asciidoc'});
+    message.react(command_success);
   } else {
     let command = params[0];
     if (client.commands.has(command)) {
       command = client.commands.get(command);
       let aliases = command.conf.aliases;
       message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, {code:'asciidoc'});
-    } 
+      message.react(command_success);
+    } else if(!client.commands.has(command)) {
+      message.react(command_fail);
+    }
   }
-  message.react(command_success);
 };
 
 exports.conf = {
