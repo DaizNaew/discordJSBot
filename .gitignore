@@ -7,5 +7,5 @@ nodemon.json
 package-lock.json
 config.json
 commands/test.js
-settings.json
 .vscode
+settings.json
