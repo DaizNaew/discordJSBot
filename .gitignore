@@ -1,8 +1,10 @@
 node_modules/
 storage/clientLog.json
 storage/playlist.json
+storage/defaultTwitch.json
+storage/suggestionBox.json
 nodemon.json
 package-lock.json
 config.json
-storage/defaultTwitch.json
 commands/test.js
+settings.json
