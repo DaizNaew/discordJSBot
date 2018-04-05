@@ -38,6 +38,7 @@ module.exports = client => {
             func.checkAllDeps("./storage/clientLog.json");
             func.checkAllDeps("./storage/playlist.json");
             func.checkAllDeps("./storage/suggestionBox.json");
+            func.checkAllDeps("./storage/twitterFolk.json");
         }, 50);
     //End of error checking on storage
 
