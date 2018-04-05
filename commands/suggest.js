@@ -4,6 +4,7 @@ const m = require('chalk'),
       fs = require('fs');
 
 exports.run = (client, message, params, command_success, command_fail) => {
+    if(!params[0]) return message.channel.send('You need to actually suggest something');
     let suggestionBox = JSON.parse(fs.readFileSync("./storage/suggestionBox.json", "utf8"));
     let input = params.slice(0).join(" ");
     message.channel.send('Logging your suggestion...')
