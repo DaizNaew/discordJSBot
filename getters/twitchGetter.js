@@ -18,7 +18,7 @@ module.exports = (message, twitchChannel) => {
         user_data,
         game_data;
 
-        ax({
+    return ax({
             method:'get',
             baseURL: 'https://api.twitch.tv/helix/',
             url:'streams/?user_id='+twitchChannel,

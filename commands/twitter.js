@@ -7,19 +7,19 @@ exports.run = (client, message, params, command_success, command_fail) => {
         return message.channel.send('You are missing some parameters there buddy');
     }
 
-    console.dir(message.mentions.channels.first());
-
     switch(params[0]) {
         case('follow'):
-        followUser(params[1],params[2]);
+        if(!message.mentions.channels.first()) return message.channel.send('You need to mention a channel for me to post in.');
+        followUser(params[1],message.mentions.channels.first());
         message.channel.send('Following');
         break;
         case('unfollow'):
+        if(!message.mentions.channels.first()) return message.channel.send('You need to mention a channel for me to post in.');
         message.channel.send('Unfollow');
         break;
         default:
         message.react(command_fail);
-        return message.channel.send('You need to write either follow or unfollow after the command and before the user to follow');
+        return message.channel.send('You need to write either follow or unfollow after the command and before the twitter user to follow');
     }
 
     message.channel.send('I am a work in progress');
@@ -28,10 +28,10 @@ exports.run = (client, message, params, command_success, command_fail) => {
 }
 
 exports.conf = {
-    enabled: false,
+    enabled: true,
     guildOnly: true,
     aliases: ['stalk'],
-    permLevel: 3
+    permLevel: 0
 }
 
 exports.help = {
@@ -42,12 +42,6 @@ exports.help = {
 
 function followUser(twitterHandle, channelToWriteTo){
 
-    //channelMention = channelToWriteTo;
-
-    console.dir(channelToWriteTo.channel);
-    
-    channelID = channelToWriteTo.id;
-
-    //channelToWriteTo.send('test also '+channelID)
+    channelToWriteTo.send('I wirked');
 
 }
