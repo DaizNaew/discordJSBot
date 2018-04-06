@@ -25,6 +25,7 @@ module.exports = (message) => {
     }
     if (cmd) {
         if(cmd.conf.guildOnly && !message.guild) return message.author.send('This command only works in a server');
+        if(cmd.conf.permLevel > 0) {message.react('🔒');return message.channel.send('You do not have the permissions to do this')}
         cmd.run(client, message, params, command_success, command_fail);
         let guildName = ``;
         let channelName = `a private message`;
