@@ -19,7 +19,7 @@ module.exports = {
             stream.on('data', function(tweet) {
 
                 const who_to_follow = [
-                    '205717291'             //DaizNaew
+                     '205717291'            //DaizNaew
                     ,'923770736'            //Weefreemen
                     ,'828062956864864256'   //Memetwitter
                 ];
