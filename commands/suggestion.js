@@ -1,26 +1,27 @@
 const m = require('chalk'),
       log = require('../enum/consoleLogging'),
       func = require('../func/propFunctions'),
-      fs = require('fs');
+      fs = require('fs'),
+      _ = require('lodash');
 
 exports.run = (client, message, params, command_success, command_fail) => {
     let suggestionBox = JSON.parse(fs.readFileSync("./storage/suggestionBox.json", "utf8"));
-    let input = params.slice(0).join(" ");
-    message.channel.send('Logging your suggestion...')
+    message.channel.send('Getting a suggestion...')
     .then(msg => {
-        defChan = require('../storage/defaultChannel.json')
-        let channel_to_post_in = client.channels.get(defChan['Testing Grounds'].requestsChannel);
-        channel_to_post_in.send(`${message.author.tag} suggested :: ${input}`, {code:'asciidoc'});
-        msg.edit('Your suggestion has been logged, thank you.');
-        log(`${m.cyan.bold(input)} were suggested by ${m.cyan.bold(message.author.tag)}`);
-        length = Object.keys(suggestionBox).length;
-        if(!suggestionBox[length]) {
-            suggestionBox[length] = {
-                user: message.author.tag,
-                suggestion : input 
-            }
+
+        let suggestion_to_show;
+        if(!params[0]) {
+            suggestion_to_show = suggestionBox[_.random(Object.keys(suggestionBox).length-1)];
+            msg.edit(`${suggestion_to_show.user} suggested :: ${suggestion_to_show.suggestion}`, {code:'asciidoc'});
+        } else if(params[0] && params[0] <= Object.keys(suggestionBox).length-1 ) {
+            suggestion_to_show = suggestionBox[params[0]];
+            msg.edit(`${suggestion_to_show.user} suggested :: ${suggestion_to_show.suggestion}`, {code:'asciidoc'});
+        } else if(params[0] === 'total') msg.edit(`Theres a total of ${Object.keys(suggestionBox).length} suggestions in the suggestion box, type suggestion <number> to get a specific suggestion, or just suggestion for a random one`)
+        else {
+            message.react(command_fail);
+            return msg.edit(`You tried to search for suggestion number: ${params[0]} Which doesn't exist in my database`)
         }
-        func.writeToFileAsync('./storage/suggestionBox.json',func.beautifyJSON(suggestionBox) );
+
         message.react(command_success);
     })
     .catch(err => {
@@ -30,7 +31,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 }
 
 exports.conf = {
-    enabled: false,
+    enabled: true,
     guildOnly: false,
     aliases: ['suggestions'],
     permLevel: 0
@@ -38,6 +39,6 @@ exports.conf = {
 
 exports.help = {
     name: 'suggestion',
-    description: 'Adds a suggestion to the bot, please be reasonable',
-    usage: 'suggest <suggestion>'
+    description: 'Shows a suggestion from the suggestion box',
+    usage: 'suggestion <total|[number]|empty for random>'
 }
