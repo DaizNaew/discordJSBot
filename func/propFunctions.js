@@ -18,6 +18,9 @@ module.exports = {
     writeToFileSync: function(file, input) {
         fs.writeFileSync(file, input);
     },
+    readFromFileSync: function(file) {
+        return JSON.parse(fs.readFileSync(file,'utf8'));
+    },
     
     //Function to check if a directory exists
     checkDirectory: function(directory, callback){
