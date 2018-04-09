@@ -19,6 +19,7 @@ setTimeout(function(){
 
       client.commands = new Discord.Collection();
       client.aliases = new Discord.Collection();
+      client.twitters = new Discord.Collection();
 
       require('./util/commandLoader')(client);
 
@@ -42,6 +43,6 @@ setTimeout(function(){
       //  ####   //
       /////////////
 
-      if(config['twitter_module'].enable_twitter_module)twit.initStream(client);
+      //if(config['twitter_module'].enable_twitter_module)twit.initStream(client);
 
 },25);
