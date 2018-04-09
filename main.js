@@ -20,6 +20,7 @@ setTimeout(function(){
       client.commands = new Discord.Collection();
       client.aliases = new Discord.Collection();
       client.twitters = new Discord.Collection();
+      client.twitchers = new Discord.Collection();
 
       require('./util/commandLoader')(client);
 
