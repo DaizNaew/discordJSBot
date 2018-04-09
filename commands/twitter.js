@@ -53,19 +53,12 @@ function followUser(twitterHandle, channelToWriteTo, client){
 
     require('../getters/twitterGetter').getUserID(twitterHandle)
     .then(response => {
-        //console.log(response);
-        console.dir(response);
         require('../getters/twitterGetter').createStream(client,response.id,channelToWriteTo)
         .then(response => {
-            console.dir(response);
             client.twitters.set(twitterHandle, response);
             log.tweet(`Started following ${twitterHandle} and posting the tweets in ${channelToWriteTo.name}`);
         })
         .catch(error => log.error(error));
     })
     .catch(error => log.error(error));
-    
-    //twitter_user = require('../getters/twitterGetter').createStream(client,id_to_follow);
-    //client.twitters.set(twitter_user.screen_name, twitter_user);
-
 }
