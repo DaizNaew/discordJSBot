@@ -34,6 +34,10 @@ module.exports.gcmd = (string) => {
     return log("🎲  "+m.cmdLoad(string));
 }
 
+module.exports.acmd = (string) => {
+    return log("🚨  "+m.cmdLoad(string));
+}
+
 module.exports.twitch = (string) => {
     return log("🎮  "+m.custom(string));
 }

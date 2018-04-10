@@ -5,7 +5,7 @@ const fs = require("fs"),
 
 module.exports = client => {
     
-    const command_array = ['','Music','Games']
+    const command_array = ['','Music','Games','Admin']
     let iteration = 0;
 
     _.forEach(command_array, element => {
@@ -16,7 +16,7 @@ module.exports = client => {
 
 function loadCommands(type,client,iteration) {
 
-    const log_types = [log.cmd, log.mcmd, log.gcmd];
+    const log_types = [log.cmd, log.mcmd, log.gcmd, log.acmd];
 
     fs.readdir(`./commands${type}/`, (err, files) => {
         if (err) log.error(err);
