@@ -18,6 +18,9 @@ module.exports = {
     writeToFileSync: function(file, input) {
         fs.writeFileSync(file, input);
     },
+    readFromFileSync: function(file) {
+        return JSON.parse(fs.readFileSync(file,'utf8'));
+    },
     
     //Function to check if a directory exists
     checkDirectory: function(directory, callback){
@@ -46,6 +49,43 @@ module.exports = {
             }
             log.warning(`${FilePos} does not exist, creating it.`);
             this.writeToFileSync(FilePos, " { } ");
+            log.success(`Successfully created file at: ${FilePos}`);
+        });
+    },
+
+    constructServerSetting:function(FilePos, client) {
+        fs.open(FilePos, 'wx', (err, fd) => {
+            if (err) {
+                if (err.code === 'EEXIST') {
+                    log.success(`${FilePos} already exists and is valid.`);
+                    return true;
+                }
+                throw err;
+            }
+            log.warning(`${FilePos} does not exist, creating it.`);
+            guildList = new Object;
+            
+            client.guilds.map((g) => {
+                if(!guildList[g.id]) {
+                    guildList[g.id] = { 'name':g.name };
+                    guildList[g.id]['commands'] = new Object;
+                    client.commands.map((c) => {
+                        guildList[g.id]['commands'][c.help.name] = [];
+                        guildList[g.id]['commands'][c.help.name].push({
+                            enabled: c.conf.enabled,
+                            permLevel: c.conf.permLevel
+                        })
+                    });
+                    guildList[g.id]['configs'] = [];
+                    guildList[g.id]['configs'].push({
+                        "prefix": "!",
+                        "enable_twitter_module": true,
+                        "enable_twitch_module" : true,
+                        "enable_imgur_module" : true
+                    });
+                }
+            })
+            this.writeToFileSync(FilePos,this.beautifyJSON(guildList));
             log.success(`Successfully created file at: ${FilePos}`);
         });
     },
@@ -81,6 +121,7 @@ module.exports = {
                     \n"twitch_client_id" : "###"
                     \n},
                     \n"imgur_module" : {
+                        \n"enable_imgur_module" : false,
                         \n"imgur_client_id" : "###"
                     \n}
                 \n} `);

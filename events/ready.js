@@ -1,6 +1,6 @@
 const   func = require('../func/propFunctions'),
         log = require('../enum/consoleLogging'),
-        twitch = require('../func/twitchGetter');
+        twitch = require('../getters/twitchGetter');
 
 module.exports = client => {
 
@@ -25,7 +25,16 @@ module.exports = client => {
 
     //Start of error Checking on storage
     log.splitter('Error Checking');
+        //Checks Storage
         func.checkDirectory("./storage/", function(err) {
+            if(err) {
+                log.error("Something went wrong: ",err);
+            } else {
+                log.success("No errors detected and I am good to go.\n");
+            }
+        });
+        //Checks Config
+        func.checkDirectory("./config/", function(err) {
             if(err) {
                 log.error("Something went wrong: ",err);
             } else {
@@ -34,10 +43,15 @@ module.exports = client => {
         });
         setTimeout(function() {
             log.splitter('Populated Directories');
+            //Checks Storage Directories for JSON files
             func.checkAllDeps("./storage/defaultTwitch.json");
             func.checkAllDeps("./storage/clientLog.json");
             func.checkAllDeps("./storage/playlist.json");
             func.checkAllDeps("./storage/suggestionBox.json");
+            func.checkAllDeps("./storage/twitterFolk.json");
+            //Checks Config Directories for JSON files
+            func.constructServerSetting("./config/serverSettings.json", client)
+            
         }, 50);
     //End of error checking on storage
 

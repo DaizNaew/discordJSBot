@@ -10,11 +10,13 @@ exports.run = (client, message, params, command_success, command_fail) => {
     .then( msg => {
 
         findWeather(client, message, input, msg);
+        message.react(command_success);
 
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
         log.error(`Weather command failed to execute [${error}]`);
+        message.react(command_fail);
     });
 }
 

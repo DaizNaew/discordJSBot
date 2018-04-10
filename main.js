@@ -5,7 +5,7 @@ const Discord = require("discord.js"),
 //Design the client
       client = new Discord.Client(),
 //Local files
-      twit = require('./func/twitterGetter.js'),
+      twit = require('./getters/twitterGetter.js'),
       func = require('./func/propFunctions'),
       regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
 
@@ -19,6 +19,8 @@ setTimeout(function(){
 
       client.commands = new Discord.Collection();
       client.aliases = new Discord.Collection();
+      client.twitters = new Discord.Collection();
+      client.twitchers = new Discord.Collection();
 
       require('./util/commandLoader')(client);
 
@@ -42,6 +44,6 @@ setTimeout(function(){
       //  ####   //
       /////////////
 
-      if(config['twitter_module'].enable_twitter_module)twit.initStream(client);
+      //if(config['twitter_module'].enable_twitter_module)twit.initStream(client);
 
 },25);

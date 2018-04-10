@@ -31,10 +31,12 @@ exports.run = (client, message, params, command_success, command_fail) => {
         msg.edit(`${message.author} I just rolled: ` 
         + numbers
         + "." );
+        message.react(command_success);
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
         log(`Roll command failed to execute [${error}]`);
+        message.react(command_fail);
     });
 }
 
