@@ -40,12 +40,14 @@ exports.run = (client, message, params, command_success, command_fail) => {
         })
         .catch(error => {
             message.channel.send(`Command Failed:: ${error}`, {code:'asciidoc'});
+            message.react(command_fail);
             log.error(error);
         });
         
     })
     .catch(error => {
         log.error(`Failed to delete messages [${error}]`);
+        message.react(command_fail);
         message.channel.send(`Something doesn't feel quite right. 😞 : \n `+ error);
     });
 }
