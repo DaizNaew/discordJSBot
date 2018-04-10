@@ -13,7 +13,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 
         serverSettings[message.guild.id]['configs'][0].prefix = input;
         func.writeToFileAsync('./config/serverSettings.json', func.beautifyJSON(serverSettings));
-        log.warning(`Prefix for ${message.guild.name} is now ${m.cyan.bold(input)}`);
+        log.warning(`Prefix for ${m.cyan.bold(message.guild.name)} is now ${m.cyan.bold(input)}`);
         msg.edit(`Prefix set to ${input}`);
         message.react(command_success);
 
