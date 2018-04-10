@@ -15,7 +15,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
         let adminIDs = [
             "128235918418116608",
             "124256687992340484",
-            //"151228724430241792"
+            "151228724430241792"
         ]
 
         if(!_.includes(adminIDs,message.author.id)) {
