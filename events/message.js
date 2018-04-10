@@ -1,6 +1,7 @@
 const   logging = require('../enum/logging'),
         m = require('chalk'),
-        log = require('../enum/consoleLogging');
+        log = require('../enum/consoleLogging'),
+        func = require('../func/propFunctions');
 
 module.exports = (message) => {
     const settings = require('../config.json');
@@ -13,7 +14,7 @@ module.exports = (message) => {
     if(client.emojis.find("name", "command_failed")) command_fail = client.emojis.find("name", "command_failed");
 
     if (message.author.bot) return;
-    const serverSettings = require('../config/serverSettings.json');
+    serverSettings = func.readFromFileSync('./config/serverSettings.json');
     let prefix = '';
     
     if(!message.guild) {
@@ -53,5 +54,6 @@ module.exports = (message) => {
         log(`${m.cyan.bold(cmd.help.name)} command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(channelName)} ${guildName}`);
         logging(message);
         //message.react(command_success);
+        delete serverSettings;
     }
 };
