@@ -62,6 +62,7 @@ module.exports = {
                         `${tweet.user.profile_image_url_https}`,
                         `${tempText}`
                     ));
+                    return tweet;
                 });
             }));
         });
