@@ -23,20 +23,26 @@ exports.run = (client, message, params, command_success, command_fail) => {
             return message.channel.send("You do not have permission to use this command");
         }
 
-        log.warning(`Cleared ${m.cyan.bold(messagecount)} messages in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
-
-        message.channel.bulkDelete(msg);
-        message.channel.send(`Deleted: ${messagecount} messages.👌`)
-        .then(msg => {
-            setTimeout(function(){
-                msg.delete();
-            }, 1750);
-            
+        message.channel.bulkDelete(msg)
+        .then(function() {
+            log.warning(`Cleared ${m.cyan.bold(messagecount)} messages in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
+            message.channel.send(`Deleted: ${messagecount} messages.👌`)
+            .then(msg => {
+                setTimeout(function(){
+                    msg.delete();
+                }, 1750);
+                
+            })
+            .catch(error => {
+                log.error(`Failed to delete my own message [${error}]`);
+                message.channel.send('Could not find my own message anymore 😞 : \n' + error);
+            });
         })
         .catch(error => {
-            log.error(`Failed to delete my own message [${error}]`);
-            message.channel.send('Could not find my own message anymore 😞 : \n' + error);
+            message.channel.send(`Command Failed:: ${error}`, {code:'asciidoc'});
+            log.error(error);
         });
+        
     })
     .catch(error => {
         log.error(`Failed to delete messages [${error}]`);
