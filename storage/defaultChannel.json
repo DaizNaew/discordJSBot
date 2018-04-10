@@ -10,5 +10,8 @@
         "defaultChannel" : "124257190641926146",
         "tweetChannel" : "423838424106008586",
         "memeChannel" : "413115983864135684"
+    },
+    "DBot": {
+        "requestsChannel" : "433222350712995840"
     }
 }
