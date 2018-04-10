@@ -53,6 +53,43 @@ module.exports = {
         });
     },
 
+    constructServerSetting:function(FilePos, client) {
+        fs.open(FilePos, 'wx', (err, fd) => {
+            if (err) {
+                if (err.code === 'EEXIST') {
+                    log.success(`${FilePos} already exists and is valid.`);
+                    return true;
+                }
+                throw err;
+            }
+            log.warning(`${FilePos} does not exist, creating it.`);
+            guildList = new Object;
+            
+            client.guilds.map((g) => {
+                if(!guildList[g.id]) {
+                    guildList[g.id] = { 'name':g.name };
+                    guildList[g.id]['commands'] = new Object;
+                    client.commands.map((c) => {
+                        guildList[g.id]['commands'][c.help.name] = [];
+                        guildList[g.id]['commands'][c.help.name].push({
+                            enabled: c.conf.enabled,
+                            permLevel: c.conf.permLevel
+                        })
+                    });
+                    guildList[g.id]['configs'] = [];
+                    guildList[g.id]['configs'].push({
+                        "prefix": "!",
+                        "enable_twitter_module": true,
+                        "enable_twitch_module" : true,
+                        "enable_imgur_module" : true
+                    });
+                }
+            })
+            this.writeToFileSync(FilePos,this.beautifyJSON(guildList));
+            log.success(`Successfully created file at: ${FilePos}`);
+        });
+    },
+
     //Function to construct a standard config
     constructConfig:function(FilePos) {
         fs.open(FilePos, 'wx', (err, fd) => {

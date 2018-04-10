@@ -50,7 +50,8 @@ module.exports = client => {
             func.checkAllDeps("./storage/suggestionBox.json");
             func.checkAllDeps("./storage/twitterFolk.json");
             //Checks Config Directories for JSON files
-            func.checkAllDeps("./config/serverSettings.json");
+            func.constructServerSetting("./config/serverSettings.json", client)
+            
         }, 50);
     //End of error checking on storage
 
