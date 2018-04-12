@@ -15,18 +15,15 @@ exports.run = (client, message, params, command_success, command_fail) => {
 
         client.commands.map(
             (c) => {
-                
-                if(!message.guild) {disabledCommands =``;return enabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;}
-                if(!serverSettings[message.guild.id]['commands'][c.help.name][0].enabled) {
-                    disabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;
-                } else {
-                    enabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;
-                }
+            if(!message.guild) {disabledCommands =``;return enabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;}
+            if(!serverSettings[message.guild.id]['commands'][c.help.name][0].enabled) {
+                disabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;
+            } else {
+                enabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;
+            }
         });
         
-        
         message.author.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
-        
         message.react(command_success);
         
     } else {
