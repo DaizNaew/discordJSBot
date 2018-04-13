@@ -23,18 +23,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
                     guild : message.mentions.channels.first().guild.name
                 }
             }
-            message.channel.send('`Now following`');
-            message.channel.send(cEmbed.RichEmbed(
-                [resolve.screen_name, "https://abs.twimg.com/icons/apple-touch-icon-192x192.png"],
-                `${resolve.name} on Twitter`,
-                ['Tweets', `${resolve.statuses_count}`, true, 'followers', `${resolve.followers_count}`, true],
-                `0x${resolve.profile_link_color}`, //Official Twitter: 0x1da1f2
-                null,
-                `http://www.twitter.com/${resolve.screen_name}`,
-                null,
-                `${resolve.profile_image_url_https}`,
-                `${resolve.description}`
-            ));
             func.writeToFileSync("./storage/twitterFolk.json", func.beautifyJSON(twitFolk));
         })
         .catch(error => log.error(error));
