@@ -8,7 +8,7 @@
   <p>
     <a href="https://discord.gg/NtgPXEE" title="DBot Discord Server"><img src="https://discordapp.com/api/guilds/431003390026186762/embed.png" alt="Discord server" /></a>
     <a href="https://david-dm.org/DaizNaew/discordJSBot" title="dependencies status"><img src="https://david-dm.org/DaizNaew/discordJSBot/status.svg"/></a>
-    <a href="https://www.patreon.com/discordjs"><img src="https://img.shields.io/badge/donate-patreon-F96854.svg" alt="Patreon" /></a>
+    <a href="https://www.patreon.com/discordjs"><img src="https://img.shields.io/badge/donate-paypal-blue.svg" alt="Paypal" /></a>
   </p>
   <br />
 </div>
@@ -21,10 +21,12 @@ Entirely 100% open source, but please respect the license shipped with the sourc
 ## Features
 - Server Administrative Commands
 - Gamey features, like dice games and blackjack
-- Youtube integration, to play music/noise in voice channels
+- Voice module to interact with discord voice channels
+- Youtube integration, to play a song from the youtube space
 - Twitter integration to post when someone tweets
 - Twitch integration to post when someone goes online
 - Weather functionality
 
 ## Requirement
 **Node.js 8.0.0 or newer is required.**
+**FFMPEG Binaries installed and in the path of your OS**
