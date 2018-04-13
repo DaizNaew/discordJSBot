@@ -41,6 +41,7 @@ module.exports = {
                         if(tweet.entities.media[0].media_url_https) {
                             tempImg = tweet.entities.media[0].media_url_https;
                             twitter_log_response += `and This tweet contained an image: ${tempImg}`;
+
                         }
                     }
                     if(tweet.entities.urls[0]){

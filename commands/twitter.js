@@ -4,7 +4,9 @@ const m = require('chalk'),
       cEmbed = require('../model/embeds');
 
 exports.run = (client, message, params, command_success, command_fail) => {
+
     if(!message.member.permissions.has("ADMINISTRATOR", true)) { message.react('🔒'); return message.channel.send('You do not have the required permissions to do this.'); }
+
     if(params.length !== 3) {
         message.react(command_fail);
         return message.channel.send('You are missing some parameters there buddy');
