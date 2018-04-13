@@ -41,7 +41,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
         
         break;
         case('unfollow'):
-        if(!message.mentions.channels.first()) return message.channel.send('You need to mention a channel for me to post in.');
         return message.channel.send('I cannot unfollow yet.');
         break;
         case('showall'):
