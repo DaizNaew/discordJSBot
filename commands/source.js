@@ -1,12 +1,29 @@
         //Local files
-const log = require('../enum/consoleLogging');
+const log = require('../enum/consoleLogging'),
+        cEmbed = require('../model/embeds');
 
 exports.run = (client, message, params, command_success, command_fail) => {
 
     message.channel.send("Fetching Sources...")
     .then(msg => {
-        msg.edit(`Source can be found on my github over at: https://github.com/DaizNaew/discordJSBot`);
-        message.react(command_success);
+        require('../getters/githubGetter')(message,'users/DaizNaew/repos','sort=discordJSBot')
+        .then(response => 
+        {
+            msg.edit(
+                cEmbed.RichEmbed(
+                    [response.data[0].owner.login, `https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png`],
+                    `${response.data[0].name} on GitHub`,
+                    ['Language', `${response.data[0].language}`,true, `License type`, `${response.data[0].license.name}`, true],
+                    0x333333,
+                    null,
+                    `${response.data[0].html_url}`,
+                    null,
+                    `${response.data[0].owner.avatar_url}`,
+                    `${response.data[0].description}`
+                )
+            );
+            message.react(command_success);
+        });
     })
     .catch(error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);

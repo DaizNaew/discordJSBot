@@ -4,6 +4,9 @@ const m = require('chalk'),
       cEmbed = require('../model/embeds');
 
 exports.run = (client, message, params, command_success, command_fail) => {
+
+    if(!message.member.permissions.has("ADMINISTRATOR", true)) { message.react('🔒'); return message.channel.send('You do not have the required permissions to do this.'); }
+
     if(params.length !== 3) {
         message.react(command_fail);
         return message.channel.send('You are missing some parameters there buddy');
@@ -40,7 +43,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
         
         break;
         case('unfollow'):
-        if(!message.mentions.channels.first()) return message.channel.send('You need to mention a channel for me to post in.');
         return message.channel.send('I cannot unfollow yet.');
         break;
         case('showall'):

@@ -10,8 +10,8 @@ exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send('Logging your suggestion...')
     .then(msg => {
         defChan = require('../storage/defaultChannel.json')
-        let channel_to_post_in = client.channels.get(defChan['Testing Grounds'].requestsChannel);
-        channel_to_post_in.send(`${message.author.tag} suggested :: ${input}`, {code:'asciidoc'});
+        let suggest_channel_1 = client.channels.get(defChan['DBot'].requestsChannel);
+        suggest_channel_1.send(`${message.author.tag} suggested :: ${input}`, {code:'asciidoc'});
         msg.edit('Your suggestion has been logged, thank you.');
         log(`${m.cyan.bold(input)} were suggested by ${m.cyan.bold(message.author.tag)}`);
         length = Object.keys(suggestionBox).length;

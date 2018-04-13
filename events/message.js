@@ -34,18 +34,22 @@ module.exports = (message) => {
         cmd = client.commands.get(client.aliases.get(command));
     }
     if (cmd) {
-        let permLevel;
-        let enabled;
+        let permLevel,
+            enabled,
+            response;
+
         if(!message.guild) {
             enabled = cmd.conf.enabled;
             permLevel = cmd.conf.permLevel;
+            response = message.author;
         } else {
             enabled = serverSettings[message.guild.id]['commands'][cmd.help.name][0].enabled;
             permLevel = serverSettings[message.guild.id]['commands'][cmd.help.name][0].permLevel;
+            response = message.channel;
         }
-        if(!enabled) return;
-        if(cmd.conf.guildOnly && !message.guild) return message.author.send('This command only works in a server');
-        if(permLevel > 0) {message.react('🔒');return message.channel.send('You do not have the permissions to do this')}
+        if(!enabled) return response.send('This command has been disabled by an admin on this server');
+        if(cmd.conf.guildOnly && !message.guild) return response.send('This command only works in a server');
+        if(permLevel > 0) {message.react('🔒');return response.send('You do not have the permissions to do this')}
         cmd.run(client, message, params, command_success, command_fail);
         let guildName = ``;
         let channelName = `a private message`;
