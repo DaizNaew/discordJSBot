@@ -44,6 +44,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
             message.react(command_fail);
         }
     }
+
 };
 
 exports.conf = {
