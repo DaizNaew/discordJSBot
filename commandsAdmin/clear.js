@@ -12,17 +12,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
     })
     .then(msg => {
 
-        let adminIDs = [
-            "128235918418116608",
-            "124256687992340484",
-            "151228724430241792"
-        ]
-
-        if(!_.includes(adminIDs,message.author.id)) {
-            log(`Clear command tried to be used by ${m.cyan.bold(message.author.tag)} to clear ${m.cyan.bold(messagecount)} ${more_than_one_message ? 'messages' : 'message'} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
-            return message.channel.send("You do not have permission to use this command");
-        }
-
         message.channel.bulkDelete(msg)
         .then(function() {
             let more_than_one_message = false;
@@ -33,7 +22,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
                 setTimeout(function(){
                     msg.delete();
                 }, 1750);
-                
             })
             .catch(error => {
                 log.error(`Failed to delete my own message [${error}]`);
