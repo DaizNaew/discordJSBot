@@ -12,18 +12,29 @@ exports.run = (client, message, params, command_success, command_fail) => {
     twitFolk = func.readFromFileSync("./storage/twitterFolk.json");
     switch(params[0]) {
         case('follow'):
+        message_to_respond_with = '`Now following`';
         if(!message.mentions.channels.first()) return message.channel.send('You need to mention a channel for me to post in.');
+
         followUser(params[1],message.mentions.channels.first(),client)
-        .then(resolve => {
-            length = Object.keys(twitFolk).length;
-            if(!twitFolk[length]) {
-                twitFolk[length] = {
-                    name : params[1],
-                    channel : message.mentions.channels.first().name,
-                    guild : message.mentions.channels.first().guild.name
+        .then(resolve => {  
+            if(!twitFolk[message.mentions.channels.first().guild.name]) {
+                twitFolk[message.mentions.channels.first().guild.name] = {
                 }
             }
-            message.channel.send('`Now following`');
+            length = Object.keys(twitFolk[message.mentions.channels.first().guild.name]).length;
+            if(!twitFolk[message.mentions.channels.first().guild.name][params[1]]) {
+                twitFolk[message.mentions.channels.first().guild.name][params[1]] = {
+                    channel : message.mentions.channels.first().name
+                }
+            } else if (twitFolk[message.mentions.channels.first().guild.name][params[1]] && twitFolk[message.mentions.channels.first().guild.name][params[1]].channel == message.mentions.channels.first().name) {
+                message_to_respond_with = '`Already set to post in '+message.mentions.channels.first().name + '`';
+            } else if (twitFolk[message.mentions.channels.first().guild.name][params[1]] && twitFolk[message.mentions.channels.first().guild.name][params[1]].channel != message.mentions.channels.first().name) {
+                twitFolk[message.mentions.channels.first().guild.name][params[1]] = {
+                    channel : message.mentions.channels.first().name
+                }
+                message_to_respond_with = '`Updated to post in '+message.mentions.channels.first().name + '`';
+            }
+            message.channel.send(message_to_respond_with);
             message.channel.send(cEmbed.RichEmbed(
                 [resolve.screen_name, "https://abs.twimg.com/icons/apple-touch-icon-192x192.png"],
                 `${resolve.name} on Twitter`,
