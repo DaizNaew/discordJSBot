@@ -4,13 +4,14 @@ const   _ = require('lodash'),
         {Util} = require('discord.js'),
         //Local files
         log = require('../enum/consoleLogging'),
-        embed = require('../model/embeds');
+        embed = require('../model/embeds'),
+        func = require('../func/propFunctions');
         
 
 exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send('Fetching...', {code: 'asciidoc'})
     .then(msg => {
-        const clientLog = require('../storage/clientLog.json');
+        const clientLog = func.readFromFileSync('../storage/clientLog.json');
         msg.edit(showUserLog(message, clientLog), {code: 'asciidoc'});
         message.react(command_success);
     })
@@ -31,7 +32,7 @@ exports.conf = {
 exports.help = {
     name: 'show',
     description: 'Show command to show the full log about a user',
-    usage: 'show <user>  /Supply no user to check yo self '
+    usage: 'show <tag a user, like @them>  /Supply no user to check yo self '
 }
 
     function showUserLog(message, clientLog){
