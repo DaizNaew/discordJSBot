@@ -10,11 +10,13 @@ exports.run = (client, message, params, command_success, command_fail) => {
         const vChan = message.member.voiceChannel;
         let input = params.slice(0).join(" ");
         if(!input) {msg.edit('I need an input for this to work'); return message.react(command_fail);}
-        require('../getters/youtubeGetter')(client, message, vChan, input, msg);        
+        require('../modules/songPlayer')(client, message, vChan, input, msg);
+        message.react(command_success);
     })
     .catch(error => {
         log.error(`The Play command failed with [${error}]`);
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
+        message.react(command_fail);
     });
 }
 
