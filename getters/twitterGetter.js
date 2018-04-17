@@ -51,7 +51,6 @@ module.exports = {
                         }
                     }
                     log.tweet(`I have detected a tweet from: ${tweet.user.screen_name} ${twitter_log_response}`);
-                    channelToWriteTo.send('`Now following`');
                     channelToWriteTo.send(cEmbed.RichEmbed(
                         [tweet.user.screen_name, "https://abs.twimg.com/icons/apple-touch-icon-192x192.png"],
                         `${tweet.user.name} on Twitter`,

@@ -18,7 +18,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
         if(!message.mentions.channels.first()) return message.channel.send('You need to mention a channel for me to post in.');
 
         followUser(params[1],message.mentions.channels.first(),client)
-        .then(resolve => {  
+        .then(resolve => {
             if(!twitFolk[message.mentions.channels.first().guild.name]) {
                 twitFolk[message.mentions.channels.first().guild.name] = {
                 }
