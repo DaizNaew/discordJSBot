@@ -19,8 +19,80 @@ exports.run = (client, message, params, command_success, command_fail) => {
 
         switch(params[0]) {
             case 'add':
+            if(!message.member.permissions.has("ADMINISTRATOR", true)) { message.react('🔒'); return message.channel.send('You do not have the required permissions to do this, ask an admin for help.'); }
+            if(params.length < 3) {
+                message.react(command_fail);
+                return message.channel.send('You are missing some parameters there buddy');
+            }
+            if(!message.mentions.channels.first()) return message.channel.send('You need to mention a channel for me to post in.');
+            twitchFolk = func.readFromFileSync("./storage/twitchFolk.json");
+            chan_to_post_in = message.mentions.channels.first();
+            
+            twitchGetter.getUserData('login',params[1])
+            .then( result => {
+                if(!twitchFolk[result.id]) {
+                    twitchFolk[result.id] = {};
+                }
+                if(!twitchFolk[result.id][message.guild.id]){
+                    twitchFolk[result.id][message.guild.id] = { 'channel_ID' : chan_to_post_in.id };
+                    msg.edit(`= Started Following ${result.display_name} in ${chan_to_post_in.name} =`, { code: 'asciidoc' });
+                    embed = new Discord.RichEmbed();
+                    embed.setAuthor(result.login, 'https://i.imgur.com/sug2x4Z.png')
+                    .setDescription(result.description)
+                    .setFooter('Powered by DiscordJS', 'https://i.imgur.com/wy9kt6e.png')
+                    .setThumbnail(result.profile_image_url)
+                    .setURL(`http://www.twitch.tv/${result.login}`)
+                    .setColor(0x6441A4);
+                    embed.setTitle(`${result.display_name} on Twitch`);
+                    if(result.view_count) embed.addField('View Count', `${result.view_count}`, true);
+                    if(result.broadcaster_type) embed.addField('Broadcaster type', `${result.broadcaster_type}`, true);
+                    if(result.type) embed.addField('Personal type', `${result.type}`, true);
+                    if(result.offline_image_url) embed.setImage(result.offline_image_url);
+                    embed.setTimestamp();
+                    message.channel.send(embed);
+                }
+                else if(twitchFolk[result.id][message.guild.id].channel_ID !== chan_to_post_in.id) {
+                    twitchFolk[result.id][message.guild.id] = { 'channel_ID' : chan_to_post_in.id };
+                    msg.edit(`= Updated to follow ${result.display_name} in ${chan_to_post_in.name} =`, { code: 'asciidoc' });
+                } else if(twitchFolk[result.id][message.guild.id].channel_ID == chan_to_post_in.id) {
+                    msg.edit(`= Already Following ${result.display_name} in ${chan_to_post_in.name} =`, { code: 'asciidoc' });
+                }
+                message.react(command_success);
+                func.writeToFileSync("./storage/twitchFolk.json", func.beautifyJSON(twitchFolk));
+            })
+            .catch(error => {
+                log.error(error);
+                msg.edit('No user found with the name of: '+params[1])
+                message.react(command_fail);
+            });
             break;
             case 'remove':
+            if(!message.member.permissions.has("ADMINISTRATOR", true)) { message.react('🔒'); return message.channel.send('You do not have the required permissions to do this, ask an admin for help.'); }
+            if(params.length < 2) {
+                message.react(command_fail);
+                return message.channel.send('You are missing some parameters there buddy');
+            }
+            twitchFolk = func.readFromFileSync("./storage/twitchFolk.json");
+            twitchGetter.getUserData('login',params[1])
+            .then( result => {
+                if(!twitchFolk[result.id]) {
+                    message.react(command_fail);
+                    return msg.edit(`I am not even following ${params[1]}`);
+                } else {
+                    if(twitchFolk[result.id][message.guild.id]){
+                        delete twitchFolk[result.id][message.guild.id];
+                    }
+                }
+                msg.edit(`= Successfully stopped following ${result.display_name} on this server =`, {code: 'asciidoc'})
+                message.react(command_success);
+                func.writeToFileSync("./storage/twitchFolk.json", func.beautifyJSON(twitchFolk));
+            })
+            .catch(error => {
+                log.error(error);
+                msg.edit('No user found with the name of: '+params[1])
+                message.react(command_fail);
+            })
+                
             break;
             default:
             if(!params[0]) {
@@ -57,9 +129,9 @@ exports.run = (client, message, params, command_success, command_fail) => {
                                 if(result.offline_image_url) embed.setImage(thumb);
                                 embed.setTimestamp();
                             msg.edit(embed);
+                            message.react(command_success);
                         })
                     } else {
-    
                         embed = new Discord.RichEmbed();
                             embed.setAuthor(result.login, 'https://i.imgur.com/sug2x4Z.png')
                             .setDescription(result.description)
@@ -74,24 +146,25 @@ exports.run = (client, message, params, command_success, command_fail) => {
                             if(result.offline_image_url) embed.setImage(result.offline_image_url);
                             embed.setTimestamp();
                         msg.edit(embed);
-    
+                        message.react(command_success);
                     }
                 }).catch(error => {
                     log.error(error);
+                    message.react(command_fail);
                 })
             })
             .catch(error => {
                 log.error(error);
                 msg.edit('No user found with the name of: '+params[0])
+                message.react(command_fail);
             })
             break;
         }
-        
-        
     })
     .catch( error => {
         message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
         log.error(`Twitch command failed to execute [${error}]`);
+        message.react(command_fail);
     });
 
 }
