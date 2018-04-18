@@ -44,9 +44,6 @@ setTimeout(function(){
       if(config['twitter_module'].enable_twitter_module){
             var twitter_module_interval = setInterval(function(){
                   require('./modules/twitterModule.js')(client)
-                  .then(resolve => {
-                        
-                  })
                   .catch(error => {
                         console.log(error);
                   })
