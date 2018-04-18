@@ -178,6 +178,6 @@ exports.conf = {
 
 exports.help = {
    name: 'twitch',
-   description: 'It does something to twitch, inappropiate most likely',
-   usage: 'twitch'
+   description: 'Handles some simple twitch integrations, like add/remove twitchers from the who to look for list, also shows a single twitch person',
+   usage: 'twitch <twitch name> to show a single twitch person\ntwitch <add/remove> <twitch name> <optional #channel as a tag if add a person>'
 }
