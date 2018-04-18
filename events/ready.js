@@ -49,6 +49,7 @@ module.exports = client => {
             func.checkAllDeps("./storage/playlist.json");
             func.checkAllDeps("./storage/suggestionBox.json");
             func.checkAllDeps("./storage/twitterFolk.json");
+            func.checkAllDeps("./storage/twitchFolk.json");
             //Checks Config Directories for JSON files
             func.constructServerSetting("./config/serverSettings.json", client)
             
