@@ -40,7 +40,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
                     icon_url: "https://cdn6.aptoide.com/imgs/e/3/f/e3f736f6c7997e9597b0be97a16b1be3_icon.png?w=120"
                 },
                 footer: {
-                    text: `Views: ${result.views}, upvotes: ${result.ups}, downvotes: ${result.downs}\ntags: ${result.tags.map(t => `${t.name}`).join(', ')}`
+                    text: `Views: ${result.views}, upvotes: ${result.ups}, downvotes: ${result.downs},\ntags: ${result.tags.map(t => `${t.name}`).join(', ')}`
                 }
             }});
         }).catch(err => { message.react(command_fail); log.error(err)});
