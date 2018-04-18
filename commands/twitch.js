@@ -34,7 +34,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
                     twitchFolk[result.id] = {};
                 }
                 if(!twitchFolk[result.id][message.guild.id]){
-                    twitchFolk[result.id][message.guild.id] = { 'channel_ID' : chan_to_post_in.id };
+                    twitchFolk[result.id][message.guild.id] = { 'channel_ID' : chan_to_post_in.id, 'live' : false };
                     msg.edit(`= Started Following ${result.display_name} in ${chan_to_post_in.name} =`, { code: 'asciidoc' });
                     embed = new Discord.RichEmbed();
                     embed.setAuthor(result.login, 'https://i.imgur.com/sug2x4Z.png')
