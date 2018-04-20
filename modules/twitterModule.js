@@ -78,7 +78,7 @@ module.exports = (member) => {
                             ));
                         }
                     });
-                    setTimeout(function(){stream.destroy()},58500);
+                    setTimeout(function(){stream.destroy()},295000);
                 }));
             } catch (error) {
                 return reject((error));

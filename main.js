@@ -45,9 +45,19 @@ setTimeout(function(){
             var twitter_module_interval = setInterval(function(){
                   require('./modules/twitterModule.js')(client)
                   .catch(error => {
+                        log.error(error);
+                  })
+            },60000*5);
+      }
+      /*
+      if(config['twitch_module'].enable_twitch_module){
+            var twitch_module_interval = setInterval(function(){
+                  require('./modules/twitchModule.js')(client)
+                  .catch(error => {
                         console.log(error);
                   })
             },60000);
       }
+      */
 
 },25);
