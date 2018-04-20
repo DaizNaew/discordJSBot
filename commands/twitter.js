@@ -64,7 +64,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
         twitter_handle = params[1];
         getUserIDPromise = require('../getters/twitterGetter').getUserID(twitter_handle);
         getUserIDPromise.then(resolve => {
-            if(!twitFolk[resolve.id]) {
+            if(!twitFolk[resolve.id][message.guild.id]) {
                 message.react(command_fail);
                 return message.channel.send(`I am not even following ${twitter_handle}`);
             } else {

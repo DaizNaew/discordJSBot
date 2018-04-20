@@ -75,12 +75,12 @@ exports.run = (client, message, params, command_success, command_fail) => {
             twitchFolk = func.readFromFileSync("./storage/twitchFolk.json");
             twitchGetter.getUserData('login',params[1])
             .then( result => {
-                if(!twitchFolk[result[0].id]) {
+                if(!twitchFolk[result[0].id].guilds[message.guild.id]) {
                     message.react(command_fail);
                     return msg.edit(`I am not even following ${params[1]}`);
                 } else {
-                    if(twitchFolk[result[0].id][message.guild.id]){
-                        delete twitchFolk[result[0].id][message.guild.id];
+                    if(twitchFolk[result[0].id].guilds[message.guild.id]){
+                        delete twitchFolk[result[0].id].guilds[message.guild.id];
                     }
                 }
                 msg.edit(`= Successfully stopped following ${result[0].display_name} on this server =`, {code: 'asciidoc'})
