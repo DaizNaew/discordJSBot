@@ -10,7 +10,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
         msg.edit(embed.RichEmbed(
             null,
             ['Developer list'],
-            ['I were created by these lovely people over at the L&B server', `🔹@DaizNaew - Main Developer \n🔸@THICCBOI - Trusty Partner In Science`]
+            ['I were created by these lovely people over at the L&B server', `🔹@DaizNaew#0001 - Main Developer \n🔸@.ZEEF#1337 - Trusty Partner In Science`]
         ));
         message.react(command_success);
         

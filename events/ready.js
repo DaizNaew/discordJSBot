@@ -30,7 +30,7 @@ module.exports = client => {
             if(err) {
                 log.error("Something went wrong: ",err);
             } else {
-                log.success("No errors detected and I am good to go.\n");
+                log.success("No errors found in storage directory.");
             }
         });
         //Checks Config
@@ -38,7 +38,7 @@ module.exports = client => {
             if(err) {
                 log.error("Something went wrong: ",err);
             } else {
-                log.success("No errors detected and I am good to go.\n");
+                log.success("No errors found in config directory.\n");
             }
         });
         setTimeout(function() {
@@ -49,6 +49,7 @@ module.exports = client => {
             func.checkAllDeps("./storage/playlist.json");
             func.checkAllDeps("./storage/suggestionBox.json");
             func.checkAllDeps("./storage/twitterFolk.json");
+            func.checkAllDeps("./storage/twitchFolk.json");
             //Checks Config Directories for JSON files
             func.constructServerSetting("./config/serverSettings.json", client)
             

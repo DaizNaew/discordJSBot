@@ -21,7 +21,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
             msg.edit(`The command [${params[0]}] you tried to toggle does not exist`);
             log.error(error);
         }
-        
     }).catch(error => { log.error(error); message.react(command_fail); });
 }
 

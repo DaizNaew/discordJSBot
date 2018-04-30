@@ -32,6 +32,7 @@ module.exports = (client, message, input, msg) => {
         embed.addField("Wind speed 💨",current.winddisplay,true);
         embed.addField("Temperature 🌡",current.temperature + ' Degrees Celsius',true);
         embed.addField("Feels like 🌡",current.feelslike + ' Degrees Celsius',true);
+        embed.addField("Moist Level 💧",current.humidity + ' %',false)
         embed.setFooter('Last updated: ' + current.observationtime);
         msg.edit({embed});
     });

@@ -27,11 +27,18 @@ exports.run = (client, message, params, command_success, command_fail) => {
         message.react(command_success);
         
     } else {
-        let command = params[0];
+        let command = params[0],
+            to_show = params[1];
+
         if (client.commands.has(command)) {
             command = client.commands.get(command);
             let aliases = command.conf.aliases;
-            message.author.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' });
+            if(to_show && to_show == 'show') 
+            {
+                message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' });
+            } else {
+               message.author.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' });
+            }
             message.react(command_success);
         } else if (!client.commands.has(command)) {
             message.react(command_fail);
@@ -50,5 +57,5 @@ exports.conf = {
 exports.help = {
     name: 'help',
     description: 'Displays all the available commands',
-    usage: 'help <command>'
+    usage: 'help <command> <show (to show it in channel, only works on specific commands)>'
 };

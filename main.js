@@ -2,10 +2,10 @@
 const Discord = require("discord.js"),
       fs = require("fs"),
       m = require("chalk"),
+      _ = require("lodash"),
 //Design the client
       client = new Discord.Client(),
 //Local files
-      twit = require('./getters/twitterGetter.js'),
       func = require('./func/propFunctions'),
       regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
 
@@ -19,8 +19,6 @@ setTimeout(function(){
 
       client.commands = new Discord.Collection();
       client.aliases = new Discord.Collection();
-      client.twitters = new Discord.Collection();
-      client.twitchers = new Discord.Collection();
 
       require('./util/commandLoader')(client);
 
@@ -43,7 +41,22 @@ setTimeout(function(){
       // Modules //
       //  ####   //
       /////////////
-
-      //if(config['twitter_module'].enable_twitter_module)twit.initStream(client);
+      if(config['twitter_module'].enable_twitter_module){
+            var twitter_module_interval = setInterval(function(){
+                  require('./modules/twitterModule.js')(client)
+                  .catch(error => {
+                        log.error(error);
+                  })
+            },60000*5);
+      }
+      
+      if(config['twitch_module'].enable_twitch_module){
+            var twitch_module_interval = setInterval(function(){
+                  require('./modules/twitchModule.js')(client)
+                  .catch(error => {
+                        console.log(error);
+                  })
+            },60000);
+      }
 
 },25);

@@ -11,3 +11,4 @@ config.json
 commands/test.js
 .vscode
 settings.json
+storage/twitchFolk.json
