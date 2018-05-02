@@ -19,10 +19,7 @@ module.exports = (member) => {
             try {
                 return resolve(client.stream('statuses/filter', {follow: user_to_follow },  function(stream) {
                     stream.on('data', function(tweet) {
-                        if(config['twitter_module'].check_reply_to_tweets == false){
-                            if(tweet.in_reply_to_status_id ) return reject('Please No Retweets');
-                            if(tweet.retweeted_status && _.includes(users_array,tweet.user.id_str)) return reject();
-                        }
+                        if(config['twitter_module'].check_reply_to_tweets == false && !tweet.in_reply_to_status_id && !tweet.retweeted_status && !_.includes(users_array,tweet.user.id_str)){
         
                         let tempText = '',
                             tempArr;
@@ -77,6 +74,9 @@ module.exports = (member) => {
                                 `${tempText}`
                             ));
                         }
+                    } else {
+                        return reject('Please No Retweets');
+                    }
                     });
                     setTimeout(function(){stream.destroy()},295000);
                 }));
