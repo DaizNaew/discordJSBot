@@ -1,13 +1,11 @@
         //Local Files
-const   func = require('../func/propFunctions'),
-        //NodeJS modules
-        fs = require('fs');
+const   func = require('../func/propFunctions');
 
 module.exports = (message) => {
 
     if(!message.guild) return;
 
-    let clientLog = JSON.parse(fs.readFileSync("./storage/clientLog.json", "utf8"));
+    let clientLog = func.readFromFileSync("./storage/clientLog.json");
     
     const guildName = message.guild.name;
     const msgAuthor = message.author;
