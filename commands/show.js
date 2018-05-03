@@ -7,11 +7,10 @@ const   _ = require('lodash'),
         embed = require('../model/embeds'),
         func = require('../func/propFunctions');
         
-
 exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send('Fetching...', {code: 'asciidoc'})
     .then(msg => {
-        const clientLog = func.readFromFileSync('../storage/clientLog.json');
+        clientLog = func.readFromFileSync('./storage/clientLog.json');
         msg.edit(showUserLog(message, clientLog), {code: 'asciidoc'});
         message.react(command_success);
     })
@@ -51,7 +50,7 @@ exports.help = {
         }
         var response;
 
-        log(`Show command used by ${m.cyan.bold(message.author.tag)} to show data about: ${m.cyan.bold(userToShow.user.tag)} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
+        log(`Showing data about: ${m.cyan.bold(userToShow.user.tag)}`);
 
         const userRolesByID = userToShow._roles;
         const index = message.guild.roles;
@@ -68,7 +67,7 @@ exports.help = {
 
         index.forEach(element => {
             if(element.position === rollePos) arr = _.merge(element, arr);
-            });
+        });
 
         if(clientLog[guildName][id]) {
             let avatar = userToShow.user.avatarURL;
@@ -88,7 +87,7 @@ exports.help = {
                     null,
                     userToShow.user.avatarURL
                 )
-            ).then(msg => log(`Sent Message to: ${m.cyan.bold(message.author.tag)}`)).catch(console.error);
+            ).catch(console.error);
 
         } else {
             response = `I cannot find this person in my records. 😞`;
