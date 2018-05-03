@@ -108,6 +108,11 @@ module.exports = {
                 \n"ytKey": "###",
                 \n"nothing" : 0,
                 \n"botActivity": "Being a wee lil bitch",
+                \n\n"mysql" : {
+                    \n"host": "localhost",
+                    \n"user": "none",
+                    \n"password": "none"
+                \n},
                 \n\n"twitter_module" : {
                     \n"twitter_consumer_key": "###",
                     \n"twitter_consumer_secret": "###",
