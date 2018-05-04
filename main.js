@@ -59,6 +59,6 @@ setTimeout(function(){
             },60000);
       }
 
-      require('./util/mysqlConn');
+      //require('./util/mysqlConn');
 
 },25);
