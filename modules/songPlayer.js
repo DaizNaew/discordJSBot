@@ -36,7 +36,7 @@ module.exports = (client, message, voiceChannel, input, msg) => {
 
     })
     .catch(error => {
-
+        log.error(error);
     })
 
     
