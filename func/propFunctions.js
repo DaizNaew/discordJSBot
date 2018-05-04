@@ -111,7 +111,8 @@ module.exports = {
                 \n\n"mysql" : {
                     \n"host": "localhost",
                     \n"user": "none",
-                    \n"password": "none"
+                    \n"password": "none",
+                    \n"db": "none"
                 \n},
                 \n\n"twitter_module" : {
                     \n"twitter_consumer_key": "###",
