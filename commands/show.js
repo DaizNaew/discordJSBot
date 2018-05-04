@@ -48,26 +48,15 @@ exports.help = {
             id = mention.id;
             userToShow = mention;
         }
-        var response;
+        let response,
+            game_name = 'None';
+
+        if(!userToShow.user.presence.game != null) game_name = userToShow.user.presence.game.name;
 
         log(`Showing data about: ${m.cyan.bold(userToShow.user.tag)}`);
 
-        const userRolesByID = userToShow._roles;
-        const index = message.guild.roles;
-        let rollePos = 0;
-        let arr;
-
-        userRolesByID.forEach(roleIDs => {
-            index.forEach(element => {
-                if(element.id === roleIDs) {
-                    if(rollePos <= element.position) rollePos = element.position;
-                }
-            });
-        });
-
-        index.forEach(element => {
-            if(element.position === rollePos) arr = _.merge(element, arr);
-        });
+        let created_date = new Date(userToShow.user.createdAt).toLocaleString('en-us', {  year: 'numeric',  day: 'numeric', month: 'long' });
+        let joined_date = new Date(userToShow.joinedAt).toLocaleString('en-us', {  year: 'numeric',  day: 'numeric', month: 'long' });
 
         if(clientLog[guildName][id]) {
             let avatar = userToShow.user.avatarURL;
@@ -77,12 +66,14 @@ exports.help = {
                     null,
                     clientLog[guildName][id].usertag,
                     ['Server Name', Util.escapeMarkdown(guildName),false,
-                    'isBot',clientLog[guildName][id].clientisbot,true,
-                    'Amount of sent messages',clientLog[guildName][id].messagesSent,true,
-                    'Highest role on server',arr.name,true,
-                    'Role ID', arr.id,true],
+                    'isBot: ',clientLog[guildName][id].clientisbot,true,
+                    'Amount of sent messages: ',clientLog[guildName][id].messagesSent,true,
+                    'Highest role on server: ',userToShow.highestRole.name,true,
+                    'Currently playing: ', game_name,true, //delet this
+                    'User created at: ', created_date,true,
+                    'Joined this server at: ', joined_date ,true],
                     userToShow.displayHexColor,
-                    ['User created at: ' + clientLog[guildName][id].usercreatedate],
+                    null,
                     null,
                     null,
                     userToShow.user.avatarURL
@@ -92,6 +83,6 @@ exports.help = {
         } else {
             response = `I cannot find this person in my records. 😞`;
         }
-            return response;
+        return response;
     }
     
