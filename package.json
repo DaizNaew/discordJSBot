@@ -1,6 +1,6 @@
 {
   "name": "discordjsbot",
-  "version": "5.6.3.0",
+  "version": "5.6.3.6",
   "description": "A discord bot writte in nodeJS to handle a lot of management and has some fun features",
   "main": "main.js",
   "dependencies": {
