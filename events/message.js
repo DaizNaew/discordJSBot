@@ -38,6 +38,22 @@ module.exports = (message) => {
             enabled,
             response;
 
+        if(!serverSettings[cmd.help.name]) {
+            if(!serverSettings[cmd.help.name]) {
+                serverSettings[cmd.help.name] = { 'command_Name' : cmd.help.name };
+                serverSettings[cmd.help.name]['guilds'] = new Object;
+                client.guilds.map((g) => {
+                    serverSettings[cmd.help.name][`guilds`][g.id] = { 'guild_Name' : g.name }
+                    serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = new Object;
+                    serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = {
+                        'enabled' : cmd.conf.enabled,
+                        'perm_Level' : cmd.conf.permLevel,
+                        'custom_Text' : 'custom'
+                    }
+                });
+            }
+            func.writeToFileSync('./config/serverSettings.json',func.beautifyJSON(serverSettings));
+        }
         if(!message.guild) {
             enabled = cmd.conf.enabled;
             permLevel = cmd.conf.permLevel;
