@@ -11,18 +11,23 @@ exports.run = (client, message, params, command_success, command_fail) => {
     .then(msg => {
         defChan = require('../storage/defaultChannel.json')
         let suggest_channel_1 = client.channels.get(defChan['DBot'].requestsChannel);
-        suggest_channel_1.send(`${message.author.tag} suggested :: ${input}`, {code:'asciidoc'});
         msg.edit('Your suggestion has been logged, thank you.');
         log(`${m.cyan.bold(input)} were suggested by ${m.cyan.bold(message.author.tag)}`);
-        length = Object.keys(suggestionBox).length;
-        if(!suggestionBox[length]) {
-            suggestionBox[length] = {
-                user: message.author.tag,
-                suggestion : input 
+        suggest_channel_1.send(`${message.author.tag} suggested :: ${input}`, {code:'asciidoc'})
+        .then(suggest_message => {
+            length = Object.keys(suggestionBox).length;
+            if(!suggestionBox[length]) {
+                suggestionBox[length] = {
+                    user: message.author.tag,
+                    suggestion : input,
+                    message_id : suggest_message.id
+                }
             }
-        }
-        func.writeToFileAsync('./storage/suggestionBox.json',func.beautifyJSON(suggestionBox) );
-        message.react(command_success);
+            func.writeToFileAsync('./storage/suggestionBox.json',func.beautifyJSON(suggestionBox) );
+            message.react(command_success);
+        })
+        
+       
     })
     .catch(err => {
         log.error(`Suggestion module failed with [${err}]`);
