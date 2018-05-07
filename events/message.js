@@ -20,7 +20,7 @@ module.exports = (message) => {
     if(!message.guild) {
         prefix = settings.prefix;
     } else {
-        prefix = serverSettings[message.guild.id]['configs'][0].prefix;
+        prefix = serverSettings[message.guild.id]['configs'].prefix;
     }
     
     if (!message.content.startsWith(prefix)) return logging(message);
@@ -43,8 +43,8 @@ module.exports = (message) => {
             permLevel = cmd.conf.permLevel;
             response = message.author;
         } else {
-            enabled = serverSettings[message.guild.id]['commands'][cmd.help.name][0].enabled;
-            permLevel = serverSettings[message.guild.id]['commands'][cmd.help.name][0].permLevel;
+            enabled = serverSettings[cmd.help.name]['guilds'][message.guild.id]['conf'].enabled;
+            permLevel = serverSettings[cmd.help.name]['guilds'][message.guild.id]['conf'].permLevel;
             response = message.channel;
         }
         if(!enabled) return response.send('This command has been disabled by an admin on this server');

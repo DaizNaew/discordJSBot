@@ -11,7 +11,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
     .then(msg => {
         let serverSettings = func.readFromFileSync("./config/serverSettings.json");
 
-        serverSettings[message.guild.id]['configs'][0].prefix = input;
+        serverSettings[message.guild.id]['configs'].prefix = input;
         func.writeToFileAsync('./config/serverSettings.json', func.beautifyJSON(serverSettings));
         log.warning(`Prefix for ${m.cyan.bold(message.guild.name)} is now ${m.cyan.bold(input)}`);
         msg.edit(`Prefix set to ${input}`);

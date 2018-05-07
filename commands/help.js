@@ -6,7 +6,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
     if (!params[0]) {
 
         prefix = settings.prefix;
-        if(message.guild) prefix = serverSettings[message.guild.id]['configs'][0].prefix;
+        if(message.guild) prefix = serverSettings[message.guild.id]['configs'].prefix;
 
         const commandNames = Array.from(client.commands.keys());
         enabledCommands = `= Enabled Commands =`;
