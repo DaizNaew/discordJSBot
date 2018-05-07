@@ -18,12 +18,18 @@ exports.run = (client, message, params, command_success, command_fail) => {
             suggestion_to_show = suggestionBox[params[0]];
             msg.edit(`${suggestion_to_show.user} suggested :: ${suggestion_to_show.suggestion}`, {code:'asciidoc'});
         } else if(params[0] === 'total' || params[0] === 'list') {
+            msg.edit(`Theres a total of ${Object.keys(suggestionBox).length-1} suggestions in the suggestion box, type ${serverSettings[message.guild.id]['configs'].prefix}suggestion <number> to get a specific suggestion, or just ${serverSettings[message.guild.id]['configs'].prefix}suggestion for a random one
+            \nSending a private message with all the suggestions, embrace the spam`);
+            temp_response = `== Showing all suggestions ==`;
+            for(i = 1; i <= Object.keys(suggestionBox).length-1; i++ ) {
+                temp_response += `\n${suggestionBox[Object.keys(suggestionBox).length-i].user} suggested :: ${suggestionBox[Object.keys(suggestionBox).length-i].suggestion}`
+            }
+            message.author.send(temp_response,{code:'asciidoc'});
+        } else if(params[0] === 'latest' || params[0] === 'top') {
             temp_response = `== Showing the 5 latest suggestions ==`;
             for(i = 1; i <= 5; i++ ) {
                 temp_response += `\n${suggestionBox[Object.keys(suggestionBox).length-i].user} suggested :: ${suggestionBox[Object.keys(suggestionBox).length-i].suggestion}`
             }
-            msg.edit(`Theres a total of ${Object.keys(suggestionBox).length-1} suggestions in the suggestion box, type ${serverSettings[message.guild.id]['configs'].prefix}suggestion <number> to get a specific suggestion, or just ${serverSettings[message.guild.id]['configs'].prefix}suggestion for a random one
-            `)
             msg.channel.send(temp_response,{code:'asciidoc'});
         }
         else {
