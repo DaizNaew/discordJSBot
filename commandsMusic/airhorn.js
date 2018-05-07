@@ -1,7 +1,7 @@
-//Local Files
-const log = require('../enum/consoleLogging'),
-//NodeJS Modules
-      m = require('chalk');
+        //Local Files
+const   log = require('../enum/consoleLogging'),
+        //NodeJS Modules
+        m = require('chalk');
 
 exports.run = (client, message, params, command_success, command_fail) => {
 

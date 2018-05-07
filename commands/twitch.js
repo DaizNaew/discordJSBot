@@ -1,9 +1,10 @@
-        //Local files
+        //Local Files
 const   log = require('../enum/consoleLogging'),
         cEmbed = require('../model/embeds'),
+        func = require('../func/propFunctions'),
+        //NodeJS Modules
         Discord = require('discord.js'),
-        moment = require('moment'),
-        func = require('../func/propFunctions');
+        moment = require('moment');
 
 exports.run = (client, message, params, command_success, command_fail) => {
 

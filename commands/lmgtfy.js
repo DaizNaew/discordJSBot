@@ -1,5 +1,7 @@
-const m = require('chalk'),
-      log = require('../enum/consoleLogging');
+        //Local Files
+const   log = require('../enum/consoleLogging'),
+        //NodeJS Modules
+        m = require('chalk');
 
 exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send('Googling...')

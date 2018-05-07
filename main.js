@@ -1,15 +1,13 @@
 //NPM Node modules
 const Discord = require("discord.js"),
-      fs = require("fs"),
       m = require("chalk"),
-      _ = require("lodash"),
 //Design the client
       client = new Discord.Client(),
 //Local files
       func = require('./func/propFunctions'),
       regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
 
-func.constructConfig('./config.json')
+func.constructConfig('./config.json');
 
 setTimeout(function(){
 

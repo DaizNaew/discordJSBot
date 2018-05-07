@@ -1,7 +1,9 @@
-const log = require('../enum/consoleLogging'),
-      func = require('../func/propFunctions'),
-      m = require('chalk'),
-      _ = require('lodash');
+        //Local Files
+const   log = require('../enum/consoleLogging'),
+        func = require('../func/propFunctions'),
+        //NodeJS Modules
+        m = require('chalk'),
+        _ = require('lodash');
 
 exports.run = (client, message, params, command_success, command_fail) => {
     let suggestionBox = func.readFromFileSync("./storage/suggestionBox.json", "utf8"),

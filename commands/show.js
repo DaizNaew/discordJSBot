@@ -1,11 +1,12 @@
-        //NodeJS modules
-const   _ = require('lodash'),
-        m = require('chalk'),
-        {Util} = require('discord.js'),
         //Local files
-        log = require('../enum/consoleLogging'),
+const   log = require('../enum/consoleLogging'),
         embed = require('../model/embeds'),
-        func = require('../func/propFunctions');
+        func = require('../func/propFunctions'),
+        //NodeJS modules
+        _ = require('lodash'),
+        m = require('chalk'),
+        {Util} = require('discord.js');
+        
         
 exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send('Fetching...', {code: 'asciidoc'})

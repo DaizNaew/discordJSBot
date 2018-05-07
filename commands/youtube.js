@@ -1,6 +1,8 @@
-const m = require('chalk'),
-      log = require('../enum/consoleLogging'),
-      func = require('../func/propFunctions');
+        //Local Files
+const   log = require('../enum/consoleLogging'),
+        func = require('../func/propFunctions'),
+        //NodeJS Modules
+        m = require('chalk');
 
 exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send('Fetching youtube video...')

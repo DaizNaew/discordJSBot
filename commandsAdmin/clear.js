@@ -1,6 +1,8 @@
-const _ = require('lodash'),
-      log = require('../enum/consoleLogging'),
-      m = require('chalk');
+        //Local Files
+const   log = require('../enum/consoleLogging'),
+        //NodeJS Modules
+        _ = require('lodash'),
+        m = require('chalk');
 
 exports.run = (client, message, params, command_success, command_fail) => {
     let canManageMessages = message.member.permissions.has("MANAGE_MESSAGES", true);

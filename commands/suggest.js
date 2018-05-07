@@ -1,7 +1,9 @@
-const m = require('chalk'),
-      log = require('../enum/consoleLogging'),
-      func = require('../func/propFunctions');
-
+        //Local Files
+const   log = require('../enum/consoleLogging'),
+        func = require('../func/propFunctions'),
+        //NodeJS Modules
+        m = require('chalk');
+      
 exports.run = (client, message, params, command_success, command_fail) => {
     if(!params[0]) return message.channel.send('You need to actually suggest something');
     let suggestionBox = func.readFromFileSync("./storage/suggestionBox.json", "utf8");

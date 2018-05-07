@@ -1,5 +1,5 @@
         //Local files
-const log = require('../enum/consoleLogging'),
+const   log = require('../enum/consoleLogging'),
         cEmbed = require('../model/embeds');
 
 exports.run = (client, message, params, command_success, command_fail) => {

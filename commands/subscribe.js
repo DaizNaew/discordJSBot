@@ -1,8 +1,9 @@
-        //NodeJS modules
-const   m = require('chalk'),
+        
         //Local files
-        log = require('../enum/consoleLogging'),
-        embed = require('../model/embeds');
+const   log = require('../enum/consoleLogging'),
+        embed = require('../model/embeds'),
+        //NodeJS modules
+        m = require('chalk');
 
 exports.run = (client, message, params, command_success, command_fail) => {
 

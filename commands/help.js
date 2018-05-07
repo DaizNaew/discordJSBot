@@ -1,4 +1,5 @@
 exports.run = (client, message, params, command_success, command_fail) => {
+            //Local Files
     const   settings = require('../config.json'),
             func = require('../func/propFunctions'),
             serverSettings = func.readFromFileSync('./config/serverSettings.json');

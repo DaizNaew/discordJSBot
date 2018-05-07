@@ -1,5 +1,5 @@
-const   Discord = require('discord.js'),
-        log = require('../enum/consoleLogging'),
+        //Local Files
+const   log = require('../enum/consoleLogging'),
         embed = require('../model/embeds');
 
 exports.run = (client, message, params, command_success, command_fail) => {

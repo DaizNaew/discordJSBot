@@ -1,6 +1,6 @@
         //local files
-const findWeather = require("../func/weatherFunc"),
-      log = require('../enum/consoleLogging');
+const   findWeather = require("../func/weatherFunc"),
+        log = require('../enum/consoleLogging');
 
 exports.run = (client, message, params, command_success, command_fail) => {
 

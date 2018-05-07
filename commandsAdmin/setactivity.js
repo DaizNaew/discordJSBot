@@ -1,5 +1,7 @@
+        //Local Files
 const   log = require('../enum/consoleLogging'),
         func = require('../func/propFunctions'),
+        //NodeJS Modules
         m = require('chalk'),
         fs = require('fs');
 

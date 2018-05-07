@@ -1,7 +1,8 @@
-const m = require('chalk'),
-      discord = require('discord.js'),
-      log = require('../enum/consoleLogging'),
-      func = require('../func/propFunctions');
+        //Local Files
+const   log = require('../enum/consoleLogging'),
+        func = require('../func/propFunctions'),
+        //NodeJS module
+        m = require('chalk');
 
 exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send('You can donate to the cause by visiting my patreon at: https://www.patreon.com/user?u=2748417');
