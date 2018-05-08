@@ -17,7 +17,7 @@
     "mysql": "^2.15.0",
     "nock": "^9.2.3",
     "node-gyp": "^3.6.2",
-    "node-opus": "^0.2.7",
+    "node-opus": "^0.3.0",
     "reaction-core": "^2.0.0",
     "rebuild": "^0.1.2",
     "twitter": "^1.7.1",
