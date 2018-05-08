@@ -1,6 +1,8 @@
-const m = require('chalk'),
-      log = require('../enum/consoleLogging'),
-      func = require('../func/propFunctions');
+        //Local Files
+const   log = require('../enum/consoleLogging'),
+        func = require('../func/propFunctions'),
+        //NodeJS Modules
+        m = require('chalk');
 
 exports.run = (client, message, params, command_success, command_fail) => {
 
@@ -11,11 +13,11 @@ exports.run = (client, message, params, command_success, command_fail) => {
     .then(msg => {
         let serverSettings = func.readFromFileSync("./config/serverSettings.json");
         try{
-            current_state = serverSettings[message.guild.id]['commands'][params[0]][0].enabled;
-            serverSettings[message.guild.id]['commands'][params[0]][0].enabled = !current_state;
+            current_state = serverSettings[params[0]]['guilds'][message.guild.id]['conf'].enabled;
+            serverSettings[params[0]]['guilds'][message.guild.id]['conf'].enabled = !current_state;
             func.writeToFileAsync('./config/serverSettings.json', func.beautifyJSON(serverSettings));
-            log.warning(`Toggled command ${params[0]} to enabled:${serverSettings[message.guild.id]['commands'][params[0]][0].enabled} for ${message.guild.name}`);
-            msg.edit(`Toggled command ${params[0]} to enabled:${serverSettings[message.guild.id]['commands'][params[0]][0].enabled}`);
+            log.warning(`Toggled command ${params[0]} to enabled:${serverSettings[params[0]]['guilds'][message.guild.id]['conf'].enabled} for ${message.guild.name}`);
+            msg.edit(`Toggled command ${params[0]} to enabled:${serverSettings[params[0]]['guilds'][message.guild.id]['conf'].enabled}`);
             message.react(command_success);
         } catch(error) {
             msg.edit(`The command [${params[0]}] you tried to toggle does not exist`);
@@ -26,7 +28,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 
 exports.conf = {
     enabled: true,
-    guildOnly: false,
+    guildOnly: true,
     aliases: [],
     permLevel: 0
 }

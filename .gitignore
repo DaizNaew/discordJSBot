@@ -12,3 +12,4 @@ commands/test.js
 .vscode
 settings.json
 storage/twitchFolk.json
+sprites/*

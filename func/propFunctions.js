@@ -63,29 +63,34 @@ module.exports = {
                 throw err;
             }
             log.warning(`${FilePos} does not exist, creating it.`);
-            guildList = new Object;
-            
-            client.guilds.map((g) => {
-                if(!guildList[g.id]) {
-                    guildList[g.id] = { 'name':g.name };
-                    guildList[g.id]['commands'] = new Object;
-                    client.commands.map((c) => {
-                        guildList[g.id]['commands'][c.help.name] = [];
-                        guildList[g.id]['commands'][c.help.name].push({
-                            enabled: c.conf.enabled,
-                            permLevel: c.conf.permLevel
-                        })
-                    });
-                    guildList[g.id]['configs'] = [];
-                    guildList[g.id]['configs'].push({
-                        "prefix": "!",
-                        "enable_twitter_module": true,
-                        "enable_twitch_module" : true,
-                        "enable_imgur_module" : true
+            commandList = new Object;
+
+            client.commands.map((c) => {
+                if(!commandList[c.help.name]) {
+                    commandList[c.help.name] = { 'command_Name' : c.help.name };
+                    commandList[c.help.name]['guilds'] = new Object;
+                    client.guilds.map((g) => {
+                        commandList[c.help.name][`guilds`][g.id] = { 'guild_Name' : g.name }
+                        commandList[c.help.name][`guilds`][g.id]['conf'] = new Object;
+                        commandList[c.help.name][`guilds`][g.id]['conf'] = {
+                            'enabled' : c.conf.enabled,
+                            'perm_Level' : c.conf.permLevel,
+                            'custom_Text' : 'custom'
+                        }
                     });
                 }
-            })
-            this.writeToFileSync(FilePos,this.beautifyJSON(guildList));
+            });
+            client.guilds.map((g) => {
+                commandList[g.id] = new Object;
+                commandList[g.id]['configs'] = new Object;
+                commandList[g.id]['configs'] = {
+                    "prefix": "!",
+                    "enable_twitter_module": true,
+                    "enable_twitch_module" : true,
+                    "enable_imgur_module" : true
+                };
+            });
+            this.writeToFileSync(FilePos,this.beautifyJSON(commandList));
             log.success(`Successfully created file at: ${FilePos}`);
         });
     },
@@ -108,6 +113,12 @@ module.exports = {
                 \n"ytKey": "###",
                 \n"nothing" : 0,
                 \n"botActivity": "Being a wee lil bitch",
+                \n\n"mysql" : {
+                    \n"host": "localhost",
+                    \n"user": "none",
+                    \n"password": "none",
+                    \n"db": "none"
+                \n},
                 \n\n"twitter_module" : {
                     \n"twitter_consumer_key": "###",
                     \n"twitter_consumer_secret": "###",

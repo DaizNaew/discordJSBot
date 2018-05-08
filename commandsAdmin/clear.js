@@ -1,6 +1,8 @@
-const _ = require('lodash'),
-      log = require('../enum/consoleLogging'),
-      m = require('chalk');
+        //Local Files
+const   log = require('../enum/consoleLogging'),
+        //NodeJS Modules
+        _ = require('lodash'),
+        m = require('chalk');
 
 exports.run = (client, message, params, command_success, command_fail) => {
     let canManageMessages = message.member.permissions.has("MANAGE_MESSAGES", true);
@@ -20,9 +22,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
             log.warning(`Cleared ${m.cyan.bold(messagecount)} ${more_than_one_message ? 'messages' : 'message'} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
             message.channel.send(`Deleted: ${messagecount} messages.👌`)
             .then(msg => {
-                setTimeout(function(){
-                    msg.delete();
-                }, 1750);
+                msg.delete(1750);
             })
             .catch(error => {
                 log.error(`Failed to delete my own message [${error}]`);

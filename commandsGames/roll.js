@@ -34,7 +34,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
         message.react(command_success);
     })
     .catch(error => {
-        message.channel.send('Something went wrong inside me. 😞 : \n '+ error);
+        message.channel.send('Please enter a valid roll command, like !roll 1d20');
         log(`Roll command failed to execute [${error}]`);
         message.react(command_fail);
     });

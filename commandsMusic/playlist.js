@@ -8,7 +8,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 }
 
 exports.conf = {
-    enabled: true,
+    enabled: false,
     guildOnly: true,
     aliases: ['queue', 'songs'],
     permLevel: 0

@@ -1,7 +1,9 @@
-const m = require('chalk'),
-      log = require('../enum/consoleLogging'),
-      func = require('../func/propFunctions'),
-      cEmbed = require('../model/embeds');
+        //local Files
+const   log = require('../enum/consoleLogging'),
+        func = require('../func/propFunctions'),
+        cEmbed = require('../model/embeds'),
+        //NodeJS Modules
+        m = require('chalk');
 
 exports.run = (client, message, params, command_success, command_fail) => {
 
@@ -90,7 +92,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 }
 
 exports.conf = {
-    enabled: true,
+    enabled: require('../config.json')['twitter_module'].enable_twitter_module,
     guildOnly: true,
     aliases: ['stalk'],
     permLevel: 0

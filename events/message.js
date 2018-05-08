@@ -20,7 +20,7 @@ module.exports = (message) => {
     if(!message.guild) {
         prefix = settings.prefix;
     } else {
-        prefix = serverSettings[message.guild.id]['configs'][0].prefix;
+        prefix = serverSettings[message.guild.id]['configs'].prefix;
     }
     
     if (!message.content.startsWith(prefix)) return logging(message);
@@ -38,13 +38,29 @@ module.exports = (message) => {
             enabled,
             response;
 
+        if(!serverSettings[cmd.help.name]) {
+            if(!serverSettings[cmd.help.name]) {
+                serverSettings[cmd.help.name] = { 'command_Name' : cmd.help.name };
+                serverSettings[cmd.help.name]['guilds'] = new Object;
+                client.guilds.map((g) => {
+                    serverSettings[cmd.help.name][`guilds`][g.id] = { 'guild_Name' : g.name }
+                    serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = new Object;
+                    serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = {
+                        'enabled' : cmd.conf.enabled,
+                        'perm_Level' : cmd.conf.permLevel,
+                        'custom_Text' : 'custom'
+                    }
+                });
+            }
+            func.writeToFileSync('./config/serverSettings.json',func.beautifyJSON(serverSettings));
+        }
         if(!message.guild) {
             enabled = cmd.conf.enabled;
             permLevel = cmd.conf.permLevel;
             response = message.author;
         } else {
-            enabled = serverSettings[message.guild.id]['commands'][cmd.help.name][0].enabled;
-            permLevel = serverSettings[message.guild.id]['commands'][cmd.help.name][0].permLevel;
+            enabled = serverSettings[cmd.help.name]['guilds'][message.guild.id]['conf'].enabled;
+            permLevel = serverSettings[cmd.help.name]['guilds'][message.guild.id]['conf'].permLevel;
             response = message.channel;
         }
         if(!enabled) return response.send('This command has been disabled by an admin on this server');
