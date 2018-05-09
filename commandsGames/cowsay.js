@@ -8,6 +8,7 @@ const   log = require('../enum/consoleLogging'),
 exports.run = (client, message, params, command_success, command_fail) => {
     if(!params[0]) return message.channel.send('The cow does not want to be mute');
     let input = params.slice(0).join(" ");
+    if(input.length > 50) return message.channel.send('The cow does not want to say this many characters, try with less');
     message.channel.send('Grassing on the fields...')
     .then(msg => {
         message.delete();
@@ -17,6 +18,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
     })
     .catch(err => {
         log.error(err);
+        
     })
 }
 
