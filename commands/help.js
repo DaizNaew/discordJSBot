@@ -2,6 +2,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
             //Local Files
     const   settings = require('../config.json'),
             func = require('../func/propFunctions'),
+            log = require('../enum/consoleLogging'),
             serverSettings = func.readFromFileSync('./config/serverSettings.json');
 
     if (!params[0]) {
@@ -17,15 +18,15 @@ exports.run = (client, message, params, command_success, command_fail) => {
         client.commands.map(
             (c) => {
             if(!message.guild) {disabledCommands =``;return enabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;}
-            if(!serverSettings[message.guild.id]['commands'][c.help.name][0].enabled) {
+            if(!serverSettings[c.help.name]['guilds'][message.guild.id].enabled) {
                 disabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;
             } else {
                 enabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;
             }
         });
         
-        message.author.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
-        message.react(command_success);
+        message.author.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' }).then(msg => message.react(command_success)).catch(err => {log.error(err); message.react(command_fail)});
+        
         
     } else {
         let command = params[0],
@@ -36,11 +37,11 @@ exports.run = (client, message, params, command_success, command_fail) => {
             let aliases = command.conf.aliases;
             if(to_show && to_show == 'show') 
             {
-                message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' });
+                message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' }).then(msg => message.react(command_success)).catch(err => {log.error(err); message.react(command_fail)});
             } else {
-               message.author.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' });
+               message.author.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' }).then(msg => message.react(command_success)).catch(err => {log.error(err); message.react(command_fail)});
             }
-            message.react(command_success);
+            
         } else if (!client.commands.has(command)) {
             message.react(command_fail);
         }
