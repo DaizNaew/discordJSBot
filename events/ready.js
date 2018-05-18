@@ -53,12 +53,12 @@ module.exports = client => {
             //Checks Config Directories for JSON files
             func.constructServerSetting("./config/serverSettings.json", client)
             
-        }, 50);
+        }, 70);
     //End of error checking on storage
 
         setTimeout(function() {
             func.constructConfig("./config.json");
-        }, 85)
+        }, 95)
 
         setTimeout(function() {
             console.log();
