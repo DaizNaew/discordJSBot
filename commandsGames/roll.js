@@ -22,7 +22,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
         });
         if(debug === 1) {
             numbersJoined= numbers.split(" ");
-                numbersJoined.pop();numbersJoined.pop();
+                numbersJoined.pop();
                 numbers = numbersJoined.join(" ");
         }
 

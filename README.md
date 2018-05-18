@@ -28,5 +28,5 @@ Entirely 100% open source, but please respect the license shipped with the sourc
 - Weather functionality
 
 ## Requirement
-**Node.js 8.0.0 or newer is required.**
-**FFMPEG Binaries installed and in the path of your OS**
+**Node.js 8.0.0 or newer (Within the 8.x.x path though) is required.**
+**FFMPEG Binaries installed and in the path of your OS for the voice parts**

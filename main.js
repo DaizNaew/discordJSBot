@@ -5,6 +5,7 @@ const Discord = require("discord.js"),
       client = new Discord.Client(),
 //Local files
       func = require('./func/propFunctions'),
+      log = require('./enum/consoleLogging'),
       regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
 
 func.constructConfig('./config.json');
@@ -40,21 +41,30 @@ setTimeout(function(){
       //  ####   //
       /////////////
       if(config['twitter_module'].enable_twitter_module){
+            try {
             var twitter_module_interval = setInterval(function(){
                   require('./modules/twitterModule.js')(client)
                   .catch(error => {
                         log.error(error);
                   })
-            },60000*5);
+            },60000*5); 
+            } catch(error) {
+                  log.error(error);
+            }
+            
       }
       
       if(config['twitch_module'].enable_twitch_module){
+            try {
             var twitch_module_interval = setInterval(function(){
                   require('./modules/twitchModule.js')(client)
                   .catch(error => {
                         console.log(error);
                   })
             },60000);
+            } catch(error) {
+                  log.error(error);
+            }
       }
 
       //require('./util/mysqlConn');
