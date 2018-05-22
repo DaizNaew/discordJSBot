@@ -11,7 +11,6 @@ const m = require('../enum/consoleColour'),
 
 module.exports = (member) => {
     
-    const config = require('../config.json');
     twitchFolk = func.readFromFileSync("./storage/twitchFolk.json");
     user_to_follow = '';
     users_array = [];
