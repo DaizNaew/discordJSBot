@@ -7,6 +7,28 @@ const   Twitter = require('twitter'),
 module.exports = {
 
     /**
+     * Constructs an object used for handling login into twitter and performing a proper OAuth 1.0 authentication
+     * @returns {object} Returns a valid twitter user based on the inputted keys.
+     */
+
+    getClient:function(){
+        try {
+            config = require("../config.json");
+            var client = new Twitter({
+                consumer_key: config['twitter_module'].twitter_consumer_key,
+                consumer_secret: config['twitter_module'].twitter_consumer_secret,
+                access_token_key: config['twitter_module'].twitter_access_token_key,
+                access_token_secret: config['twitter_module'].twitter_access_token_secret
+            });
+            return client;
+
+        } catch(error) {
+            log.error(error);
+        }
+        
+    },
+
+    /**
      * Fetches a twitter user based on their screen name as shown on twitter
      * @param {string} user_to_search_for The user to lookup, based on their screen name
      * @returns {Promise} returns a promise for better async handling
@@ -23,28 +45,6 @@ module.exports = {
                 return resolve(response);
                 });
             });
-        } catch(error) {
-            log.error(error);
-        }
-        
-    },
-
-    /**
-     * Constructs an object used for handling login into twitter and performing a proper OAuth 1.0 authentication
-     * @returns {object} Returns a valid twitter user based on the inputted keys.
-     */
-
-    getClient:function(){
-        try {
-            config = require("../config.json");
-            var client = new Twitter({
-                consumer_key: config['twitter_module'].twitter_consumer_key,
-                consumer_secret: config['twitter_module'].twitter_consumer_secret,
-                access_token_key: config['twitter_module'].twitter_access_token_key,
-                access_token_secret: config['twitter_module'].twitter_access_token_secret
-            });
-            return client;
-
         } catch(error) {
             log.error(error);
         }

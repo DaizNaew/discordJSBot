@@ -40,6 +40,7 @@ setTimeout(function(){
       // Modules //
       //  ####   //
       /////////////
+      
       if(config['twitter_module'].enable_twitter_module){
             try {
             var twitter_module_interval = setInterval(function(){
