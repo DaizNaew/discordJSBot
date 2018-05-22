@@ -65,17 +65,4 @@ module.exports = client => {
             console.log();
             log.splitter("Starting normal usage logging");            
         }, 120);
-
-    /////////////
-    //  ####   //
-    // Modules //
-    //  ####   //
-    /////////////
-
-    //Twitch module
-    let timerTime = 1;
-
-    let calced_time = (1 * 1000) * 60;
-
-    //setInterval(twitch(msg,'16964788'), calced_time);
 }
