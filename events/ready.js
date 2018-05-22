@@ -41,6 +41,7 @@ module.exports = client => {
                 log.success("No errors found in config directory.\n");
             }
         });
+        //Checks Dependencies and directories
         setTimeout(function() {
             log.splitter('Populated Directories');
             //Checks Storage Directories for JSON files
