@@ -1,8 +1,6 @@
 const   Twitter = require('twitter'),
-        _ = require('lodash'),
         // Local files
-        log = require("../enum/consoleLogging"),
-        cEmbed = require('../model/embeds');
+        log = require("../enum/consoleLogging");
 
 module.exports = {
 
