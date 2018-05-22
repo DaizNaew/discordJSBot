@@ -5,7 +5,7 @@ const   log = require('../enum/consoleLogging'),
         m = require('chalk');
 
 exports.run = (client, message, params, command_success, command_fail) => {
-    if(!params[0]) return message.channel.send('The cow does not want to be mute');
+    if(!params[0]) return message.channel.send('I could not count any words to clap for');
     let input = params.slice(0).join(":clap:");
     message.channel.send('Counting words...')
     .then(msg => {
