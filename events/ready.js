@@ -41,6 +41,7 @@ module.exports = client => {
                 log.success("No errors found in config directory.\n");
             }
         });
+        //Checks Dependencies and directories
         setTimeout(function() {
             log.splitter('Populated Directories');
             //Checks Storage Directories for JSON files
@@ -53,28 +54,15 @@ module.exports = client => {
             //Checks Config Directories for JSON files
             func.constructServerSetting("./config/serverSettings.json", client)
             
-        }, 50);
+        }, 70);
     //End of error checking on storage
 
         setTimeout(function() {
             func.constructConfig("./config.json");
-        }, 85)
+        }, 95)
 
         setTimeout(function() {
             console.log();
             log.splitter("Starting normal usage logging");            
         }, 120);
-
-    /////////////
-    //  ####   //
-    // Modules //
-    //  ####   //
-    /////////////
-
-    //Twitch module
-    let timerTime = 1;
-
-    let calced_time = (1 * 1000) * 60;
-
-    //setInterval(twitch(msg,'16964788'), calced_time);
 }

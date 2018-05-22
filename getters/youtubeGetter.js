@@ -14,6 +14,12 @@ module.exports = (input,msg) => {
         type: 'video'
     };
     
+    /**
+     * Used to fetch a result from youtube, based on either title or link
+     * @param {string} input The title or URL to look for
+     * @returns {Promise} Returns a promise for better async handling
+     */
+
     return new Promise((resolve, reject) => {
         search(input, opts, function(err, results) {
             if(err) {
