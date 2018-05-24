@@ -40,7 +40,7 @@ module.exports = {
                     if(error) {
                         return reject(log.error('Failed to find the user'));
                     }
-                return resolve(response);
+                    return resolve(response);
                 });
             });
         } catch(error) {
@@ -62,7 +62,12 @@ module.exports = {
         try {
             var client = this.getClient();
             return new Promise((resolve, reject) => {
-                client.get('statuses/user_timeline', {screen_name: screen_name, count: count, max_id: max_id, since_id: since_id})
+                client.get('statuses/user_timeline', {
+                    screen_name: screen_name, 
+                    count: count, 
+                    max_id: max_id, 
+                    since_id: since_id
+                })
                 .then(tweet => {
                     return resolve(tweet[0]);
                 })

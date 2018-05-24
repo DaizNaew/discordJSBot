@@ -4,7 +4,7 @@ const chalk = require('chalk'),
 
 
 module.exports = (reaction, user, client) => {
-    let tempMsgID = func.readFromFileSync('./storage/tempMsgID.json');
+
     let isclient;
     let userid;
     let cmd = client.commands.get("help")

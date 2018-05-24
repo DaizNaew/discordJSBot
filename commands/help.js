@@ -18,7 +18,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
         client.commands.map(
             (c) => {
             if(!message.guild) {disabledCommands =``;return enabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;}
-            if(!serverSettings[c.help.name]['guilds'][message.guild.id].enabled) {
+            if(!serverSettings[c.help.name]['guilds'][message.guild.id]['conf'].enabled) {
                 disabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;
             } else {
                 enabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;
@@ -26,7 +26,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
         });
         
         message.author.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' }).then(msg => message.react(command_success)).catch(err => {log.error(err); message.react(command_fail)});
-        
         
     } else {
         let command = params[0],
