@@ -14,7 +14,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
         limit:messagecount+1
     })
     .then(msg => {
-
         message.channel.bulkDelete(msg)
         .then(function() {
             let more_than_one_message = false;
@@ -22,7 +21,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
             log.warning(`Cleared ${m.cyan.bold(messagecount)} ${more_than_one_message ? 'messages' : 'message'} in ${m.cyan.bold(message.channel.name)} on ${m.cyan.bold(message.guild.name)}`);
             message.channel.send(`Deleted: ${messagecount} messages.👌`)
             .then(msg => {
-                msg.delete(1750);
+                msg.delete(1750)
             })
             .catch(error => {
                 log.error(`Failed to delete my own message [${error}]`);
@@ -34,7 +33,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
             message.react(command_fail);
             log.error(error);
         });
-        
     })
     .catch(error => {
         log.error(`Failed to delete messages [${error}]`);
