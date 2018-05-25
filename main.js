@@ -41,6 +41,7 @@ setTimeout(function(){
       //  ####   //
       /////////////
       
+      /*
       if(config['twitter_module'].enable_twitter_module){
             try {
             var twitter_module_interval = setInterval(function(){
@@ -54,6 +55,7 @@ setTimeout(function(){
             }
             
       }
+      */
       
       if(config['twitch_module'].enable_twitch_module){
             try {

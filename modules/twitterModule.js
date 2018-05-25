@@ -1,5 +1,4 @@
-const   Twitter = require('twitter'),
-        _ = require('lodash'),
+const   _ = require('lodash'),
         log = require("../enum/consoleLogging"),
         func = require('../func/propFunctions'),
         cEmbed = require('../model/embeds');
@@ -7,14 +6,12 @@ const   Twitter = require('twitter'),
 module.exports = (member) => {
         client = require('../getters/twitterGetter').getClient();
         twitFolk = func.readFromFileSync("./storage/twitterFolk.json");
-        strim = null;
         user_to_follow = '';
         users_array = [];
         for(element in twitFolk) {
             user_to_follow += element+',';
             users_array.push(element);
         }
-        if(strim) delete strim;
         return new Promise((resolve, reject) => {
             try {
                 return resolve(client.stream('statuses/filter', {follow: user_to_follow },  function(stream) {
