@@ -62,11 +62,11 @@ setTimeout(function(){
             var twitch_module_interval = setInterval(function(){
                   require('./modules/twitchModule.js')(client)
                   .catch(error => {
-                        console.log(error);
+                        log.error('[Twitch Module] '+error);
                   })
             },60000);
             } catch(error) {
-                  log.error(error);
+                  log.error('[Twitch Module] '+error);
             }
       }
 

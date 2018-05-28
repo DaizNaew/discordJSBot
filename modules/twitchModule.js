@@ -88,14 +88,14 @@ module.exports = (member) => {
                         return;
                     }
                 }).catch(error => {
-                    log.error(error);
+                    log.error('[Twitch Module] '+error);
                     message.react(command_fail);
                 })
             }) 
             
         })
         .catch(error => {
-        log.error(error);
+        log.error('[Twitch Module] '+error);
         }));
     } catch(error) {
         return reject((error));
