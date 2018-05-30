@@ -1,7 +1,7 @@
 const   logging = require('../enum/logging'),
-        m = require('chalk'),
         log = require('../enum/consoleLogging'),
-        func = require('../func/propFunctions');
+        func = require('../func/propFunctions'),
+        m = require('chalk');
 
 module.exports = (message) => {
     const settings = require('../config.json');
@@ -22,8 +22,10 @@ module.exports = (message) => {
     } else {
         prefix = serverSettings[message.guild.id]['configs'].prefix;
     }
-    
-    if (!message.content.startsWith(prefix)) return logging(message);
+
+    logging(message);
+    if (!message.content.startsWith(prefix)) return;
+
     const command = message.content.split(' ')[0].slice(prefix.length).toLowerCase();
     const params = message.content.split(' ').slice(1);
 
@@ -72,7 +74,6 @@ module.exports = (message) => {
         if(message.guild) guildName = `on ${m.cyan.bold(message.guild.name)}`;
         if(message.channel.name) channelName = message.channel.name;
         log(`${m.cyan.bold(cmd.help.name)} command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(channelName)} ${guildName}`);
-        logging(message);
         //message.react(command_success);
         delete serverSettings;
     }
