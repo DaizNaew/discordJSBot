@@ -53,6 +53,7 @@ module.exports = {
         });
     },
 
+    //Function to construct a file for handling server specific settings
     constructServerSetting:function(FilePos, client) {
         fs.open(FilePos, 'wx', (err, fd) => {
             if (err) {
@@ -140,6 +141,8 @@ module.exports = {
         });
 
     },
+    
+    //Function to convert seconds to Hours, Minutes and Seconds and then format it in proper string
     secondsToHms:function (d) {
         d = Number(d);
         var h = Math.floor(d / 3600);

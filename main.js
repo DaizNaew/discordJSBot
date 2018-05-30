@@ -41,6 +41,7 @@ setTimeout(function(){
       //  ####   //
       /////////////
       
+      /*
       if(config['twitter_module'].enable_twitter_module){
             try {
             var twitter_module_interval = setInterval(function(){
@@ -54,17 +55,18 @@ setTimeout(function(){
             }
             
       }
+      */
       
       if(config['twitch_module'].enable_twitch_module){
             try {
             var twitch_module_interval = setInterval(function(){
                   require('./modules/twitchModule.js')(client)
                   .catch(error => {
-                        console.log(error);
+                        log.error('[Twitch Module] '+error);
                   })
             },60000);
             } catch(error) {
-                  log.error(error);
+                  log.error('[Twitch Module] '+error);
             }
       }
 

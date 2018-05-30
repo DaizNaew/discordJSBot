@@ -37,7 +37,7 @@ module.exports = (message) => {
          
             clientLog[guildName][authID].messagesSent++;
         
-            func.writeToFileAsync('./storage/clientLog.json', func.beautifyJSON(clientLog));
+            func.writeToFileSync('./storage/clientLog.json', func.beautifyJSON(clientLog));
         
         }
 
