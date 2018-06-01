@@ -9,7 +9,7 @@ const   log = require('../enum/consoleLogging'),
  * @returns {promise} returns a promise that can be handled by another module
  */
 
-module.exports = function() {
+module.exports = () => {
     return ax({
         method:'get',
         baseURL: 'https://icanhazdadjoke.com/',
