@@ -56,15 +56,21 @@ setTimeout(function(){
             
       }
       */
+
+      let delayTime = 60000;
       
       if(config['twitch_module'].enable_twitch_module){
             try {
             var twitch_module_interval = setInterval(function(){
-                  require('./modules/twitchModule.js')(client)
+                  require('./modules/twitchModule.js')(client).
+                  then(()=>{
+                        delayTime = 60000;
+                  })
                   .catch(error => {
                         log.error('[Twitch Module] '+error);
+                        delayTime = 600000;
                   })
-            },60000);
+            },delayTime);
             } catch(error) {
                   log.error('[Twitch Module] '+error);
             }
