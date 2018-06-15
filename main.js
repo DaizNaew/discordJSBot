@@ -30,7 +30,7 @@ setTimeout(function(){
       });
 
       client.login(config.token)
-      .catch( error => {
+      .catch( () => {
             console.log('You need to setup the config file before proceeding to run this bot');
             process.exit();
       });
