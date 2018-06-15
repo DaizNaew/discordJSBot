@@ -51,8 +51,8 @@ exports.help = {
         }
         let response,
             game_name = 'None';
-
-        if(!userToShow.user.presence.game != null) game_name = userToShow.user.presence.game.name;
+            
+        if(userToShow.user.presence.game != null) game_name = userToShow.user.presence.game.name;
 
         log(`Showing data about: ${m.cyan.bold(userToShow.user.tag)}`);
 
@@ -77,10 +77,9 @@ exports.help = {
                     null,
                     null,
                     null,
-                    userToShow.user.avatarURL
+                    avatar
                 )
             ).catch(console.error);
-
         } else {
             response = `I cannot find this person in my records. 😞`;
         }
