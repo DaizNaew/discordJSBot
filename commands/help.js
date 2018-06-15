@@ -17,7 +17,10 @@ exports.run = (client, message, params, command_success, command_fail) => {
 
         client.commands.map(
             (c) => {
-            if(!message.guild) {disabledCommands =``;return enabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;}
+            if(!message.guild) {
+                disabledCommands =``;
+                return enabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;
+            }
             if(!serverSettings[c.help.name]['guilds'][message.guild.id]['conf'].enabled) {
                 disabledCommands += `\n${prefix}${c.help.name}${' '.repeat(longest - c.help.name.length)} :: ${c.help.description}`;
             } else {
@@ -25,7 +28,9 @@ exports.run = (client, message, params, command_success, command_fail) => {
             }
         });
         
-        message.author.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' }).then(msg => message.react(command_success)).catch(err => {log.error(err); message.react(command_fail)});
+        message.author.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' })
+        .then(() => message.react(command_success))
+        .catch(err => {log.error(err); message.react(command_fail)});
         
     } else {
         let command = params[0],
@@ -36,9 +41,13 @@ exports.run = (client, message, params, command_success, command_fail) => {
             let aliases = command.conf.aliases;
             if(to_show && to_show == 'show') 
             {
-                message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' }).then(msg => message.react(command_success)).catch(err => {log.error(err); message.react(command_fail)});
+                message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' })
+                .then(() => message.react(command_success))
+                .catch(err => {log.error(err); message.react(command_fail)});
             } else {
-               message.author.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' }).then(msg => message.react(command_success)).catch(err => {log.error(err); message.react(command_fail)});
+               message.author.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' })
+               .then(() => message.react(command_success))
+               .catch(err => {log.error(err); message.react(command_fail)});
             }
             
         } else if (!client.commands.has(command)) {
