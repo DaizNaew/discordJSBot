@@ -1,5 +1,6 @@
         //Local Files
-const   log = require('../enum/consoleLogging');
+const   log = require('../enum/consoleLogging'),
+        func = require('../func/propFunctions');
 
 exports.run = (client, message, params, command_success, command_fail) => {
 
@@ -24,7 +25,8 @@ exports.conf = {
     enabled: true,
     guildOnly: true,
     aliases: [],
-    permLevel: 0
+    permLevel: 0,
+    category: func.getDirForCategory(__dirname)
 }
 
 exports.help = {

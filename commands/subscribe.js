@@ -2,6 +2,7 @@
         //Local files
 const   log = require('../enum/consoleLogging'),
         embed = require('../model/embeds'),
+        func = require('../func/propFunctions'),
         //NodeJS modules
         m = require('chalk');
 
@@ -73,7 +74,8 @@ exports.conf = {
    enabled: true,
    guildOnly: true,
    aliases: ['notify'],
-   permLevel: 0
+   permLevel: 0,
+   category: func.getDirForCategory(__dirname)
 }
 
 exports.help = {

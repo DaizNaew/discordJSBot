@@ -1,5 +1,6 @@
         //Local Files
 const   log = require('../enum/consoleLogging'),
+        func = require('../func/propFunctions'),
         //NodeJS Modules
         _ = require('lodash'),
         m = require('chalk');
@@ -45,7 +46,8 @@ exports.conf = {
     enabled: true,
     guildOnly: true,
     aliases: ['purge'],
-    permLevel: 0
+    permLevel: 0,
+    category: func.getDirForCategory(__dirname)
 }
 
 exports.help = {

@@ -1,5 +1,6 @@
         //Local Files
 const   log = require('../enum/consoleLogging'),
+        func = require('../func/propFunctions'),
         //NodeJS Modules
         m = require('chalk'),
         _ = require('lodash');
@@ -54,7 +55,8 @@ exports.conf = {
     enabled: require('../config.json')['imgur_module'].enable_imgur_module,
     guildOnly: true,
     aliases: ['imgsearch','image','img'],
-    permLevel: 0
+    permLevel: 0,
+    category: func.getDirForCategory(__dirname)
 }
 
 exports.help = {

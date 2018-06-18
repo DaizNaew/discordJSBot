@@ -1,6 +1,7 @@
         //Local files
 const   log = require('../enum/consoleLogging'),
-        cEmbed = require('../model/embeds');
+        cEmbed = require('../model/embeds'),
+        func = require('../func/propFunctions');
 
 exports.run = (client, message, params, command_success, command_fail) => {
 
@@ -36,7 +37,8 @@ exports.conf = {
    enabled: true,
    guildOnly: false,
    aliases: ['github'],
-   permLevel: 0
+   permLevel: 0,
+   category: func.getDirForCategory(__dirname)
 }
 
 exports.help = {

@@ -174,7 +174,8 @@ exports.conf = {
    enabled: require('../config.json')['twitch_module'].enable_twitch_module,
    guildOnly: true,
    aliases: ['stream'],
-   permLevel: 0
+   permLevel: 0,
+   category: func.getDirForCategory(__dirname)
 }
 
 exports.help = {

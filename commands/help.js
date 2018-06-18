@@ -1,8 +1,10 @@
+const   func = require('../func/propFunctions'),
+        log = require('../enum/consoleLogging');
+
 exports.run = (client, message, params, command_success, command_fail) => {
+    
             //Local Files
     const   settings = require('../config.json'),
-            func = require('../func/propFunctions'),
-            log = require('../enum/consoleLogging'),
             serverSettings = func.readFromFileSync('./config/serverSettings.json');
 
     if (!params[0]) {
@@ -60,7 +62,8 @@ exports.conf = {
     enabled: true,
     guildOnly: false,
     aliases: ['h', 'halp', 'help', 'ineedanadult'],
-    permLevel: 0
+    permLevel: 0,
+    category: func.getDirForCategory(__dirname)
 };
 
 exports.help = {

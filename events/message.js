@@ -76,5 +76,6 @@ module.exports = (message) => {
         log(`${m.cyan.bold(cmd.help.name)} command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(channelName)} ${guildName}`);
         //message.react(command_success);
         delete serverSettings;
+        console.log(cmd.conf.category);
     }
 };
