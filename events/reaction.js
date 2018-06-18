@@ -13,58 +13,57 @@ module.exports = (reaction, user, client) => {
 
     if(reaction.me){
         if(isbot) return;
-        /*
+        
 
         if(reaction.emoji.name == "❓"){
-            cmd.run(client, reaction.message)
-            reaction.remove().catch(error);
-            reaction.remove(userid).catch(error);
+            cmd.default(client, reaction.message)
+            reaction.remove().catch(error => log.error(error));
+            reaction.remove(userid).catch(error => log.error(error));
         }
 
         if(reaction.emoji.name == "1⃣"){
             cmd.run(client, reaction.message, ["Standard"])
-            reaction.remove(userid).catch(error);
+            reaction.remove(userid).catch(error => log.error(error));
             reaction.message.reactions.map(q => {q.remove()})
             reaction.message.react("⬅");
         }
 
-
         if(reaction.emoji.name == "2⃣"){
             cmd.run(client, reaction.message, ["Admin"])
-            reaction.remove(userid).catch(error);
+            reaction.remove(userid).catch(error => log.error(error));
             reaction.message.reactions.map(q => {q.remove()})
             reaction.message.react("⬅");
         }
 
         if(reaction.emoji.name == "3⃣"){
-            cmd.run(client, reaction.message, ["Fun"])
-            reaction.remove(userid).catch(error);
+            cmd.run(client, reaction.message, ["Games"])
+            reaction.remove(userid).catch(error => log.error(error));
             reaction.message.reactions.map(q => {q.remove()})
             reaction.message.react("⬅");
         }
 
         if(reaction.emoji.name == "4⃣"){
-            cmd.run(client, reaction.message, ["NSFW"])
-            reaction.remove(userid).catch(error);
+            cmd.run(client, reaction.message, ["Music"])
+            reaction.remove(userid).catch(error => log.error(error));
             reaction.message.reactions.map(q => {q.remove()})
             reaction.message.react("⬅");
         }
-
+        /*
         if(reaction.emoji.name == "5⃣"){
-            cmd.run(client, reaction.message, ["Voice"])
-            reaction.remove(userid).catch(error);
+            cmd.run(client, reaction.message, ["Music"])
+            reaction.remove(userid).catch(error => log.error(error));
             reaction.message.reactions.map(q => {q.remove()})
             reaction.message.react("⬅");
         }
-
+        */
 
 
         if(reaction.emoji.name == "⬅"){
-            reaction.message.delete();
+            reaction.message.delete().catch(error => log.error(error));
             cmd.run(client, reaction.message)
         }
 
-        */
+        
        // console.log(reaction.message.id)
     }
 }

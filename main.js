@@ -18,6 +18,8 @@ setTimeout(function(){
 
       client.commands = new Discord.Collection();
       client.aliases = new Discord.Collection();
+      client.commandCategories = ['Standard','Music','Games','Admin']
+      client.commandCategoriesCollection = new Discord.Collection();
 
       require('./util/commandLoader')(client);
 

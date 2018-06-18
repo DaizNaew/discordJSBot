@@ -23,6 +23,14 @@ module.exports = (message) => {
         prefix = serverSettings[message.guild.id]['configs'].prefix;
     }
 
+    if(message.mentions.members != null) {
+        let member = message.mentions.members.first();
+        if(member){
+        if(member.id == client.user.id){
+            message.react('❓');
+        }}
+    }
+    
     logging(message);
     if (!message.content.startsWith(prefix)) return;
 
@@ -40,22 +48,8 @@ module.exports = (message) => {
             enabled,
             response;
 
-        if(!serverSettings[cmd.help.name]) {
-            if(!serverSettings[cmd.help.name]) {
-                serverSettings[cmd.help.name] = { 'command_Name' : cmd.help.name };
-                serverSettings[cmd.help.name]['guilds'] = new Object;
-                client.guilds.map((g) => {
-                    serverSettings[cmd.help.name][`guilds`][g.id] = { 'guild_Name' : g.name }
-                    serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = new Object;
-                    serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = {
-                        'enabled' : cmd.conf.enabled,
-                        'perm_Level' : cmd.conf.permLevel,
-                        'custom_Text' : 'custom'
-                    }
-                });
-            }
-            func.writeToFileSync('./config/serverSettings.json',func.beautifyJSON(serverSettings));
-        }
+        updateServerSettings(serverSettings, cmd);
+
         if(!message.guild) {
             enabled = cmd.conf.enabled;
             permLevel = cmd.conf.permLevel;
@@ -76,6 +70,24 @@ module.exports = (message) => {
         log(`${m.cyan.bold(cmd.help.name)} command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(channelName)} ${guildName}`);
         //message.react(command_success);
         delete serverSettings;
-        console.log(cmd.conf.category);
     }
-};
+}
+
+function updateServerSettings(serverSettings, cmd) {
+    if(!serverSettings[cmd.help.name]) {
+        if(!serverSettings[cmd.help.name]) {
+            serverSettings[cmd.help.name] = { 'command_Name' : cmd.help.name };
+            serverSettings[cmd.help.name]['guilds'] = new Object;
+            client.guilds.map((g) => {
+                serverSettings[cmd.help.name][`guilds`][g.id] = { 'guild_Name' : g.name }
+                serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = new Object;
+                serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = {
+                    'enabled' : cmd.conf.enabled,
+                    'perm_Level' : cmd.conf.permLevel,
+                    'custom_Text' : 'custom'
+                }
+            });
+        }
+        func.writeToFileSync('./config/serverSettings.json',func.beautifyJSON(serverSettings));
+    }
+}
