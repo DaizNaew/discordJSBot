@@ -9,7 +9,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
    if(params == false) {
        this.default(client,message);
    } else {
-       this.constrHelp(client,message,params,command_success, command_fail);
+       constrHelp(client,message,params,command_success, command_fail);
    }
 
    message.react(command_success);
@@ -67,7 +67,7 @@ exports.category = (client, message, category) => {
     message.edit(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
 }
 
-exports.constrHelp = (client, message, params, command_success, command_fail) => {
+function constrHelp(client, message, params, command_success, command_fail) {
     let command = params[0],
         to_show = params[1];
 
