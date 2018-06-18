@@ -67,21 +67,6 @@ exports.category = (client, message, category) => {
     message.edit(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
 }
 
-exports.conf = {
-    enabled: true,
-    guildOnly: false,
-    aliases: ['h', 'halp', 'help', 'ineedanadult'],
-    permLevel: 0,
-    category: func.getDirForCategory(__dirname)
-}
-
-exports.help = {
-    name: 'help',
-    description: 'Displays all the available commands',
-    usage: 'help <command> <show (to show it in channel, only works on specific commands)>'
-}
-
-
 exports.constrHelp = (client, message, params, command_success, command_fail) => {
     let command = params[0],
         to_show = params[1];
@@ -104,4 +89,18 @@ if (client.commands.has(command)) {
     } else if (!client.commands.has(command)) {
         message.react(command_fail);
     }
+}
+
+exports.conf = {
+    enabled: true,
+    guildOnly: false,
+    aliases: ['h', 'halp', 'help', 'ineedanadult'],
+    permLevel: 0,
+    category: func.getDirForCategory(__dirname)
+}
+
+exports.help = {
+    name: 'help',
+    description: 'Displays all the available commands',
+    usage: 'help <command> <show (to show it in channel, only works on specific commands)>'
 }
