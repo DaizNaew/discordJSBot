@@ -95,7 +95,8 @@ exports.conf = {
     enabled: require('../config.json')['twitter_module'].enable_twitter_module,
     guildOnly: true,
     aliases: ['stalk'],
-    permLevel: 0
+    permLevel: 0,
+    category: func.getDirForCategory(__dirname)
 }
 
 exports.help = {

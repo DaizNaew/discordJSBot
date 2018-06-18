@@ -1,5 +1,6 @@
         //local files
 const   findWeather = require("../func/weatherFunc"),
+        func = require('../func/propFunctions'),
         log = require('../enum/consoleLogging');
 
 exports.run = (client, message, params, command_success, command_fail) => {
@@ -24,7 +25,8 @@ exports.conf = {
     enabled: true,
     guildOnly: false,
     aliases: ['forecast'],
-    permLevel: 0
+    permLevel: 0,
+    category: func.getDirForCategory(__dirname)
 }
 
 exports.help = {

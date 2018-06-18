@@ -141,6 +141,19 @@ module.exports = {
         });
 
     },
+
+    getDirForCategory:function (directory) {
+
+        fullPath = directory;
+        path = fullPath.split("\\");
+        cwd = path[path.length-1];
+    
+        category = cwd.replace('commands','');
+    
+        if(category == '') category = 'Standard';
+        return category;
+    
+    },
     
     //Function to convert seconds to Hours, Minutes and Seconds and then format it in proper string
     secondsToHms:function (d) {

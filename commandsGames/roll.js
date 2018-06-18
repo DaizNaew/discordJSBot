@@ -1,5 +1,6 @@
         //Local files
 const   log = require("../enum/consoleLogging"),
+        func = require('../func/propFunctions'),
         //NodeJS Modules
         _ = require("lodash");
 
@@ -44,7 +45,8 @@ exports.conf = {
     enabled: true,
     guildOnly: false,
     aliases: ['flip'],
-    permLevel: 0
+    permLevel: 0,
+    category: func.getDirForCategory(__dirname)
 }
 
 exports.help = {

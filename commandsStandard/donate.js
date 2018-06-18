@@ -1,18 +1,17 @@
         //Local Files
-const   log = require('../enum/consoleLogging'),
-        func = require('../func/propFunctions'),
-        //NodeJS module
-        m = require('chalk');
+const   func = require('../func/propFunctions');
 
-exports.run = (client, message, params, command_success, command_fail) => {
+exports.run = (client, message, params, command_success) => {
     message.channel.send('You can donate to the cause by visiting my patreon at: https://www.patreon.com/user?u=2748417');
+    message.react(command_success);
 }
 
 exports.conf = {
     enabled: true,
     guildOnly: false,
     aliases: ['support'],
-    permLevel: 0
+    permLevel: 0,
+    category: func.getDirForCategory(__dirname)
 }
 
 exports.help = {

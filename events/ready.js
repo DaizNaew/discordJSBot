@@ -6,10 +6,6 @@ module.exports = client => {
 
     settings = require('../config.json');
 
-    //Sets a default channel and creates a timestamp from that
-    const channel = client.channels.get('411571330585067530');
-    const date = new Date(channel.createdTimestamp);
-
     //Sets the activity of the bot
     client.user.setActivity(settings.botActivity);
 

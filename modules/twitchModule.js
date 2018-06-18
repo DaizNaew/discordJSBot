@@ -74,6 +74,7 @@ module.exports = (member) => {
                             func.writeToFileSync("./storage/twitchFolk.json", func.beautifyJSON(twitchFolk));
                             
                         })
+                        .catch(err => log.error(err));
                     } else if (response == undefined && twitchFolk[result.id].live == true) {
                         for(ele in twitchFolk) {
                             if(ele == result.id) {
