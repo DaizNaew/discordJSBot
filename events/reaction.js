@@ -5,7 +5,6 @@ const chalk = require('chalk'),
 
 module.exports = (reaction, user, client) => {
 
-    let isclient;
     let userid;
     let cmd = client.commands.get("help")
     reaction.users.map(r => {isbot = r.bot; userid = r.id})
@@ -60,8 +59,5 @@ module.exports = (reaction, user, client) => {
             reaction.message.delete().catch(error => log.error(error));
             cmd.default(client, reaction.message)
         }
-
-        
-       // console.log(reaction.message.id)
     }
 }

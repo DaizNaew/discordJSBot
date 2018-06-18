@@ -4,9 +4,9 @@ const   func = require('../func/propFunctions'),
         _ = require('lodash');
 
 exports.run = (client, message, params, command_success, command_fail) => {
-    
+
    //constrHelp(client, message, params, command_success, command_fail);
-   if(!params) {
+   if(params == false) {
        this.default(client,message);
    } else {
        this.constrHelp(client,message,params,command_success, command_fail);
