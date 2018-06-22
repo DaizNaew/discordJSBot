@@ -35,8 +35,8 @@ exports.run = (client, message, params, command_success, command_fail) => {
         message.react(command_success);
     })
     .catch(error => {
-        message.channel.send('Please enter a valid roll command, like !roll 1d20');
-        log(`Roll command failed to execute [${error}]`);
+        message.channel.send(`Command Failed:: Please enter a valid roll command, like !roll 1d20`, {code:'asciidoc'});
+        log.error(`Roll command failed to execute [${error}]`);
         message.react(command_fail);
     });
 }
@@ -44,7 +44,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
     enabled: true,
     guildOnly: false,
-    aliases: ['flip'],
+    aliases: [],
     permLevel: 0,
     category: func.getDirForCategory(__dirname)
 }
