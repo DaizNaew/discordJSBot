@@ -31,8 +31,15 @@ setTimeout(function(){
             console.log(m.bgRed(e.replace(regToken, 'that was redacted')));
       });
 
-      client.login(config.token)
-      .catch( () => {
+      var logon_try = client.login(config.token);
+
+      logon_try
+      .catch( (error) => {
+            // ETIMEDOUT
+            // ENOTFOUND
+            if(error.code == 'ETIMEDOUT' || error.code == 'ENOTFOUND') {
+                  return log.error(error);
+            }
             console.log('You need to setup the config file before proceeding to run this bot');
             process.exit();
       });
