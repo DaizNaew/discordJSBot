@@ -11,9 +11,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
    } else {
        constrHelp(client,message,params,command_success, command_fail);
    }
-
-   message.react(command_success);
-
 }
 
 exports.default = (client, message) => {
@@ -37,6 +34,10 @@ exports.default = (client, message) => {
 }
 
 exports.category = (client, message, category) => {
+    constrCategory(client,message,category);
+}
+
+function constrCategory(client, message, category) {
     const   settings = require('../config.json'),
     serverSettings = func.readFromFileSync('./config/serverSettings.json');
 
@@ -64,12 +65,23 @@ exports.category = (client, message, category) => {
         }
     );
 
-    message.edit(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
+    if(message.author.id != client.id) {
+        message.channel.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' })
+    } else {
+        message.edit(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
+    }
+    
 }
 
 function constrHelp(client, message, params, command_success, command_fail) {
     let command = params[0],
         to_show = params[1];
+
+cat = command[0].toUpperCase() + command.slice(1).toLowerCase();
+
+if(client.commandCategories.includes(cat)) {
+    return constrCategory(client, message, cat);
+}
 
 if (client.commands.has(command)) {
     command = client.commands.get(command);

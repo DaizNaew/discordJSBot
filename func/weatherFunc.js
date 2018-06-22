@@ -33,7 +33,7 @@ module.exports = (client, message, input, msg) => {
         embed.addField("Temperature 🌡",current.temperature + ' Degrees Celsius',true);
         embed.addField("Feels like 🌡",current.feelslike + ' Degrees Celsius',true);
         embed.addField("Humidity 💧",current.humidity + ' %',false)
-        embed.setFooter('Last updated: ' + current.observationtime);
+        embed.setFooter('Powered by DiscordJS | This forecast were last updated: ' + current.observationtime,'https://i.imgur.com/wy9kt6e.png');
         msg.edit({embed});
     });
 }

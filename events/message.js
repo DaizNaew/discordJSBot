@@ -48,7 +48,7 @@ module.exports = (message) => {
             enabled,
             response;
 
-        updateServerSettings(serverSettings, cmd);
+        updateServerSettings(serverSettings, cmd, client);
 
         if(!message.guild) {
             enabled = cmd.conf.enabled;
@@ -73,7 +73,7 @@ module.exports = (message) => {
     }
 }
 
-function updateServerSettings(serverSettings, cmd) {
+function updateServerSettings(serverSettings, cmd, client) {
     if(!serverSettings[cmd.help.name]) {
         if(!serverSettings[cmd.help.name]) {
             serverSettings[cmd.help.name] = { 'command_Name' : cmd.help.name };
