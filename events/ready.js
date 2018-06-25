@@ -55,6 +55,7 @@ module.exports = client => {
 
         setTimeout(function() {
             func.constructConfig("./config.json");
+            func.constructUsers(client,"./storage");
         }, 95)
 
         setTimeout(function() {

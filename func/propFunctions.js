@@ -53,6 +53,37 @@ module.exports = {
         });
     },
 
+    //Function to construct data files for all users on all servers indefinetely, won't stop can't stop
+    constructUsers:function (client, filePos) {
+        this.checkDirectory(filePos+'/userStats',(err) => {
+            if(err) {
+                log.error(err);
+            }
+        });
+        client.guilds.map(g => {
+            this.checkDirectory(filePos+'/userStats'+'/'+g.id,(err) => {
+                if(err) {
+                    log.error(err);
+                }
+            });
+            g.members.map(u => {
+                this.checkDirectory(filePos+'/userStats'+'/'+g.id+'/'+u.id,(err) => {
+                    if(err) {
+                        log.error(err);
+                    }
+                });
+            })
+        })
+    },
+
+    addUser:function (member) {
+        this.checkDirectory('./storage'+'/userStats'+'/'+member.guild.id+'/'+member.id, (err) => {
+            if(err) {
+                log.error(err);
+            }
+        })
+    },
+
     //Function to construct a file for handling server specific settings
     constructServerSetting:function(FilePos, client) {
         fs.open(FilePos, 'wx', (err, fd) => {
