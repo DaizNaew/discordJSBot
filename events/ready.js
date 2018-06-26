@@ -42,7 +42,8 @@ module.exports = client => {
             log.splitter('Populated Directories');
             //Checks Storage Directories for JSON files
             func.checkAllDeps("./storage/defaultTwitch.json");
-            func.checkAllDeps("./storage/clientLog.json");
+            //ClientLog is now unused and has been replaced by the new userdata system
+            //func.checkAllDeps("./storage/clientLog.json");
             func.checkAllDeps("./storage/playlist.json");
             func.checkAllDeps("./storage/suggestionBox.json");
             func.checkAllDeps("./storage/twitterFolk.json");

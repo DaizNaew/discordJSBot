@@ -31,9 +31,12 @@ module.exports = (message) => {
             message.react('❓');
         }}
     }
-    
-    logging(message);
+
+    //The old logging system is now deprecated and has been replaced by userLogging system
+    //logging(message);
+
     userLogging(message);
+    
     if (!message.content.startsWith(prefix)) return;
 
     const command = message.content.split(' ')[0].slice(prefix.length).toLowerCase();
