@@ -7,14 +7,11 @@ const   log = require('../enum/consoleLogging'),
 
 exports.run = (client, message, params, command_success, command_fail) => {
 
-    
-
 message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts the match within 30 seconds, the match is canceled')
 .then(msg => {
 
     player1_obj = new Object;
     player2_obj = new Object;
-    gameOn = false;
 
     player1 = message.member;
     temp = setTimeout(()=> {
@@ -66,7 +63,7 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
             .then((collection) =>
             {
                 message.react(command_success)
-                
+
                 player2 = collection.first().member;
                 msg.edit(collection.first().member + ' Accepted the challenge!!!')
                 setTimeout(() => {
