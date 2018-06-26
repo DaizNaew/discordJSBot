@@ -17,14 +17,15 @@ CommandDefines = [
     'A group of Standard commands, these normally require no specific permissions to use',
     'A group of Musical commands, these might have some specific permissions to use',
     'A group of Gamey commands, these normally require no specific permissions to use, they are just for fun',
-    'A group of Admin commands, these all require a set of specific permission to use, reserved for admins and moderators'
+    'A group of Admin commands, these all require a set of specific permission to use, reserved for admins and moderators',
+    'A group of RPG commands, these commands are used if you have the RPG module enabled on the server'
 ]
 
 function loadCommands(type,client,iteration) {
 
     client.commandCategoriesCollection.set(type, {iteration:iteration, key:type, define:CommandDefines[iteration]});
 
-    const log_types = [log.cmd, log.mcmd, log.gcmd, log.acmd];
+    const log_types = [log.cmd, log.mcmd, log.gcmd, log.acmd, log.rpgcmd];
 
     fs.readdir(`./commands${type}/`, (err, files) => {
         if (err) log.error(err);

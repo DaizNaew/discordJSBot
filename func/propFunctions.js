@@ -24,6 +24,9 @@ module.exports = {
     returnUserDate:function(member){
         return this.readFromFileSync('./storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/"+'userData.json');
     },
+    returnRaceSheet:function(){
+        return this.readFromFileSync('./storage/RPG/races.json');
+    },
     
     //Function to check if a directory exists
     checkDirectory: function(directory, callback){
@@ -146,13 +149,30 @@ module.exports = {
     constructCharacterSheet:function(member, args){
         userData = this.returnUserDate(member);
         userData.RPGEnabled = true;
-        this.writeToFileSync(this.beautifyJSON('./storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/"+'userData.json'), userData);
+        userFolder = './storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/";
+        this.writeToFileSync(this.beautifyJSON(userFolder+'userData.json'), userData);
 
         characterSheet = new Object();
         characterSheet = {
             level: 1,
+            xp: 0,
             race: args[0],
+            statPoints: 0,
+            skillPoints: 0
         }
+
+        characterSheet.stats = {
+            strength: 0,
+            perception: 0,
+            endurance: 0,
+            charisma: 0,
+            agility: 0,
+            intelligence: 0,
+            luck: 0
+        }
+
+        this.writeToFileSync(this.beautifyJSON(userFolder+'characterSheet.json'), characterSheet);
+
     },
 
     //Function to construct a file for handling server specific settings

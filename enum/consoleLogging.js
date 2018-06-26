@@ -38,6 +38,10 @@ module.exports.acmd = (string) => {
     return log("🚨  "+m.cmdLoad(string));
 }
 
+module.exports.rpgcmd = (string) => {
+    return log("⚔️  "+m.cmdLoad(string));
+}
+
 module.exports.twitch = (string) => {
     return log("🎮  "+m.custom(string));
 }
