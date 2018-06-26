@@ -26,7 +26,7 @@ module.exports = client => {
             if(err) {
                 log.error("Something went wrong: ",err);
             } else {
-                log.success("No errors found in storage directory.");
+                log.success("No errors found in storage directory.\n");
             }
         });
         //Checks Config

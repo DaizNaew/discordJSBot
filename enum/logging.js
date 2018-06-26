@@ -39,5 +39,6 @@ module.exports = (message) => {
         
         func.writeToFileSync('./storage/clientLog.json', func.beautifyJSON(clientLog));
         
+        
     }
 
