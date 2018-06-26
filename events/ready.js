@@ -39,6 +39,15 @@ module.exports = client => {
             }
         });
 
+        //Checks RPG storage
+        func.checkDirectory("./storage/RPG/", function(err) {
+            if(err) {
+                log.error("Something went wrong: ",err);
+            } else {
+                log.success("No errors found in storage directory.\n");
+            }
+        });
+
         //Checks Dependencies and directories
         setTimeout(function() {
             log.splitter('Populated Directories');
@@ -47,7 +56,7 @@ module.exports = client => {
             
             //ClientLog is now unused and has been replaced by the new userdata system
             //func.checkAllDeps("./storage/clientLog.json");
-
+            
             func.checkAllDeps("./storage/playlist.json");
             func.checkAllDeps("./storage/suggestionBox.json");
             func.checkAllDeps("./storage/twitterFolk.json");

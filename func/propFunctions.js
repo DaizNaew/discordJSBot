@@ -142,6 +142,19 @@ module.exports = {
         })
     },
 
+    //Function to make a character sheet.
+    constructCharacterSheet:function(member, args){
+        userData = this.returnUserDate(member);
+        userData.RPGEnabled = true;
+        this.writeToFileSync(this.beautifyJSON('./storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/"+'userData.json'), userData);
+
+        characterSheet = new Object();
+        characterSheet = {
+            level: 1,
+            race: args[0],
+        }
+    },
+
     //Function to construct a file for handling server specific settings
     constructServerSetting:function(FilePos, client) {
         fs.open(FilePos, 'wx', (err, fd) => {
