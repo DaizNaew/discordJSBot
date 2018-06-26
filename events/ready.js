@@ -1,6 +1,5 @@
 const   func = require('../func/propFunctions'),
-        log = require('../enum/consoleLogging'),
-        twitch = require('../getters/twitchGetter');
+        log = require('../enum/consoleLogging');
 
 module.exports = client => {
 
@@ -21,6 +20,7 @@ module.exports = client => {
 
     //Start of error Checking on storage
     log.splitter('Error Checking');
+
         //Checks Storage
         func.checkDirectory("./storage/", function(err) {
             if(err) {
@@ -29,6 +29,7 @@ module.exports = client => {
                 log.success("No errors found in storage directory.\n");
             }
         });
+
         //Checks Config
         func.checkDirectory("./config/", function(err) {
             if(err) {
@@ -37,13 +38,16 @@ module.exports = client => {
                 log.success("No errors found in config directory.\n");
             }
         });
+
         //Checks Dependencies and directories
         setTimeout(function() {
             log.splitter('Populated Directories');
             //Checks Storage Directories for JSON files
             func.checkAllDeps("./storage/defaultTwitch.json");
+            
             //ClientLog is now unused and has been replaced by the new userdata system
             //func.checkAllDeps("./storage/clientLog.json");
+
             func.checkAllDeps("./storage/playlist.json");
             func.checkAllDeps("./storage/suggestionBox.json");
             func.checkAllDeps("./storage/twitterFolk.json");
@@ -52,7 +56,7 @@ module.exports = client => {
             func.constructServerSetting("./config/serverSettings.json", client)
             
         }, 70);
-    //End of error checking on storage
+        //End of error checking on storage
 
         setTimeout(function() {
             func.constructConfig("./config.json");
