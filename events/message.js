@@ -1,4 +1,5 @@
 const   logging = require('../enum/logging'),
+        userLogging = require('../func/userLogging'),
         log = require('../enum/consoleLogging'),
         func = require('../func/propFunctions'),
         m = require('chalk');
@@ -30,8 +31,12 @@ module.exports = (message) => {
             message.react('❓');
         }}
     }
+
+    //The old logging system is now deprecated and has been replaced by userLogging system
+    //logging(message);
+
+    userLogging(message);
     
-    logging(message);
     if (!message.content.startsWith(prefix)) return;
 
     const command = message.content.split(' ')[0].slice(prefix.length).toLowerCase();

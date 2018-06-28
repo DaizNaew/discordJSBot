@@ -4,6 +4,7 @@ storage/playlist.json
 storage/defaultTwitch.json
 storage/suggestionBox.json
 storage/twitterFolk.json
+storage/userStats
 config/
 nodemon.json
 package-lock.json

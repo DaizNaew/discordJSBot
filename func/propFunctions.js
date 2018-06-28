@@ -21,6 +21,12 @@ module.exports = {
     readFromFileSync: function(file) {
         return JSON.parse(fs.readFileSync(file,'utf8'));
     },
+    returnUserDate:function(member){
+        return this.readFromFileSync('./storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/"+'userData.json');
+    },
+    returnRaceSheet:function(){
+        return this.readFromFileSync('./storage/RPG/races.json');
+    },
     
     //Function to check if a directory exists
     checkDirectory: function(directory, callback){
@@ -51,6 +57,122 @@ module.exports = {
             this.writeToFileSync(FilePos, " { } ");
             log.success(`Successfully created file at: ${FilePos}`);
         });
+    },
+
+    //Function to construct data files for all users on all servers indefinetely, won't stop can't stop
+    constructUsers:function (client, filePos) {
+        this.checkDirectory(filePos+'/userStats',(err) => {
+            if(err) {
+                log.error(err);
+            }
+        });
+        this.checkDirectory(filePos+'/userStats'+'/guilds',(err) => {
+            if(err) {
+                log.error(err);
+            } else {
+                client.guilds.map(async g => {
+                    await this.checkDirectory(filePos+'/userStats'+'/guilds/'+g.id, async (err) => {
+                        if(err) {
+                            log.error(err);
+                        } else {
+                            await fs.open(filePos+'/userStats'+'/guilds/'+g.id+'/'+g.name, 'wx', (err, fd) => {
+                                if(!err) {
+                                    this.writeToFileSync(filePos+'/userStats'+'/guilds/'+g.id+'/'+g.name,'');
+                                }
+                            })
+                            await this.checkDirectory(filePos+'/userStats'+'/guilds/'+g.id+'/users', async (err) => {
+                                if(err) {
+                                    log.error(err);
+                                } else {
+                                    g.members.map(async u => {
+                                        await this.checkDirectory(filePos+'/userStats'+'/guilds/'+g.id+'/users/'+u.id, async (err) => {
+                                            if(err) {
+                                                log.error(err);
+                                            } else {
+                                                await fs.open(filePos+'/userStats'+'/guilds/'+g.id+'/users/'+u.id+"/"+u.user.username, 'wx', async (err, fd) => {
+                                                    if (!err) {
+                                                        await this.writeToFileSync(filePos+'/userStats'+'/guilds/'+g.id+'/users/'+u.id+"/"+u.user.username, " ");
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    })
+                                }
+                            });
+                        }
+                    });
+                })
+            }
+        });
+    },
+
+    //Adds a single user to the new storage system
+    addUser:function (member) {
+        this.checkDirectory('./storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id, (err) => {
+            if(!err) {
+                fs.open('./storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/"+member.user.username, 'wx', (err, fd) => {
+                    if (!err) {
+                        this.writeToFileSync('./storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/"+member.user.username, " ");
+                    }
+                });
+                this.addUserData(member).then((userDat) => {
+                    this.writeToFileSync('./storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/"+'userData.json',this.beautifyJSON(userDat));
+                }).catch((err) => {
+                    log.error(err)
+                })
+            }
+        })
+    },
+
+    //Constructs the general user data JSON
+    addUserData:function(member) {
+
+        return new Promise((resolve,reject) => {
+            filePos = './storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/"+'userData.json';
+            fs.open(filePos, 'wx', (err, fd) => {
+                if (!err) {
+                    userDat = new Object;
+                    userDat.userTag = member.user.tag;
+                    userDat.firstNick = member.nickname;
+                    userDat.createdAtDate = new Date(member.user.createdAt);
+                    userDat.clientIsBot = member.user.bot;
+                    userDat.messages = 0;
+                    return resolve(userDat);
+                } else {
+                    return reject(err);
+                }
+            });
+        })
+    },
+
+    //Function to make a character sheet.
+    constructCharacterSheet:function(member, args){
+        userData = this.returnUserDate(member);
+        userData.RPGEnabled = true;
+        userFolder = './storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/";
+        this.writeToFileSync(this.beautifyJSON(userFolder+'userData.json'), userData);
+
+        characterSheet = new Object();
+        characterSheet = {
+            level: 1,
+            xp: 0,
+            race: args[0],
+            statPoints: 0,
+            skillPoints: 0
+        }
+
+        characterSheet.stats = {
+            strength: 0,
+            perception: 0,
+            endurance: 0,
+            charisma: 0,
+            agility: 0,
+            intelligence: 0,
+            luck: 0
+        }
+
+        this.writeToFileSync(this.beautifyJSON(userFolder+'characterSheet.json'), characterSheet);
+
     },
 
     //Function to construct a file for handling server specific settings
