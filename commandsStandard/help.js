@@ -66,7 +66,7 @@ function constrCategory(client, message, category) {
         }
     );
 
-    if(message.author.id != client.id) {
+    if(message.author.id != client.user.id) {
         message.channel.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' })
     } else {
         message.edit(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
