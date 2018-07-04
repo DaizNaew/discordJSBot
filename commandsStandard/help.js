@@ -26,11 +26,9 @@ exports.default = (client, message) => {
     })
     message.channel.send(constr, { code: 'asciidoc' })
     .then(async message => {
-        await message.react("1⃣").catch(error => {});
-        await message.react("2⃣").catch(error => {});
-        await message.react("3⃣").catch(error => {});
-        await message.react("4⃣").catch(error => {});
-        await message.react("5⃣").catch(error => {});
+        for(i = 1; i < 6; i++) {
+            await message.react(i+"⃣").catch(error => {})
+        }
     })
 }
 
