@@ -10,6 +10,8 @@ exports.run = (client, message, params, command_success, command_fail) => {
     race_sheet = func.returnRaceSheet();
     red_cross = client.emojis.find("name", "red_cross");
     races_array = Object.keys(race_sheet);
+    emoji_array = ['✅'];
+    emoji_array.push(red_cross.name);
 
         message.channel.send(constrRaces())
         .then(async msg => {
@@ -19,58 +21,36 @@ exports.run = (client, message, params, command_success, command_fail) => {
             const reactionFilter = (reaction, user) => user.id === message.author.id
             const collector = msg.createReactionCollector(reactionFilter);
 
-            collector.next.then(test => {
+            collector.on("collect", test => {
                 integer = test.emoji.name[0] - 1;
                 msg.delete().then(() => {
+                    
                     message.channel.send(constrRaceEmbed(character(race_sheet,races_array[integer])))
-                    .then(msg => {
-                        msg.react('✅');
-                        msg.react(red_cross);
-                        msg.awaitReactions((reaction, user) => reaction.emoji.name == '✅' && user.id == message.author.id,{max: 1, time: 60000, errors: ['time']})
-                        .then((collection) =>
-                        {
-                            collection.first().remove();
-                            return msg.edit({embed:{description: 'You are now an '+character(race_sheet,races_array[integer]).nominator}})
+                    .then(async nMsg => {
+                        await nMsg.react('✅');
+                        await nMsg.react(red_cross);
+                        await nMsg.createReactionCollector(reactionFilter).on("collect", coll => {
+                            chosen_race = character(race_sheet,races_array[integer]).nominator
+                            switch(coll.emoji.name) {
+                                case emoji_array[0]:
+                                usernick = message.member.nickname;
+                                if(usernick == null) usernick = message.author.username;
+                                    nMsg.reactions.map(r => r.remove());
+                                    nMsg.edit({embed:{description: 'You are now an '+chosen_race}})
+                                    createUser(chosen_race, message.author.id, usernick);
+                                break;
+                                case emoji_array[1]: 
+                                    nMsg.reactions.map(r => r.remove());
+                                    nMsg.edit({embed:{description: 'Oh, okay. :('}})
+                            }
                         })
-                        .catch(collection => console.log(collection));
-                        msg.awaitReactions((reaction, user) => reaction.emoji == red_cross && user.id == message.author.id,{max: 1, time: 60000, errors: ['time']})
-                        .then((collection) =>
-                        {
-                            collection.first().remove();
-                            return msg.edit({embed:{description: 'Oh, okay. :('}})
-                        })
-                        .catch(collection => console.log(collection));
                     })
                     .catch(console.log);
                 })
                 .catch(console.log);
             })
-            .catch(console.log);
         })
         .catch(console.log);
-
-        /*
-        message.channel.send(constrRaceEmbed(chosenRace, params))
-        .then(msg => {
-            msg.react('✅');
-            msg.react(red_cross);
-            msg.awaitReactions((reaction, user) => reaction.emoji.name == '✅' && user.id == message.author.id,{max: 1, time: 60000, errors: ['time']})
-            .then((collection) =>
-            {
-                collection.first().remove();
-                return msg.edit({embed:{description: 'You are now an '+params[0]}})
-            })
-            .catch(collection => console.log(collection));
-            msg.awaitReactions((reaction, user) => reaction.emoji == red_cross && user.id == message.author.id,{max: 1, time: 60000, errors: ['time']})
-            .then((collection) =>
-            {
-                collection.first().remove();
-                return msg.edit({embed:{description: 'Oh, okay. :('}})
-            })
-            .catch(collection => console.log(collection));
-            
-        })
-        */
 }
 
 exports.conf = {
@@ -84,7 +64,7 @@ exports.conf = {
 exports.help = {
     name: 'rpg.character_create',
     description: 'Create your character',
-    usage: 'rpg.character_create <race>'
+    usage: 'rpg.character_create'
 }
 
 character = (race_sheet, race, msg) =>{
@@ -141,7 +121,7 @@ constrRaceEmbed = (chosenRace) => {
             }
         ],
         footer: {
-            text:'If you want to pick this race, click the ✅ reaction icon else click '+red_cross
+            text:'If you want to pick this race, click the ✅ reaction icon else click the '+red_cross.name
         }
     }}
     return embed$;
@@ -163,4 +143,25 @@ constrRaces = () => {
     embed.fields = array;
 
     return {embed};
+}
+
+createUser = (race, id, userName) => {
+    xp_to_next_level$ = 50;
+    userStats = new Object;
+    userStats.race = race;
+    userStats.level = 1;
+    userStats.xp = 0;
+    userStats.xp_to_next_level = xp_to_next_level$;
+    userStats.stats = {
+        strength : 0,
+        perception : 0,
+        endurance : 0,
+        charisma : 0,
+        agility : 0,
+        intelligence : 0,
+        luck : 0
+    },
+    userStats.nickname = userName;
+
+    func.writeToFileSync(`./storage/RPG/users/${id}.json`,func.beautifyJSON(userStats));
 }
