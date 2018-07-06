@@ -20,14 +20,14 @@ winchance = (multiplier, outof, luck) => {
     return win;
 }
 
-module.exports.armwrestle = (strength, dexterity) => {
-    return strengthCalculated(strength, dexterity);
+module.exports.armwrestle = (strength, endurance) => {
+    return strengthCalculated(strength, endurance);
 
 }
 
-strengthCalculated = (strength, dexterity) => {
+strengthCalculated = (strength, endurance) => {
 
-    modifier = (strength*0.80) + (dexterity*0.65);
+    modifier = (strength*0.80) + (endurance*0.65);
     random_fifty = _.random(0,50);
     calced_win = _.random((random_fifty+Math.round(modifier)), (random_fifty*modifier));
 

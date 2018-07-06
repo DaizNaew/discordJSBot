@@ -21,6 +21,28 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
             message.channel.awaitMessages(mess => mess.content.toLowerCase() == 'accept' && mess.member == player2,{max: 1, time: 30000, errors: ['time']})
             .then((collection) =>
             {
+                player1_obj.char_sheet = false;
+                player2_obj.char_sheet = false;
+                player1_obj.strength = 1;
+                player1_obj.endurance = 1;
+                player2_obj.strength = 1;
+                player2_obj.endurance = 1;
+                races = func.returnRaceSheet();
+
+                try {
+                    player1_obj.char_sheet = func.readFromFileSync(`./storage/RPG/users/${player1.id}.json`)
+                    player1_obj.strength = player1_obj.strength + player1_obj.char_sheet['stats'].strength + races[player1_obj.char_sheet.race]['stats'].strength
+                    player1_obj.endurance = player1_obj.endurance + player1_obj.char_sheet['stats'].endurance + races[player1_obj.char_sheet.race]['stats'].endurance
+                }catch(err) {
+                }
+
+                try {
+                    player2_obj.char_sheet = func.readFromFileSync(`./storage/RPG/users/${player2.id}.json`)
+                    player2_obj.strength = player2_obj.strength + player2_obj.char_sheet['stats'].strength + races[player2_obj.char_sheet.race]['stats'].strength
+                    player2_obj.endurance = player2_obj.endurance + player2_obj.char_sheet['stats'].endurance + races[player2_obj.char_sheet.race]['stats'].endurance
+                } catch(err) {
+                }
+                
                 message.react(command_success)
 
                 msg.edit(collection.first().member + ' Accepted the challenge!!!')
@@ -31,17 +53,17 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
                             fields:[
                                 {
                                     name: 'Player 1: '+player1.user.username,
-                                    value: 'STRENGTH: 1 \nDEXTERITY: 1'
+                                    value: `STRENGTH: ${player1_obj.strength} \nENDURANCE: ${player1_obj.endurance}`
                                 },
                                 {
                                     name: 'Player 2: '+player2.user.username,
-                                    value: 'STRENGTH: 1 \nDEXTERITY: 1'
+                                    value: `STRENGTH: ${player2_obj.strength} \nENDURANCE: ${player2_obj.endurance}`
                                 }
                             ]
                         }
                     })
-                    player1_obj.score = gameFunc.armwrestle(1,1);
-                    player2_obj.score = gameFunc.armwrestle(1,1);
+                    player1_obj.score = gameFunc.armwrestle(player1_obj.strength,player1_obj.endurance);
+                    player2_obj.score = gameFunc.armwrestle(player2_obj.strength,player2_obj.endurance);
                     setTimeout(() => {
                         winner = player1;
                         if(player1_obj.score < player2_obj.score) winner = player2
@@ -73,11 +95,11 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
                             fields:[
                                 {
                                     name: 'Player 1: '+player1.user.username,
-                                    value: 'STRENGTH: 1 \nDEXTERITY: 1'
+                                    value: 'STRENGTH: 1 \nENDURANCE: 1'
                                 },
                                 {
                                     name: 'Player 2: '+player2.user.username,
-                                    value: 'STRENGTH: 1 \nDEXTERITY: 1'
+                                    value: 'STRENGTH: 1 \nENDURANCE: 1'
                                 }
                             ]
                         }
