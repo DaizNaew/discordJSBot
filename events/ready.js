@@ -44,8 +44,15 @@ module.exports = client => {
             if(err) {
                 log.error("Something went wrong: ",err);
             } else {
-                log.success("No errors found in storage directory.\n");
+                log.success("No errors found in RPG directory.\n");
             }
+            func.checkDirectory("./storage/RPG/users", function(err) {
+                if(err) {
+                    log.error("Something went wrong: ",err);
+                } else {
+                    log.success("No errors found in users directory.\n");
+                }
+            });
         });
 
         //Checks Dependencies and directories

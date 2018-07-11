@@ -25,11 +25,21 @@ exports.default = (client, message) => {
         constr += `\n${c.iteration+1}). ${c.key}${' '.repeat(longest - c.key.length)} :: ${c.define}`;
     })
     message.channel.send(constr, { code: 'asciidoc' })
-    .then(async message => {
-        await message.react("1⃣").catch(error => {});
-        await message.react("2⃣").catch(error => {});
-        await message.react("3⃣").catch(error => {});
-        await message.react("4⃣").catch(error => {});
+    .then(async msg => {
+        const reactionFilter = (reaction, user) => user.id === message.author.id;
+        for(i = 1; i < 6; i++) {
+            await msg.react(i+"⃣").catch(error => {})
+        }
+        const collector = msg.createReactionCollector(reactionFilter);
+        await collector.on("collect", r => {
+            if(r.emoji.name != "⬅"){
+                integer = r.emoji.name[0] - 1;
+                r.remove(message.author.id).catch(error => log.error(error));
+                constrCategory(client,msg, client.commandCategories[integer]);
+            } else {
+                msg.delete().then(this.default(client,message));
+            }
+        })
     })
 }
 
@@ -65,10 +75,11 @@ function constrCategory(client, message, category) {
         }
     );
 
-    if(message.author.id != client.id) {
+    if(message.author.id != client.user.id) {
         message.channel.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' })
     } else {
         message.edit(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
+        message.react("⬅");
     }
     
 }

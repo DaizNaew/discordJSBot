@@ -5,6 +5,7 @@ storage/defaultTwitch.json
 storage/suggestionBox.json
 storage/twitterFolk.json
 storage/userStats
+storage/RPG
 config/
 nodemon.json
 package-lock.json

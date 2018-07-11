@@ -18,6 +18,7 @@ module.exports = (reaction, user, client) => {
             reaction.remove().catch(error => log.error(error));
             reaction.remove(userid).catch(error => log.error(error));
         }
+        /*
 
         if(reaction.emoji.name == "1⃣"){
             cmd.category(client, reaction.message, "Standard")
@@ -46,18 +47,18 @@ module.exports = (reaction, user, client) => {
             reaction.message.reactions.map(q => {q.remove()})
             reaction.message.react("⬅");
         }
-        /*
+        
         if(reaction.emoji.name == "5⃣"){
-            cmd.run(client, reaction.message, ["Music"])
+            cmd.category(client, reaction.message, ["RPG"])
             reaction.remove(userid).catch(error => log.error(error));
             reaction.message.reactions.map(q => {q.remove()})
             reaction.message.react("⬅");
         }
-        */
-
+        
         if(reaction.emoji.name == "⬅"){
             reaction.message.delete().catch(error => log.error(error));
             cmd.default(client, reaction.message)
         }
+        */
     }
 }
