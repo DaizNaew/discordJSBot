@@ -114,6 +114,7 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
                             title: 'Arm Wrestling Contest',
                             description: winner.user.username + ' is the STRENGTH MASTER!'
                         }})
+                        //GainExpFunc(player2_obj, '10');
                     },2500)
                 },2500)
             })
