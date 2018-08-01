@@ -31,6 +31,6 @@ exports.conf = {
 
 exports.help = {
     name: 'play',
-    description: 'Plays a defined song, or just resumes the playlist',
-    usage: 'play <songname / URL> to play a specific song, or supply no arguments to play the playlist'
+    description: 'Plays a defined song, or adds the song to the playlist',
+    usage: 'play <songname / URL> to play a specific song or adds it to the playlist '
 }
