@@ -4,14 +4,14 @@ const   log = require('../enum/consoleLogging'),
         //NodeJS Modules
         m = require('chalk');
 
-exports.run = (client, message, params, command_success, command_fail) => {
+exports.run = async (client, message, params, command_success, command_fail, ops) => {
 
     message.channel.send("Fetching a song to play...")
-    .then(msg => {
+    .then(async msg => {
         const vChan = message.member.voiceChannel;
         let input = params.slice(0).join(" ");
         if(!input) {msg.edit('I need an input for this to work'); return message.react(command_fail);}
-        require('../modules/songPlayer')(client, message, vChan, input, msg);
+        await require('../modules/songPlayer')(client, message, vChan, input, msg, ops);
         message.react(command_success);
     })
     .catch(error => {

@@ -1,7 +1,7 @@
 const search = require("youtube-search"),
       m = require('chalk');
 
-module.exports = (input,msg) => {
+module.exports = async (input,msg) => {
 
     const config = require('../config.json'),
           log = require('../enum/consoleLogging');

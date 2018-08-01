@@ -2,19 +2,33 @@
 const   log = require('../enum/consoleLogging'),
         func = require('../func/propFunctions');
 
-exports.run = (client, message, params, command_success, command_fail) => {
+exports.run = (client, message, params, command_success, command_fail, ops) => {
 
     message.channel.send("Trying to stop playing music")
     .then(msg => {
-        if(!message.member.voiceChannel.connection) {message.react(command_fail);return msg.edit('I need to be in a channel for that');}
+        if(!message.member.voiceChannel) {
+            message.react(command_fail);
+            return msg.edit('You need to be in a voicechannel to do this');
+        }
+        if(!message.guild.me.voiceChannel) {
+            message.react(command_fail);
+            return msg.edit('I am not connected to any voicechannels');
+        }
+
+        if(message.guild.me.voiceChannelID !== message.member.voiceChannelID) {
+            message.react(command_fail);
+            return msg.edit('We need to be in the same voicechannel for this to work');
+        }
         try {
-            message.member.voiceChannel.connection.dispatcher.end();
+            let data = ops.active.get(msg.guild.id) || {};
+            data.dispatcher.end();
+            message.guild.me.voiceChannel.leave();
             msg.edit('I stopped playing music. :mute:');
             message.react(command_success);
         } catch(err) {
             message.react(command_fail);
             log.error(`The Stop command failed with [${err}]`);
-            msg.edit('Something went wrong inside me. 😞 : \n '+ err);
+            msg.edit('Something went critically wrong inside me. 😞 : \n '+ err);
         }
     })
     .catch(err => {
@@ -26,7 +40,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ['endme', 'shutup'],
+    aliases: ['endme', 'shutup', 'leave'],
     permLevel: 0,
     category: func.getDirForCategory(__dirname)
 }

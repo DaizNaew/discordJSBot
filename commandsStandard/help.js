@@ -43,11 +43,11 @@ exports.default = (client, message) => {
     })
 }
 
-exports.category = (client, message, category) => {
+exports.category = async (client, message, category) => {
     constrCategory(client,message,category);
 }
 
-function constrCategory(client, message, category) {
+async function constrCategory(client, message, category) {
     const   settings = require('../config.json'),
     serverSettings = func.readFromFileSync('./config/serverSettings.json');
 
@@ -79,7 +79,8 @@ function constrCategory(client, message, category) {
         message.channel.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' })
     } else {
         message.edit(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
-        message.react("⬅");
+        await message.reactions.map(q => {q.remove()})
+        await message.react("⬅");
     }
     
 }
