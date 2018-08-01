@@ -4,7 +4,7 @@ const   logging = require('../enum/logging'),
         func = require('../func/propFunctions'),
         m = require('chalk');
 
-module.exports = (message) => {
+module.exports = (message, active) => {
     const settings = require('../config.json');
     const client = message.client;
 
@@ -51,7 +51,10 @@ module.exports = (message) => {
     if (cmd) {
         let permLevel,
             enabled,
-            response;
+            response,
+            ops = {
+                active: active
+            };
 
         updateServerSettings(serverSettings, cmd, client);
 
@@ -67,7 +70,7 @@ module.exports = (message) => {
         if(!enabled) return response.send('This command has been disabled by an admin on this server');
         if(cmd.conf.guildOnly && !message.guild) return response.send('This command only works in a server');
         if(permLevel > 0) {message.react('🔒');return response.send('You do not have the permissions to do this')}
-        cmd.run(client, message, params, command_success, command_fail);
+        cmd.run(client, message, params, command_success, command_fail, ops);
         let guildName = ``;
         let channelName = `a private message`;
         if(message.guild) guildName = `on ${m.cyan.bold(message.guild.name)}`;

@@ -14,7 +14,9 @@ setTimeout(function(){
 
       const config = require("./config.json");
 
-      require('./util/eventLoader')(client);
+      const active = new Map();
+
+      require('./util/eventLoader')(client, active);
 
       client.commands = new Discord.Collection();
       client.aliases = new Discord.Collection();
