@@ -26,7 +26,7 @@ module.exports = client => {
             if(err) {
                 log.error("Something went wrong: ",err);
             } else {
-                log.success("No errors found in storage directory.\n");
+                log.success("No errors found in storage directory.");
             }
         });
 
@@ -35,16 +35,33 @@ module.exports = client => {
             if(err) {
                 log.error("Something went wrong: ",err);
             } else {
-                log.success("No errors found in config directory.\n");
+                log.success("No errors found in config directory.");
             }
         });
+
+        //Checks UserStats
+        func.checkDirectory("./storage/userStats/", function(err) {
+            if(err) {
+                log.error("Something went wrong: ", err);
+            } else {
+                log.success("No errors found in userStats directory. ");
+            }
+            func.checkDirectory("./storage/userStats/guilds/", function(err) {
+                if(err) {
+                    log.error("Something went wrong: ", err);
+                } else {
+                    log.success("No errors found in userStats/guilds directory.")
+                }
+            })
+
+        })
 
         //Checks RPG storage
         func.checkDirectory("./storage/RPG/", function(err) {
             if(err) {
                 log.error("Something went wrong: ",err);
             } else {
-                log.success("No errors found in RPG directory.\n");
+                log.success("No errors found in RPG directory.");
             }
             func.checkDirectory("./storage/RPG/users", function(err) {
                 if(err) {
