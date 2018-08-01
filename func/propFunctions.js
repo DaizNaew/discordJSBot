@@ -32,10 +32,12 @@ module.exports = {
     checkDirectory: function(directory, callback){
         fs.stat(directory, function(err, stats) {
         //Check if error defined and the error code is "not exists"
+        if(err) {
             if (err && err.errno === -4058 || err.errno === -2 && err.code === 'ENOENT') {
                 //Create the directory, call the callback.
                 fs.mkdir(directory, callback);
-            } else {
+            }
+        } else {
                 //just in case there was a different error:
                 callback(err)
             }
