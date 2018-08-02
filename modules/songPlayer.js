@@ -36,26 +36,6 @@ module.exports = async (client, message, voiceChannel, input, msg, ops) => {
 
         ops.active.set(message.guild.id, data);
 
-        /*
-        response = `🎵 Now playing: **${song.name}** 🎵`;
-        voiceChannel.join()
-        .then(connection => {
-            msg.edit(response);
-            const stream = ytdl(song.link, { filter : 'audioonly'});
-            broadcast.playStream(stream);
-                    
-            var dispatcher = connection.playBroadcast(broadcast,streamOptions);
-
-            dispatcher.on('end', () => {
-            voiceChannel.leave();
-            });
-            log.warning(`Playing the song ${m.cyan.bold(song.name)} in ${m.cyan.bold(voiceChannel.name)}`);
-        })
-        .catch(console.error);
-
-        msg.edit(response);
-        */
-
     })
     .catch(error => {
         log.error(error);
@@ -69,7 +49,7 @@ async function play(client,ops,data,msg,voiceChannel) {
     data.dispatcher.guildID = data.guildID;
     log.warning(`Playing the song ${m.cyan.bold(data.queue[0].songTitle)} in ${m.cyan.bold(client.guilds.get(data.dispatcher.guildID).me.voiceChannel.name)}`);
 
-    data.dispatcher.on('end', () => {
+    data.dispatcher.once('end', () => {
         finish(client,ops,data.dispatcher,msg,voiceChannel)
     })
 }

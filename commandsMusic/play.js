@@ -12,7 +12,6 @@ exports.run = async (client, message, params, command_success, command_fail, ops
         let input = params.slice(0).join(" ");
         if(!input) {msg.edit('I need an input for this to work'); return message.react(command_fail);}
         await require('../modules/songPlayer')(client, message, vChan, input, msg, ops);
-        msg.delete();
         message.react(command_success);
     })
     .catch(error => {
