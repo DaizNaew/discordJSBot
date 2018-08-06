@@ -99,9 +99,10 @@ module.exports = {
         remaining_statpoints = charsheet.statPoints;
         if(remaining_statpoints === 0) return false;
         try {
-            stats.stat_to_raise++;
+            stats[stat_to_raise]++;
             remaining_statpoints--;
             charsheet.stats = stats;
+            charsheet.statPoints = remaining_statpoints;
         } catch(error) {
             log.error(error);
         }
@@ -115,6 +116,6 @@ module.exports = {
      * @returns {characterSheet} The character sheet
      */
     getPlayerObject:function(member) {
-        return func.returnUserDate(member);
+        return func.readFromFileSync(`./storage/RPG/users/${member.id}.json`)
     }
 }
