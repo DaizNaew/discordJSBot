@@ -29,4 +29,3 @@ exports.help = {
     description: 'Let me tell you about this bot I know.',
     usage: 'rudeboi'
 }
-

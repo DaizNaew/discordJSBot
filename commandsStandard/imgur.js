@@ -48,7 +48,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
             }});
         }).catch(err => { message.react(command_fail); log.error(err)});
     }).catch(err => { message.react(command_fail); log.error(err)});
-    
 }
 
 exports.conf = {

@@ -4,7 +4,6 @@ const   func = require('../func/propFunctions'),
         _ = require('lodash');
 
 exports.run = (client, message, params, command_success, command_fail) => {
-
    if(params == false) {
        this.default(client,message);
    } else {
@@ -81,34 +80,33 @@ async function constrCategory(client, message, category) {
         await message.reactions.map(q => {q.remove()})
         await message.react("⬅");
     }
-    
 }
 
 function constrHelp(client, message, params, command_success, command_fail) {
     let command = params[0],
         to_show = params[1];
 
-cat = command[0].toUpperCase() + command.slice(1).toLowerCase();
+    cat = command[0].toUpperCase() + command.slice(1).toLowerCase();
 
-if(client.commandCategories.includes(cat)) {
-    return constrCategory(client, message, cat);
-}
-
-if (client.commands.has(command)) {
-    command = client.commands.get(command);
-    let aliases = command.conf.aliases;
-
-    if(to_show && to_show == 'show') 
-    {
-        message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' })
-        .then(() => message.react(command_success))
-        .catch(err => {log.error(err); message.react(command_fail)});
-    } else {
-        message.author.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' })
-        .then(() => message.react(command_success))
-        .catch(err => {log.error(err); message.react(command_fail)});
+    if(client.commandCategories.includes(cat)) {
+        return constrCategory(client, message, cat);
     }
-            
+
+    if (client.commands.has(command)) {
+        command = client.commands.get(command);
+        let aliases = command.conf.aliases;
+
+        if(to_show && to_show == 'show') 
+        {
+            message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' })
+            .then(() => message.react(command_success))
+            .catch(err => {log.error(err); message.react(command_fail)});
+        } else {
+            message.author.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' })
+            .then(() => message.react(command_success))
+            .catch(err => {log.error(err); message.react(command_fail)});
+        }
+        
     } else if (!client.commands.has(command)) {
         message.react(command_fail);
     }

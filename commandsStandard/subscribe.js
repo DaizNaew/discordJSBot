@@ -1,4 +1,3 @@
-        
         //Local files
 const   log = require('../enum/consoleLogging'),
         embed = require('../model/embeds'),
@@ -67,7 +66,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
         log.error(`Subscribe command failed to execute [${error}]`);
         message.react(command_fail);
     });
-    
 }
 
 exports.conf = {

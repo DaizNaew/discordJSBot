@@ -163,7 +163,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
         log.error(`Twitch command failed to execute [${error}]`);
         message.react(command_fail);
     });
-
 }
 
 exports.conf = {
