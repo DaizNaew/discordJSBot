@@ -72,7 +72,7 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
 
                         msg.edit({embed:{
                             title: 'Arm Wrestling Contest',
-                            description: winner[0].user.username + ' is the STRENGTH MASTER!'
+                            description: ':muscle: ' + winner[0].user.username + ' is the STRENGTH MASTER! :muscle: '
                         }});
                         rpgFunc.gainExp(winner, '10');
                     },2500)
@@ -140,7 +140,7 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
 
                         msg.edit({embed:{
                             title: 'Arm Wrestling Contest',
-                            description: winner[0].user.username + ' is the STRENGTH MASTER!'
+                            description: ':muscle: ' + winner[0].user.username + ' is the STRENGTH MASTER! :muscle: '
                         }})
 
                     },2500)

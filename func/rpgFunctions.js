@@ -64,7 +64,9 @@ module.exports = {
     
         func.writeToFileSync(`./storage/RPG/users/${player_object[0].user.id}.json`,func.beautifyJSON(player_object[1].char_sheet));
 
-        this.gainLvl(player_object);
+        if(player_object[1].char_sheet.xp == player_object[1].char_sheet.xp_to_next_level || player_object[1].char_sheet.xp >= player_object[1].char_sheet.xp_to_next_level) {
+            this.gainLvl(player_object);
+        }
     },
 
     /**
@@ -75,7 +77,7 @@ module.exports = {
      */
     gainLvl: function(player_object) {
 
-        player_object[1].char_sheet.level = player_object.char_sheet.level++;
+        player_object[1].char_sheet.level = player_object[1].char_sheet.level++;
         player_object[1].char_sheet.xp = 0;
         player_object[1].char_sheet.statPoints = player_object[1].char_sheet.statPoints + 5;
         player_object[1].char_sheet.xp_to_next_level = Math.floor((player_object[1].char_sheet.level/0.24)^2);
