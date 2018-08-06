@@ -28,7 +28,7 @@ exports.default = (client, message) => {
     .then(async msg => {
         const reactionFilter = (reaction, user) => user.id === message.author.id;
         for(i = 1; i < 6; i++) {
-            await msg.react(i+"⃣").catch(error => {})
+            await msg.react(i+"⃣").catch(error => {log.error(error)})
         }
         const collector = msg.createReactionCollector(reactionFilter);
         await collector.on("collect", r => {

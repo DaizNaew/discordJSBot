@@ -3,8 +3,7 @@ const   log = require('../enum/consoleLogging'),
         cEmbed = require('../model/embeds'),
         func = require('../func/propFunctions'),
         //NodeJS Modules
-        Discord = require('discord.js'),
-        moment = require('moment');
+        Discord = require('discord.js');
 
 exports.run = (client, message, params, command_success, command_fail) => {
 
@@ -108,9 +107,6 @@ exports.run = (client, message, params, command_success, command_fail) => {
                         stream_data = response;
                         twitchGetter.getGameInfo(response.game_id).then(resolve => {
                             game_data = resolve;
-    
-                            let startDate = moment(stream_data.started_at).format('YYYY-MM-DD HH:mm:ss');
-                            let now = moment().format('YYYY-MM-DD HH:mm:ss');
                             live_since = ((Date.now() - new Date(stream_data.started_at)));
     
                             let thumb = stream_data.thumbnail_url.replace(/{width}/i, '1280');
