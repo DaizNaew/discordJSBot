@@ -79,7 +79,7 @@ module.exports = {
 
         player_object[1].char_sheet.level = player_object[1].char_sheet.level++;
         player_object[1].char_sheet.xp = 0;
-        player_object[1].char_sheet.statPoints = player_object[1].char_sheet.statPoints + 5;
+        player_object[1].char_sheet.statPoints = player_object[1].char_sheet.statPoints + 2;
         player_object[1].char_sheet.xp_to_next_level = Math.floor((player_object[1].char_sheet.level/0.24)^2);
 
         func.writeToFileSync(`./storage/RPG/users/${player_object[0].user.id}.json`,func.beautifyJSON(player_object[1].char_sheet));
