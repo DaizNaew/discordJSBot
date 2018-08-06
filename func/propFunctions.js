@@ -53,9 +53,9 @@ module.exports = {
         return JSON.parse(fs.readFileSync(file,'utf8'));
     },
     /**
-     * Takes a guildmember input and fetches the charaactersheet belonging to that member
+     * Takes a guildmember input and fetches the userdata belonging to that member
      * @param {guildMember} member The member to lookup for
-     * @returns {JSON} The charactersheet returned as a JSON Object
+     * @returns {JSON} The userdata returned as a JSON Object
      */
     returnUserDate:function(member){
         return this.readFromFileSync('./storage/userStats/guilds/'+member.guild.id+'/users/'+member.user.id+'/userData.json');
