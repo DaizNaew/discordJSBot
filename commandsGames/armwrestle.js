@@ -153,7 +153,7 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
         }
     },5000)
 })
-
+.catch(err => log.error(err));
 }
 
 exports.conf = {
