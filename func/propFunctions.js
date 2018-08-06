@@ -22,7 +22,7 @@ module.exports = {
         return JSON.parse(fs.readFileSync(file,'utf8'));
     },
     returnUserDate:function(member){
-        return this.readFromFileSync('./storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/"+'userData.json');
+        return this.readFromFileSync('./storage/userStats/guilds/'+member.guild.id+'/users/'+member.user.id+'/userData.json');
     },
     returnRaceSheet:function(){
         return this.readFromFileSync('./storage/RPG/races.json');
@@ -146,37 +146,7 @@ module.exports = {
             });
         })
     },
-
-    //Function to make a character sheet.
-    constructCharacterSheet:function(member, args){
-        userData = this.returnUserDate(member);
-        userData.RPGEnabled = true;
-        userFolder = './storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/";
-        this.writeToFileSync(this.beautifyJSON(userFolder+'userData.json'), userData);
-
-        characterSheet = new Object();
-        characterSheet = {
-            level: 1,
-            xp: 0,
-            race: args[0],
-            statPoints: 0,
-            skillPoints: 0
-        }
-
-        characterSheet.stats = {
-            strength: 0,
-            perception: 0,
-            endurance: 0,
-            charisma: 0,
-            agility: 0,
-            intelligence: 0,
-            luck: 0
-        }
-
-        this.writeToFileSync(this.beautifyJSON(userFolder+'characterSheet.json'), characterSheet);
-
-    },
-
+    
     //Function to construct a file for handling server specific settings
     constructServerSetting:function(FilePos, client) {
         fs.open(FilePos, 'wx', (err, fd) => {

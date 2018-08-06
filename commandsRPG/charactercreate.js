@@ -1,6 +1,7 @@
         //Local Files
 const   log = require('../enum/consoleLogging'),
         func = require('../func/propFunctions'),
+        rpgFunc = require('../func/rpgFunctions'),
         //NodeJS Modules
         m = require('chalk'),
         _ = require('lodash');
@@ -37,7 +38,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
                                 if(usernick == null) usernick = message.author.username;
                                     nMsg.reactions.map(r => r.remove());
                                     nMsg.edit({embed:{description: 'You are now an '+chosen_race}})
-                                    createUser(chosen_race, message.author.id, usernick);
+                                    rpgFunc.constructCharacterSheet(message.member, chosen_race);
                                 break;
                                 case emoji_array[1]: 
                                     nMsg.reactions.map(r => r.remove());
@@ -143,25 +144,4 @@ constrRaces = () => {
     embed.fields = array;
 
     return {embed};
-}
-
-createUser = (race, id, userName) => {
-    xp_to_next_level$ = 50;
-    userStats = new Object;
-    userStats.race = race;
-    userStats.level = 1;
-    userStats.xp = 0;
-    userStats.xp_to_next_level = xp_to_next_level$;
-    userStats.stats = {
-        strength : 0,
-        perception : 0,
-        endurance : 0,
-        charisma : 0,
-        agility : 0,
-        intelligence : 0,
-        luck : 0
-    },
-    userStats.nickname = userName;
-
-    func.writeToFileSync(`./storage/RPG/users/${id}.json`,func.beautifyJSON(userStats));
 }
