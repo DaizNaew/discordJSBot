@@ -3,18 +3,16 @@ const   log = require('../enum/consoleLogging'),
         func = require('../func/propFunctions'),
         rpgFunc = require('../func/rpgFunctions'),
         //NodeJS Modules
-        m = require('chalk'),
-        _ = require('lodash');
+        m = require('chalk');
 
 exports.run = (client, message, params, command_success, command_fail) => {
 
     char_sheet = rpgFunc.getPlayerObject(message.member);
 
-    red_cross = client.emojis.find("name", "red_cross");
     stats_array = Object.keys(char_sheet['stats']);
     const longest = stats_array.reduce((long, str) => Math.max(long, str.length), 0);
 
-    resp = `= Showing stats = \n`;
+    resp = `= Showing stats for ${message.member.displayName} = \n`;
 
     for(a in stats_array) {
         resp += `${parseInt(a)+1}). ${stats_array[a]}${' '.repeat(longest - stats_array[a].length)} :: Currently assigned : *${char_sheet.stats[stats_array[a]]}* points\n`
