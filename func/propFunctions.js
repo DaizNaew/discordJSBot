@@ -8,8 +8,6 @@ module.exports = {
      * @type {object}
      * @typedef {object} DiscordClient
      * @type {object}
-     * @typedef {object} characterSheet
-     * @type {object}
      */
   
     /**
