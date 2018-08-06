@@ -1,6 +1,7 @@
     //Local Files
 const   log = require('../enum/consoleLogging'),
         func = require('../func/propFunctions'),
+        rpgFunc = require('../func/rpgFunctions'),
         gameFunc = require('../func/gameFuncs'),
     //Node Modules
         _ = require('lodash');
@@ -10,10 +11,13 @@ exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send('Flipping this coin!')
     .then(msg => {
         setTimeout(() => {
-            
+            player_obj = new Object;
+            player_obj.char_sheet = rpgFunc.getPlayerObject(message.member)
+            player_object = [message.member, player_obj];
             if(params != 0) {
                 if(gameFunc(6))
                 {
+                    rpgFunc.gainExp(player_object, Math.floor(_.random(0,5)));
                     return msg.edit(resultsArray(params)[_.random(0,(resultsArray(params).length-1))]+"\n"+
                     `You did however in some odd turn of events, win this once...`);
                 }
@@ -34,7 +38,7 @@ resultsArray = (params) => {
         `The coin just disintigrated after being flipped too hard.`,
         `The coin got stuck in a cobweb under the rafters, and a spider now owns the coin.`,
         `The coin refused to get flipped.`,
-        `The coin landed on ${params[0]} and you won, but sadly the bank is broke and cannot payout.`
+        `The coin landed on ${params} and you won, but sadly the bank is broke and cannot payout.`
     ]
     return arr;
 }
