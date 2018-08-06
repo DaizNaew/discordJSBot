@@ -48,7 +48,7 @@ character = (race_sheet, race, msg) =>{
 constrUserEmbed = (user_sheet, race, message) => {
     embed$ = {embed: {
         title: `Character sheet for: ${user_sheet.nickname}`,
-        description: `**Race : **`+user_sheet.race,
+        description: `**Race : ** ${user_sheet.race}`,
         fields:[
 
             {
@@ -108,6 +108,20 @@ constrUserEmbed = (user_sheet, race, message) => {
             {
                 name: 'LUCK',
                 value: `${race['stats'].luck+user_sheet['stats'].luck}`,
+                "inline": true
+            },
+            {
+                name: '** **',
+                value: `** LEVEL **`
+            },
+            {
+                name: 'StatPoints',
+                value: `**Unspent statpoints:** ${user_sheet.statPoints}`,
+                "inline": true
+            },
+            {
+                name: 'SkillPoints',
+                value: `**Unspent skillpoints:** ${user_sheet.skillPoints}`,
                 "inline": true
             }
         ],
