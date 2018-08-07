@@ -30,7 +30,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: [],
+    aliases: ['rpg.char'],
     permLevel: 0,
     category: func.getDirForCategory(__dirname)
 }
@@ -115,12 +115,12 @@ constrUserEmbed = (user_sheet, race, message) => {
                 value: `** LEVEL **`
             },
             {
-                name: 'StatPoints',
+                name: 'STATPOINTS',
                 value: `**Unspent statpoints:** ${user_sheet.statPoints}`,
                 "inline": true
             },
             {
-                name: 'SkillPoints',
+                name: 'SKILLPOINTS',
                 value: `**Unspent skillpoints:** ${user_sheet.skillPoints}`,
                 "inline": true
             }

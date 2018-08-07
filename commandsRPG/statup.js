@@ -18,8 +18,12 @@ exports.run = (client, message, params, command_success, command_fail) => {
         resp += `${parseInt(a)+1}). ${stats_array[a]}${' '.repeat(longest - stats_array[a].length)} :: Currently assigned : *${char_sheet.stats[stats_array[a]]}* points\n`
     }
 
+    points_to_spend = 1;
+
+    if(params[0] && !isNaN(params[0]) && params[0] <= char_sheet.statPoints && params[0] != 0) points_to_spend = params[0];
+
     if(char_sheet.statPoints !== 0) {
-        resp += `\nYou have *${char_sheet.statPoints}* unspent stat points.\nClick the corresponding number below to add 1 to that stat.`
+        resp += `\nYou have *${char_sheet.statPoints}* unspent stat points.\nClick the corresponding number below to add ${points_to_spend} to that stat.`
     } else {
         resp += `\nYou don't have any points to spend, level up to gain more points.`
     }
@@ -35,8 +39,8 @@ exports.run = (client, message, params, command_success, command_fail) => {
             collector.on("collect", reaction => {
                 i = reaction.emoji.name[0] -1;
                 
-                if(rpgFunc.spendSkillpoints(message.member, stats_array[i])) {
-                    msg.edit(`You just added *1* point to ${stats_array[i]}, it is now at *${rpgFunc.getPlayerObject(message.member).stats[stats_array[i]]}*`)
+                if(rpgFunc.spendSkillpoints(message.member, stats_array[i], points_to_spend)) {
+                    msg.edit(`You just added *${points_to_spend}* point to ${stats_array[i]}, it is now at *${rpgFunc.getPlayerObject(message.member).stats[stats_array[i]]}*`)
                     msg.clearReactions(m)
                     .catch(err => log.error(err))
                 }

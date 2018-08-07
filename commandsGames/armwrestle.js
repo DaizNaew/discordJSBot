@@ -18,6 +18,7 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
     temp = setTimeout(()=> {
         if(message.mentions.members.first()) {
             player2 = message.mentions.members.first();
+            if(player2 == player1) return msg.edit(`LOOK AT THIS GUY, THINKING HE CAN WRESTLE HIMSELF.`);
             msg.edit(`${player2} were challenged to armwrestle, type <accept> to join the fun!`);
             message.channel.awaitMessages(mess => mess.content.toLowerCase() == 'accept' && mess.member == player2,{max: 1, time: 30000, errors: ['time']})
             .then((collection) =>
@@ -74,7 +75,7 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
                             title: 'Arm Wrestling Contest',
                             description: ':muscle: ' + winner[0].user.username + ' is the STRENGTH MASTER! :muscle: '
                         }});
-                        rpgFunc.gainExp(winner, '10');
+                        rpgFunc.gainExp(winner, '10', message.channel);
                     },2500)
                 },2500)
             })
@@ -90,6 +91,8 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
                 message.react(command_success)
 
                 player2 = collection.first().member;
+
+                if(player2 == player1) return msg.edit(`LOOK AT THIS GUY, THINKING HE CAN WRESTLE HIMSELF.`);
 
                 player1_obj.char_sheet = false;
                 player2_obj.char_sheet = false;
@@ -136,7 +139,7 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
                         winner = [player1, player1_obj];
                         if(player1_obj.score < player2_obj.score) winner = [player2, player2_obj]
 
-                        rpgFunc.gainExp(winner, '10');
+                        rpgFunc.gainExp(winner, '10', message.channel);
 
                         msg.edit({embed:{
                             title: 'Arm Wrestling Contest',

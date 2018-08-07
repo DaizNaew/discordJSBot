@@ -55,7 +55,7 @@ module.exports = {
      * @param {characterSheet} player_object[1] The charactersheet for this player object
      * @param {number} expToGain How much exp to add to the character sheet
      */
-    gainExp: function(player_object, expToGain)  {
+    gainExp: function(player_object, expToGain, channel)  {
         if(!player_object[1].char_sheet) return;
  
         new_exp = player_object[1].char_sheet.xp + parseInt(expToGain);
@@ -64,8 +64,8 @@ module.exports = {
     
         func.writeToFileSync(`./storage/RPG/users/${player_object[0].user.id}.json`,func.beautifyJSON(player_object[1].char_sheet));
 
-        if(player_object[1].char_sheet.xp == player_object[1].char_sheet.xp_to_next_level || player_object[1].char_sheet.xp >= player_object[1].char_sheet.xp_to_next_level) {
-            this.gainLvl(player_object);
+        if(player_object[1].char_sheet.xp >= player_object[1].char_sheet.xp_to_next_level) {
+            this.gainLvl(player_object, channel);
         }
     },
 
@@ -75,14 +75,16 @@ module.exports = {
      * @param {guildMember} player_object[0] The member as a guildmember
      * @param {characterSheet} player_object[1] The charactersheet for this player object
      */
-    gainLvl: function(player_object) {
+    gainLvl: function(player_object, channel) {
 
-        player_object[1].char_sheet.level = player_object[1].char_sheet.level++;
+        player_object[1].char_sheet.level += 1;
         player_object[1].char_sheet.xp = 0;
-        player_object[1].char_sheet.statPoints = player_object[1].char_sheet.statPoints + 2;
-        player_object[1].char_sheet.xp_to_next_level = Math.floor((player_object[1].char_sheet.level/0.24)^2);
+        player_object[1].char_sheet.statPoints += 2;
+        player_object[1].char_sheet.xp_to_next_level = Math.floor(50+((player_object[1].char_sheet.level/0.24)^2));
 
         func.writeToFileSync(`./storage/RPG/users/${player_object[0].user.id}.json`,func.beautifyJSON(player_object[1].char_sheet));
+
+        channel.send(`**${player_object[0].nickname}** just leveled up and is now level: **${player_object[1].char_sheet.level}**`);
 
         return;
     },
@@ -92,15 +94,17 @@ module.exports = {
      * @param {guildMember} member The player to work with, supplied as a guildmember
      * @param {string} stat The stat to affect
      */
-    spendSkillpoints:function(member, stat) {
+    spendSkillpoints:function(member, stat, points_to_spend) {
         charsheet = this.getPlayerObject(member);
+        points_to_add = 1;
+        if(points_to_spend) points_to_add = parseInt(points_to_spend);
         stats = charsheet.stats;
         stat_to_raise = stat
         remaining_statpoints = charsheet.statPoints;
         if(remaining_statpoints === 0) return false;
         try {
-            stats[stat_to_raise]++;
-            remaining_statpoints--;
+            stats[stat_to_raise] += parseInt(points_to_add);
+            remaining_statpoints -= points_to_add;
             charsheet.stats = stats;
             charsheet.statPoints = remaining_statpoints;
         } catch(error) {
