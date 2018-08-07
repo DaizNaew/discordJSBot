@@ -57,6 +57,12 @@ module.exports = {
      */
     gainExp: function(player_object, expToGain, channel)  {
         if(!player_object[1].char_sheet) return;
+
+        luck_modifier = player_object[1].char_sheet['stats'].luck;
+        modNum = ((Math.random()*luck_modifier)*2,5)
+        mod = _.random(modNum, _.random(modNum, modNum+2))
+
+        
  
         new_exp = player_object[1].char_sheet.xp + parseInt(expToGain);
     
@@ -80,7 +86,7 @@ module.exports = {
         player_object[1].char_sheet.level += 1;
         player_object[1].char_sheet.xp = 0;
         player_object[1].char_sheet.statPoints += 2;
-        player_object[1].char_sheet.xp_to_next_level = Math.floor(50+((player_object[1].char_sheet.level/0.24)^2));
+        player_object[1].char_sheet.xp_to_next_level = Math.floor(Math.pow((player_object[1].char_sheet.level/0.24),2));
 
         func.writeToFileSync(`./storage/RPG/users/${player_object[0].user.id}.json`,func.beautifyJSON(player_object[1].char_sheet));
 
