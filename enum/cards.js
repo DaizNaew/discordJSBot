@@ -1,14 +1,25 @@
-cardDeck = [
-    suitDiamond = [],
-    suitHeart = [],
-    suitSpade = [],
-    suitClubs = []
-]
+cards = {
+    1: "Ace",
+    2: "Two",
+    3: "Three",
+    4: "Four",
+    5: "Five",
+    6: "Six",
+    7: "Seven",
+    8: "Eight",
+    9: "Nine",
+    10: "Ten",
+    11: "Jack",
+    12: "Queen",
+    13: "King",
+};
 
-for(i = 1; i <= 13; i++) {
-    cardDeck.forEach(suit => {
-        suit.push(i);
-    });
-}
+deck = {
+    Diamonds: {cards},
+    Hearts: {cards},
+    Spades: {cards},
+    Clubs: {cards}
+};
 
-module.exports = {cardDeck};
+exports.cards = {cards};
+exports.deck = {deck};
