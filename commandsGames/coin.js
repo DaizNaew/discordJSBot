@@ -19,12 +19,14 @@ exports.run = (client, message, params, command_success, command_fail) => {
         } catch(error) {
             log.error(error);
         }
+        luck = 0;
         time_delay = 2000;
         if(player_obj.char_sheet) {
             stats = player_obj.char_sheet;
             player_object = [message.member, player_obj];
             total_strength = parseInt(stats['stats'].strength) + parseInt(races[stats.race]['stats'].strength);
             time_delay = time_delay*Math.floor(total_strength/2);
+            luck = stats['stats'].luck;
         }
         
         too_stronk = false;
@@ -42,7 +44,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
 
         setTimeout(() => {
             if(params != 0) {
-                if(gameFunc(6))
+                if(gameFunc(6, 2, luck))
                 {
                     rpgFunc.gainExp(player_object, Math.floor(_.random(0,5)));
                     if(too_stronk) {
