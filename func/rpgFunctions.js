@@ -54,9 +54,10 @@ module.exports = {
      * @param {guildMember} player_object[0] The member as a guildmember
      * @param {characterSheet} player_object[1] The charactersheet for this player object
      * @param {number} expToGain How much exp to add to the character sheet
+     * @returns The gained exp
      */
     gainExp: function(player_object, expToGain, channel)  {
-        if(!player_object[1].char_sheet) return;
+        if(!player_object[1].char_sheet) return 'no experience because they don\'t have a character yet';
 
         luck_modifier = player_object[1].char_sheet['stats'].luck;
         modNum = ((Math.random()*luck_modifier)*2,5)
@@ -73,6 +74,7 @@ module.exports = {
         if(player_object[1].char_sheet.xp >= player_object[1].char_sheet.xp_to_next_level) {
             this.gainLvl(player_object, channel);
         }
+        return expToGain + " experience";
     },
 
     /**

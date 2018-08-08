@@ -139,11 +139,11 @@ message.channel.send('Starting an arm wrestling contest!\nIf no oppenent accepts
                         winner = [player1, player1_obj];
                         if(player1_obj.score < player2_obj.score) winner = [player2, player2_obj]
 
-                        rpgFunc.gainExp(winner, Math.floor(6,12), message.channel);
+                       exp_to_gain = rpgFunc.gainExp(winner, Math.floor(6,12), message.channel);
 
                         msg.edit({embed:{
                             title: 'Arm Wrestling Contest',
-                            description: ':muscle: ' + winner[0].user.username + ' is the STRENGTH MASTER! :muscle: '
+                            description: `:muscle: ${winner[0].user.username} is the STRENGTH MASTER! and gained ${exp_to_gain} :muscle: `
                         }})
 
                     },2500)
