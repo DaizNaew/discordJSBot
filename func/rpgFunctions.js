@@ -65,7 +65,7 @@ module.exports = {
         mod = _.random(modNum, _.random(modNum, modNum+2))
 
         expToGain += parseInt(mod);
- 
+
         new_exp = player_object[1].char_sheet.xp + parseInt(expToGain);
     
         player_object[1].char_sheet.xp = new_exp;
@@ -88,8 +88,10 @@ module.exports = {
 
         player_object[1].char_sheet.level += 1;
         player_object[1].char_sheet.statPoints += 2;
+        modded_xp = (player_object[1].char_sheet.xp % player_object[1].char_sheet.xp_to_next_level)
         player_object[1].char_sheet.xp_to_next_level = Math.floor(Math.pow((player_object[1].char_sheet.level/0.24),2));
-        player_object[1].char_sheet.xp = (player_object[1].char_sheet.xp%player_object[1].char_sheet.xp_to_next_level);
+        
+        player_object[1].char_sheet.xp = modded_xp;
 
         func.writeToFileSync(`./storage/RPG/users/${player_object[0].user.id}.json`,func.beautifyJSON(player_object[1].char_sheet));
 

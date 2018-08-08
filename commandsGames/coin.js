@@ -46,13 +46,13 @@ exports.run = (client, message, params, command_success, command_fail) => {
             if(params != 0) {
                 if(gameFunc(6, 2, luck))
                 {
-                    rpgFunc.gainExp(player_object, Math.floor(_.random(0,5)));
+                    expGained = rpgFunc.gainExp(player_object, Math.floor(_.random(0,5)), message.channel);
                     if(too_stronk) {
                         return msg.edit(resultsArray(params)[_.random(0,3)]+"\n"+
-                        `You did however in some odd turn of events, win this once...`);
+                        `You did however in some odd turn of events, win this once... And for some reason gained ${expGained}`);
                     }
                     return msg.edit(resultsArray(params)[_.random(0,(resultsArray(params).length-1))]+"\n"+
-                    `You did however in some odd turn of events, win this once...`);
+                    `You did however in some odd turn of events, win this once... And for some reason gained ${expGained}`);
                 }
                 if(too_stronk) {
                     return msg.edit(resultsArray(params)[_.random(0,3)]+"\n"+
