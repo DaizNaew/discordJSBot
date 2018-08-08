@@ -13,15 +13,20 @@ exports.run = (client, message, params, command_success, command_fail) => {
 
         races = func.returnRaceSheet();
         player_obj = new Object;
+        player_obj.char_sheet = false;
         try {
             player_obj.char_sheet = rpgFunc.getPlayerObject(message.member);
         } catch(error) {
             log.error(error);
         }
-        stats = player_obj.char_sheet;
-        player_object = [message.member, player_obj];
-        total_strength = parseInt(stats['stats'].strength) + parseInt(races[stats.race]['stats'].strength);
-        time_delay = 2000*Math.floor(total_strength/2);
+        time_delay = 2000;
+        if(player_obj.char_sheet) {
+            stats = player_obj.char_sheet;
+            player_object = [message.member, player_obj];
+            total_strength = parseInt(stats['stats'].strength) + parseInt(races[stats.race]['stats'].strength);
+            time_delay = time_delay*Math.floor(total_strength/2);
+        }
+        
         too_stronk = false;
 
         if(time_delay >= 10000) {
