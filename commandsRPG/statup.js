@@ -8,6 +8,7 @@ const   log = require('../enum/consoleLogging'),
 exports.run = (client, message, params, command_success, command_fail) => {
 
     char_sheet = rpgFunc.getPlayerObject(message.member);
+    red_cross = client.emojis.find("name", "red_cross");
 
     stats_array = Object.keys(char_sheet['stats']);
     const longest = stats_array.reduce((long, str) => Math.max(long, str.length), 0);
@@ -30,18 +31,30 @@ exports.run = (client, message, params, command_success, command_fail) => {
 
     message.channel.send(resp, {code: 'asciidoc' })
     .then(async msg => {
+        
         if(char_sheet.statPoints !== 0) {
             for(i = 1; i < stats_array.length+1; i++) {
                 await msg.react(i+"⃣")
             }
+            await msg.react(red_cross);
             const reactionFilter = (reaction, user) => user.id === message.author.id;
             const collector = msg.createReactionCollector(reactionFilter);
             collector.on("collect", reaction => {
+                cancel = false;
+                if(reaction.emoji.name == red_cross.name) {
+                    msg.clearReactions()
+                    .then(() => {
+                        msg.edit('You decided to not spend any skillpoints this time.');
+                    })
+                    .catch(err => log.error(err))
+                    cancel = true;
+                }
+                if(cancel) return;
                 i = reaction.emoji.name[0] -1;
                 
                 if(rpgFunc.spendSkillpoints(message.member, stats_array[i], points_to_spend)) {
                     msg.edit(`You just added *${points_to_spend}* point to ${stats_array[i]}, it is now at *${rpgFunc.getPlayerObject(message.member).stats[stats_array[i]]}*`)
-                    msg.clearReactions(m)
+                    msg.clearReactions()
                     .catch(err => log.error(err))
                 }
             })
