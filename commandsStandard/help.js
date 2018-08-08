@@ -4,11 +4,16 @@ const   func = require('../func/propFunctions'),
         _ = require('lodash');
 
 exports.run = (client, message, params, command_success, command_fail) => {
+    const categoryNames = Array.from(client.commandCategoriesCollection.keys());
    if(params == false) {
        this.default(client,message);
-   } else {
-       constrHelp(client,message,params,command_success, command_fail);
-   }
+    } else {
+        if(_.includes(categoryNames,params[0])) {
+            this.category(client,message,params[0])
+        } else {
+            constrHelp(client,message,params,command_success, command_fail);
+        }
+    }
 }
 
 exports.default = (client, message) => {
