@@ -1,5 +1,6 @@
 func = require('../func/propFunctions'),
-log = require('../enum/consoleLogging');
+log = require('../enum/consoleLogging'),
+_ = require('lodash');
 
 module.exports = {
 
