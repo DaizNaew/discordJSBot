@@ -84,9 +84,9 @@ module.exports = {
     gainLvl: function(player_object, channel) {
 
         player_object[1].char_sheet.level += 1;
-        player_object[1].char_sheet.xp = 0;
         player_object[1].char_sheet.statPoints += 2;
         player_object[1].char_sheet.xp_to_next_level = Math.floor(Math.pow((player_object[1].char_sheet.level/0.24),2));
+        player_object[1].char_sheet.xp = (player_object[1].char_sheet.xp%player_object[1].char_sheet.xp_to_next_level);
 
         func.writeToFileSync(`./storage/RPG/users/${player_object[0].user.id}.json`,func.beautifyJSON(player_object[1].char_sheet));
 
