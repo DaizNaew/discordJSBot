@@ -123,7 +123,8 @@ constrRaceEmbed = (chosenRace) => {
         ],
         footer: {
             text:'If you want to pick this race, click the ✅ reaction icon else click the '+red_cross.name
-        }
+        },
+        color: 0xc05ae2
     }}
     return embed$;
 }
@@ -140,6 +141,8 @@ constrRaces = () => {
         array.push({name: i + ': ' +race.nominator, value: race['descriptors'].description});
         i++;
     })
+
+    embed.color = 0xc05ae2;
 
     embed.fields = array;
 
