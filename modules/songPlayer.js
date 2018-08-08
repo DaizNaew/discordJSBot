@@ -1,6 +1,7 @@
 const ytdl = require("ytdl-core"),
       m = require('chalk'),
-      log = require('../enum/consoleLogging');
+      log = require('../enum/consoleLogging'),
+      func = require('../func/propFunctions');
 
 module.exports = async (client, message, voiceChannel, input, msg, ops) => {
 
@@ -24,14 +25,18 @@ module.exports = async (client, message, voiceChannel, input, msg, ops) => {
 
         data.queue.push({
             songTitle: info.title,
-            requester: message.author.tag,
-            url: song.link,
-            announceChannel: message.channel.id
+            songLength : info.length_seconds,
+            thumbnail : info.thumbnail_url,
+            requester_member : message.member,
+            requester : message.author.tag,
+            url : song.link,
+            announceChannel : message.channel.id
         })
 
         if (!data.dispatcher) play(client, ops, data, msg, voiceChannel);
         else {
-            msg.edit(`Added To Queue: **${info.title}** | Requested By: **${message.author.tag}**`);
+            msg.edit(`:notes: Added To Queue:`);
+            msg.channel.send(constrEmbed(message.author.tag,message.member,info.length_seconds,info.title,song.link,info.thumbnail_url));
         }
 
         ops.active.set(message.guild.id, data);
@@ -44,10 +49,15 @@ module.exports = async (client, message, voiceChannel, input, msg, ops) => {
 }
 
 async function play(client,ops,data,msg,voiceChannel) {
-    msg.channel.send(`🎵 Now playing: **${data.queue[0].songTitle}** 🎵 | Requested By: **${data.queue[0].requester}**`);
+
     data.dispatcher = await data.connection.playStream(ytdl(data.queue[0].url, {filter : 'audioonly'}))
     data.dispatcher.guildID = data.guildID;
-    log.warning(`Playing the song ${m.cyan.bold(data.queue[0].songTitle)} in ${m.cyan.bold(client.guilds.get(data.dispatcher.guildID).me.voiceChannel.name)}`);
+
+    data.dispatcher.once('speaking', async () => {
+        msg.edit(`:notes: Now playing:`);
+        msg.channel.send(constrEmbed(data.queue[0].requester,data.queue[0].requester_member,data.queue[0].songLength,data.queue[0].songTitle,data.queue[0].url,data.queue[0].thumbnail));
+        log.warning(`Playing the song ${m.cyan.bold(data.queue[0].songTitle)} in ${m.cyan.bold(client.guilds.get(data.dispatcher.guildID).me.voiceChannel.name)}`);
+    })
 
     data.dispatcher.once('end', () => {
         finish(client,ops,data.dispatcher,msg,voiceChannel)
@@ -66,4 +76,34 @@ function finish(client,ops,dispatcher,msg, voiceChannel) {
         ops.active.delete(dispatcher.guildID);
         if(voiceChannel) voiceChannel.leave();
     }
+}
+
+/**
+ * @param string The requesters tag as a string
+ * @param member The requester as a guildMember
+ * @param number The length of the song as a number
+ * @param string The title of the song as a string
+ * @param string The url of the song as a string
+ * @param string The url of the Thumbnail for the song as a string
+ * @returns The embed as an object
+ */
+function constrEmbed(requester, requester_member, songLength, songTitle, songUrl, songThumbnail) {
+
+    embed = { };
+    embed.author = { 
+        name: 'Requested By: ' + requester,
+        icon_url: requester_member.user.avatarURL
+    };
+    embed.description = `\`[${func.ytSecondsToHms(songLength)}]\` **${songTitle}**`;
+    embed.fields = [{
+        name: 'Link to the song on YT',
+        value: `**[LINK](${songUrl})**`
+    }];
+    embed.thumbnail = {
+        url: songThumbnail
+    };
+    embed.color = 0xc05ae2;
+
+    return {embed};
+
 }
