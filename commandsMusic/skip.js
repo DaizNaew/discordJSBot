@@ -43,7 +43,7 @@ exports.run = async (client, message, params, command_success, command_fail, ops
 }
 
 exports.conf = {
-    enabled: true,
+    enabled: false,
     guildOnly: true,
     aliases: ['next'],
     permLevel: 0,

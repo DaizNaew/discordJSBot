@@ -62,7 +62,7 @@ module.exports = {
         modNum = ((Math.random()*luck_modifier)*2,5)
         mod = _.random(modNum, _.random(modNum, modNum+2))
 
-        
+        expToGain += parseInt(mod);
  
         new_exp = player_object[1].char_sheet.xp + parseInt(expToGain);
     

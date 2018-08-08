@@ -324,5 +324,21 @@ module.exports = {
         var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "0 minutes";
         var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "0 seconds";
         return hDisplay + mDisplay + sDisplay; 
+    },
+    /**
+     * Takes in seconds and converts them to a proper time format, complete with a formatted sentence
+     * @param {number} d The time which to convert, supplied as seconds
+     * @returns {string} The formatted time format
+     */
+    ytSecondsToHms:function (d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+    
+        var hDisplay = h > 0 ? h + (h == 1 ? ":" : ":") : "";
+        var mDisplay = m > 0 ? m + (m == 1 ? ":" : ":") : "";
+        var sDisplay = s > 0 ? s + (s == 1 ? "" : "") : "0";
+        return hDisplay + mDisplay + sDisplay; 
     }
 }
