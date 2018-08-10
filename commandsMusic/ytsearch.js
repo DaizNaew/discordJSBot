@@ -1,5 +1,5 @@
         //Local Files
-const   log = require('../enum/consoleLogging'),
+        const   log = require('../enum/consoleLogging'),
         func = require('../func/propFunctions'),
         //NodeJS Modules
         m = require('chalk'),
@@ -38,8 +38,9 @@ exports.run = async (client, message, params, command_success, command_fail, ops
 
             collector.videos = videos;
             collector.once('collect', n => {
-                let commandFile= (require('../commandsMusic/play.js'));
+                let commandFile = (require('../commandsMusic/play.js'));
                 commandFile.run(client,message,[videos[parseInt(n.content)-1].link],command_success, command_fail, ops)
+                msg.delete(1500);
             })
         })
     })

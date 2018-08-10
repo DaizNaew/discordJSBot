@@ -2,33 +2,76 @@ const fs = require("fs"),
       log = require('../enum/consoleLogging');
 
 module.exports = {
+
+    /**
+     * @typedef {object} guildMember
+     * @type {object}
+     * @typedef {object} DiscordClient
+     * @type {object}
+     */
   
-    //Standard functions
+    /**
+     * Converts a JavaScript Object Notation (JSON) string into an object.
+     * @param {JSON} arrayToJSON The JSON to convert to an object
+     * @returns {Object} The constructed object
+     */
     arrayifyJSON: function(arrayToJSON) {
         return JSON.parse(arrayToJSON, null, 4);
     },
+    /**
+     * Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
+     * @param {string} jsonToString The string which to convert to JSON
+     * @returns {JSON} The constructed JSON object
+     */
     beautifyJSON: function(jsonToString){
         return JSON.stringify(jsonToString, null, 4);
     },
+    /**
+     * (ASYNC) Takes an input and writes it to a file 
+     * @param {string} file The file to write to
+     * @param {string} input The input to write to the file
+     */
     writeToFileAsync: function(file, input) {
         fs.writeFile(file, input, (err) => {
             if (err) console.error(err);
         });
     },
+    /**
+     * (SYNC) Takes an input and writes it to a file
+     * @param {string} file The file to write to
+     * @param {string} input The input to write to the file
+     */
     writeToFileSync: function(file, input) {
         fs.writeFileSync(file, input);
     },
+    /**
+     * (SYNC) Takes a supplied file and reads it, then returns it as a JSON Object
+     * @param {string} file The file to read from
+     * @returns {JSON} The JSON object that was found
+     */
     readFromFileSync: function(file) {
         return JSON.parse(fs.readFileSync(file,'utf8'));
     },
+    /**
+     * Takes a guildmember input and fetches the userdata belonging to that member
+     * @param {guildMember} member The member to lookup for
+     * @returns {JSON} The userdata returned as a JSON Object
+     */
     returnUserDate:function(member){
-        return this.readFromFileSync('./storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/"+'userData.json');
+        return this.readFromFileSync('./storage/userStats/guilds/'+member.guild.id+'/users/'+member.user.id+'/userData.json');
     },
+    /**
+     * Fetches the racesheet needed for the RPG modules
+     * @returns {JSON} The racesheet returned as a JSON Object
+     */
     returnRaceSheet:function(){
         return this.readFromFileSync('./storage/RPG/races.json');
     },
-    
-    //Function to check if a directory exists
+    /**
+     * Checks if a directory exists, if not it creates said directory
+     * @param {string} directory The directory to lookup and check
+     * @param {function} callback The callback function
+     */
     checkDirectory: function(directory, callback){
         fs.stat(directory, function(err, stats) {
         //Check if error defined and the error code is "not exists"
@@ -43,10 +86,11 @@ module.exports = {
             }
         });
     },
-
-    //Function to check if a certain file exists
+    /**
+     * Checks if a file exists, if not it creates said file with an empty Object
+     * @param {string} FilePos The file to lookup and check
+     */
     checkAllDeps: function(FilePos) {
-    
         fs.open(FilePos, 'wx', (err, fd) => {
             if (err) {
                 if (err.code === 'EEXIST') {
@@ -60,8 +104,11 @@ module.exports = {
             log.success(`Successfully created file at: ${FilePos}`);
         });
     },
-
-    //Function to construct data files for all users on all servers indefinetely, won't stop can't stop
+    /**
+     * Creates a lot of folders and JSON files to hold the data about every guild and their members
+     * @param {DiscordClient} client The current client, this is the client that's connected to Discord
+     * @param {string} filePos The directory in which to store all this information
+     */
     constructUsers:function (client, filePos) {
         this.checkDirectory(filePos+'/userStats',(err) => {
             if(err) {
@@ -107,8 +154,10 @@ module.exports = {
             }
         });
     },
-
-    //Adds a single user to the new storage system
+    /**
+     * Adds a single guildMember to the storage system
+     * @param {guildMember} member The member to add to the system
+     */
     addUser:function (member) {
         this.checkDirectory('./storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id, (err) => {
             if(!err) {
@@ -125,8 +174,11 @@ module.exports = {
             }
         })
     },
-
-    //Constructs the general user data JSON
+    /**
+     *Constructs the JSON Object storing all of the user data needed
+     * @param {guildMember} member The member to add to the system
+     * @returns {Promise} A promise used to handle the construction
+     */
     addUserData:function(member) {
 
         return new Promise((resolve,reject) => {
@@ -146,38 +198,11 @@ module.exports = {
             });
         })
     },
-
-    //Function to make a character sheet.
-    constructCharacterSheet:function(member, args){
-        userData = this.returnUserDate(member);
-        userData.RPGEnabled = true;
-        userFolder = './storage'+'/userStats'+'/guilds/'+member.guild.id+'/users/'+member.user.id+"/";
-        this.writeToFileSync(this.beautifyJSON(userFolder+'userData.json'), userData);
-
-        characterSheet = new Object();
-        characterSheet = {
-            level: 1,
-            xp: 0,
-            race: args[0],
-            statPoints: 0,
-            skillPoints: 0
-        }
-
-        characterSheet.stats = {
-            strength: 0,
-            perception: 0,
-            endurance: 0,
-            charisma: 0,
-            agility: 0,
-            intelligence: 0,
-            luck: 0
-        }
-
-        this.writeToFileSync(this.beautifyJSON(userFolder+'characterSheet.json'), characterSheet);
-
-    },
-
-    //Function to construct a file for handling server specific settings
+    /**
+     * Creates files that handles the server specific settings
+     * @param {DiscordClient} client The current client, this is the client that's connected to Discord
+     * @param {string} FilePos The directory in which to store all this information
+     */
     constructServerSetting:function(FilePos, client) {
         fs.open(FilePos, 'wx', (err, fd) => {
             if (err) {
@@ -219,8 +244,10 @@ module.exports = {
             log.success(`Successfully created file at: ${FilePos}`);
         });
     },
-
-    //Function to construct a standard config
+    /**
+     * Creates a general config file for the program
+     * @param {string} FilePos The directory in which to store all this information
+     */
     constructConfig:function(FilePos) {
         fs.open(FilePos, 'wx', (err, fd) => {
             if (err) {
@@ -265,7 +292,11 @@ module.exports = {
         });
 
     },
-
+    /**
+     * Takes the directories used to hold commands and takes the suffix then return that as a category
+     * @param {string} directory The directory in which to lookup for the categories
+     * @returns {string} The handled category
+     */
     getDirForCategory:function (directory) {
 
         fullPath = directory;
@@ -278,8 +309,11 @@ module.exports = {
         return category;
     
     },
-    
-    //Function to convert seconds to Hours, Minutes and Seconds and then format it in proper string
+    /**
+     * Takes in seconds and converts them to a proper time format, complete with a formatted sentence
+     * @param {number} d The time which to convert, supplied as seconds
+     * @returns {string} The formatted time format
+     */
     secondsToHms:function (d) {
         d = Number(d);
         var h = Math.floor(d / 3600);
@@ -289,6 +323,22 @@ module.exports = {
         var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
         var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "0 minutes";
         var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "0 seconds";
+        return hDisplay + mDisplay + sDisplay; 
+    },
+    /**
+     * Takes in seconds and converts them to a proper time format, complete with a formatted sentence
+     * @param {number} d The time which to convert, supplied as seconds
+     * @returns {string} The formatted time format
+     */
+    ytSecondsToHms:function (d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+    
+        var hDisplay = h > 0 ? h + (h == 1 ? ":" : ":") : "";
+        var mDisplay = m > 0 ? m + (m == 1 ? ":" : ":") : "";
+        var sDisplay = s > 0 ? s + (s == 1 ? "" : "") : "0";
         return hDisplay + mDisplay + sDisplay; 
     }
 }

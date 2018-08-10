@@ -8,8 +8,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send("Fetching Sources...")
     .then(msg => {
         require('../getters/githubGetter')(message,'users/DaizNaew/repos','sort=discordJSBot')
-        .then(response => 
-        {
+        .then(response => {
             msg.edit(
                 cEmbed.RichEmbed(
                     [response.data[0].owner.login, `https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png`],

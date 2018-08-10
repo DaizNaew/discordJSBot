@@ -84,7 +84,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
         });
         break;
 
-        //DEFAULT CASTE
+        //DEFAULT CASE
         default:
         message.react(command_fail);
         message.channel.send(`It seems you failed the command in some way, did you remember to do follow/unfollow?`)

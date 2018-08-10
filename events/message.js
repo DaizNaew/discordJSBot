@@ -31,10 +31,7 @@ module.exports = (message, active) => {
             message.react('❓');
         }}
     }
-
-    //The old logging system is now deprecated and has been replaced by userLogging system
-    //logging(message);
-
+    
     userLogging(message);
     
     if (!message.content.startsWith(prefix)) return;
@@ -76,7 +73,6 @@ module.exports = (message, active) => {
         if(message.guild) guildName = `on ${m.cyan.bold(message.guild.name)}`;
         if(message.channel.name) channelName = message.channel.name;
         log(`${m.cyan.bold(cmd.help.name)} command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(channelName)} ${guildName}`);
-        //message.react(command_success);
         delete serverSettings;
     }
 }

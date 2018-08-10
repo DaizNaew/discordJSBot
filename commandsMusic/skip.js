@@ -35,7 +35,6 @@ exports.run = async (client, message, params, command_success, command_fail, ops
             message.react(command_success);
             msg.edit(`successfully voted to skip. ${fetched.queue[0].voteSkips.length}/${required} required`)
         }
-        
     })
     .catch(err => {
         message.react(command_fail);

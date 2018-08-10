@@ -1,6 +1,6 @@
 {
   "name": "discordjsbot",
-  "version": "5.6.3.6",
+  "version": "5.7.0.1",
   "description": "A discord bot writte in nodeJS to handle a lot of management and has some fun features",
   "main": "main.js",
   "dependencies": {
@@ -13,11 +13,11 @@
     "erlpack": "github:hammerandchisel/erlpack",
     "ffmpeg": "0.0.4",
     "ffmpeg-binaries": "^3.2.2",
-    "knex": "^0.14.6",
     "lodash": "^4.17.5",
     "moment": "^2.22.0",
     "mysql": "^2.15.0",
     "nock": "^9.2.3",
+    "node-fetch": "^2.2.0",
     "node-gyp": "^3.6.2",
     "node-opus": "^0.3.0",
     "uws": "^9.14.0",

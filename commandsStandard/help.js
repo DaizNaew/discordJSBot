@@ -4,13 +4,16 @@ const   func = require('../func/propFunctions'),
         _ = require('lodash');
 
 exports.run = (client, message, params, command_success, command_fail) => {
-
-   //constrHelp(client, message, params, command_success, command_fail);
+    const categoryNames = Array.from(client.commandCategoriesCollection.keys());
    if(params == false) {
        this.default(client,message);
-   } else {
-       constrHelp(client,message,params,command_success, command_fail);
-   }
+    } else {
+        if(_.includes(categoryNames,params[0])) {
+            this.category(client,message,params[0])
+        } else {
+            constrHelp(client,message,params,command_success, command_fail);
+        }
+    }
 }
 
 exports.default = (client, message) => {
@@ -28,7 +31,7 @@ exports.default = (client, message) => {
     .then(async msg => {
         const reactionFilter = (reaction, user) => user.id === message.author.id;
         for(i = 1; i < 6; i++) {
-            await msg.react(i+"⃣").catch(error => {})
+            await msg.react(i+"⃣").catch(error => {log.error(error)})
         }
         const collector = msg.createReactionCollector(reactionFilter);
         await collector.on("collect", r => {
@@ -79,37 +82,37 @@ async function constrCategory(client, message, category) {
         message.channel.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' })
     } else {
         message.edit(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
-        await message.reactions.map(q => {q.remove()})
+        await message.clearReactions()
+        .catch(err => log.error(err));
         await message.react("⬅");
     }
-    
 }
 
 function constrHelp(client, message, params, command_success, command_fail) {
     let command = params[0],
         to_show = params[1];
 
-cat = command[0].toUpperCase() + command.slice(1).toLowerCase();
+    cat = command[0].toUpperCase() + command.slice(1).toLowerCase();
 
-if(client.commandCategories.includes(cat)) {
-    return constrCategory(client, message, cat);
-}
-
-if (client.commands.has(command)) {
-    command = client.commands.get(command);
-    let aliases = command.conf.aliases;
-
-    if(to_show && to_show == 'show') 
-    {
-        message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' })
-        .then(() => message.react(command_success))
-        .catch(err => {log.error(err); message.react(command_fail)});
-    } else {
-        message.author.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' })
-        .then(() => message.react(command_success))
-        .catch(err => {log.error(err); message.react(command_fail)});
+    if(client.commandCategories.includes(cat)) {
+        return constrCategory(client, message, cat);
     }
-            
+
+    if (client.commands.has(command)) {
+        command = client.commands.get(command);
+        let aliases = command.conf.aliases;
+
+        if(to_show && to_show == 'show') 
+        {
+            message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' })
+            .then(() => message.react(command_success))
+            .catch(err => {log.error(err); message.react(command_fail)});
+        } else {
+            message.author.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nusable in guild only:: ${command.conf.guildOnly}\naliases:: ${aliases}`, { code: 'asciidoc' })
+            .then(() => message.react(command_success))
+            .catch(err => {log.error(err); message.react(command_fail)});
+        }
+        
     } else if (!client.commands.has(command)) {
         message.react(command_fail);
     }
