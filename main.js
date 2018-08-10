@@ -33,6 +33,10 @@ setTimeout(function(){
             console.log(m.bgRed(e.replace(regToken, 'that was redacted')));
       });
 
+      client.on('rateLimit', e => {
+            log.warning(e);
+      });
+
       var logon_try = client.login(config.token);
 
       logon_try
