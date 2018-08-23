@@ -12,7 +12,7 @@
     "discord.js": "^11.4.0",
     "erlpack": "github:hammerandchisel/erlpack",
     "ffmpeg": "0.0.4",
-    "ffmpeg-binaries": "^3.2.2",
+    "ffmpeg-binaries": "^4.0.0",
     "lodash": "^4.17.5",
     "moment": "^2.22.0",
     "mysql": "^2.15.0",
