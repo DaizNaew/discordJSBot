@@ -95,4 +95,9 @@ module.exports = client => {
             console.log();
             log.splitter("Starting normal usage logging");            
         }, 120);
+
+        client.emojis.find(emoji => {
+            client.emojisByName.set(emoji.name, emoji)
+        });
+        
 }

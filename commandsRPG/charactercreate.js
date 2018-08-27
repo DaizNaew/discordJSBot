@@ -9,7 +9,7 @@ const   log = require('../enum/consoleLogging'),
 exports.run = (client, message, params, command_success, command_fail) => {
 
     race_sheet = func.returnRaceSheet();
-    red_cross = client.emojis.find("name", "red_cross");
+    red_cross = client.emojisByName.get("red_cross");
     races_array = Object.keys(race_sheet);
     emoji_array = ['✅'];
     emoji_array.push(red_cross.name);

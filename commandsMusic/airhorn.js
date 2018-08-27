@@ -9,7 +9,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
     message.channel.send("MAKING SOME NOISE...")
     .then(msg => {
 
-        let airhornemoji = client.emojis.find("name", "airhorn");
+        let airhornemoji = client.emojisByName.get("airhorn");
         const horn = './sound/Jamaican Horn Siren.wav';
         const vChan = message.member.voiceChannel;
 

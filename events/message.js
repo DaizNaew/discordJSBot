@@ -8,19 +8,19 @@ module.exports = (message, active) => {
     const settings = require('../config.json');
     const client = message.client;
 
-    var command_success,
-        command_fail;
+    var command_success = client.emojisByName.get('command_successful'),
+        command_fail = client.emojisByName.get('command_failed');
 
-    client.emojis.find(val1 => {
+    // client.emojis.find(val1 => {
 
-        switch (val1.name) {
-            case "command_failed":
-            command_fail = val1;
+    //     switch (val1.name) {
+    //         case "command_failed":
+    //         command_fail = val1;
             
-            case "command_successful":
-            command_success = val1;
-        }
-    })
+    //         case "command_successful":
+    //         command_success = val1;
+    //     }
+    // })
 
     //var command_success = client.emojis.find("name", "white_check_mark");
     //var command_fail = client.emojis.find("name", "negative_squared_cross_mark");
