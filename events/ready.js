@@ -96,6 +96,7 @@ module.exports = client => {
             log.splitter("Starting normal usage logging");            
         }, 120);
 
+        //Maps all custom emojis by name instead of ID
         client.emojis.find(emoji => {
             client.emojisByName.set(emoji.name, emoji)
         });
