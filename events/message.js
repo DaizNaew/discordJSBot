@@ -1,5 +1,4 @@
-const   logging = require('../enum/logging'),
-        userLogging = require('../func/userLogging'),
+const   userLogging = require('../func/userLogging'),
         log = require('../enum/consoleLogging'),
         func = require('../func/propFunctions'),
         m = require('chalk');
@@ -10,23 +9,6 @@ module.exports = (message, active) => {
 
     var command_success = client.emojisByName.get('command_successful'),
         command_fail = client.emojisByName.get('command_failed');
-
-    // client.emojis.find(val1 => {
-
-    //     switch (val1.name) {
-    //         case "command_failed":
-    //         command_fail = val1;
-            
-    //         case "command_successful":
-    //         command_success = val1;
-    //     }
-    // })
-
-    //var command_success = client.emojis.find("name", "white_check_mark");
-    //var command_fail = client.emojis.find("name", "negative_squared_cross_mark");
-
-    //if(client.emojis.find("name", "command_successful")) command_success = client.emojis.find("name", "command_successful");
-    //if(client.emojis.find("name", "command_failed")) command_fail = client.emojis.find("name", "command_failed");
 
     if (message.author.bot) return;
     serverSettings = func.readFromFileSync('./config/serverSettings.json');
