@@ -6,7 +6,7 @@ const   log = require('../enum/consoleLogging'),
         _ = require('lodash');
 
 exports.run = (client, message, params, command_success, command_fail) => {
-    if(!params[0]) return message.channel.send('I could not count any words to clap for');
+    if(!params[0]) return message.channel.send('I could not see any words for me to break into piece');
     emojilist = func.readFromFileSync('./storage/emojilist.json');
     //let input = params.slice(0).join(emojilist['emojilist'][_.random(emojilist['emojilist'].length)]);
     let input = "";

@@ -30,7 +30,6 @@ winchance = (multiplier, outof, luck) => {
 
 module.exports.armwrestle = (strength, endurance) => {
     return strengthCalculated(strength, endurance);
-
 }
 
 /**
