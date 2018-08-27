@@ -24,7 +24,7 @@
     "Gnome": {
         "nominator": "Gnome",
         "descriptors": {
-            "personality": "",
+            "personality": "Crafty and intelligent beings",
             "lore": "",
             "description": "Mostly known for being tricksters, these little beings surely seems to have the smarts to utilize a quantum tunneling manipulator, what's that you may ask? Well only the gnomes know the secrets of those ancient devices."
         },
@@ -46,7 +46,7 @@
     "Dwarf": {
         "nominator": "Dwarf",
         "descriptors": {
-            "personality": "",
+            "personality": "Short and stout, they stand proud",
             "lore": "",
             "description": "Being short seems to have its benefits for our dwarven friends, being this close to the ground and roads allows them to scour them clean of any and all dropped gold, their desire for gold is only matched by their desire for mead and food."
         },
@@ -68,7 +68,7 @@
     "Human": {
         "nominator": "Human",
         "descriptors": {
-            "personality": "",
+            "personality": "As average as lukewarm water",
             "lore": "",
             "description": "Being bland and having no specific speciality might have its benefits, which consequently means the humans get to be worse in everything compared to other races, except maybe for their modesty?"
         },
@@ -90,7 +90,7 @@
     "Elf": {
         "nominator": "Elf",
         "descriptors": {
-            "personality": "",
+            "personality": "This a snob, just about that",
             "lore": "",
             "description": "These nimble and beautiful beings have the uncanny ability to stalk their prey for miles without leaving a trace, waiting in the shadows to strike at just the right moment."
         },
