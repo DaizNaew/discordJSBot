@@ -78,14 +78,16 @@ async function constrCategory(client, message, category) {
         }
     );
 
-    if(message.author.id != client.user.id) {
-        message.channel.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' })
-    } else {
-        message.edit(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
-        await message.clearReactions()
-        .catch(err => log.error(err));
-        await message.react("⬅");
-    }
+    setTimeout(async ()=> {
+        if(message.author.id != client.user.id) {
+            message.channel.send(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' })
+        } else {
+            message.edit(`= Command List =\n\n[Use ${prefix}help <commandname> for details]\n\n${enabledCommands} \n${disabledCommands}`, { code: 'asciidoc' });
+            await message.clearReactions()
+            .catch(err => log.error(err));
+            await message.react("⬅");
+        }
+    },100)
 }
 
 function constrHelp(client, message, params, command_success, command_fail) {
