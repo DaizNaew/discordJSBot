@@ -13,7 +13,7 @@ exports.run = (client, message, params, command_success, command_fail) => {
         twitchGetter = require('../getters/twitchGetter');
 
         let channelToGet,
-            live_emoji = client.emojis.find("name", "live_emoji"),
+            live_emoji = client.emojisByName.get("live_emoji"),
             stream_data,
             game_data;
 

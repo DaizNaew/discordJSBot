@@ -25,7 +25,7 @@ module.exports = (member) => {
         i++;
     }
 
-    let live_emoji = member.emojis.find("name", "live_emoji");
+    let live_emoji = member.emojisByName.get("live_emoji");
 
     return new Promise((resolve, reject) => {
     try {

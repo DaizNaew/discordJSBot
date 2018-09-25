@@ -8,7 +8,7 @@ const   log = require('../enum/consoleLogging'),
 exports.run = (client, message, params, command_success, command_fail) => {
 
     char_sheet = rpgFunc.getPlayerObject(message.member);
-    red_cross = client.emojis.find("name", "red_cross");
+    red_cross = client.emojisByName.get("red_cross");
 
     stats_array = Object.keys(char_sheet['stats']);
     const longest = stats_array.reduce((long, str) => Math.max(long, str.length), 0);

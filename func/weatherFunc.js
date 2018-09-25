@@ -17,9 +17,8 @@ module.exports = (client, message, input, msg) => {
     
     weather.find({search: input, degreeType: 'C'}, function(err, result) {
 
-        if(!result[0]) return(msg.edit('I errored in a critical way.'));
-
         if(err) return log.error(err);
+        if(!result) return(msg.edit('No results found.'));
         localArr = result[0];
         if(localArr == []) return msg.edit('nothing were found');
         if(localArr === undefined) return msg.edit('I have failed to find: ' + input + ' on this planet.', {code: 'asciidoc'});

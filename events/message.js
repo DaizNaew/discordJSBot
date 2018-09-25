@@ -8,11 +8,25 @@ module.exports = (message, active) => {
     const settings = require('../config.json');
     const client = message.client;
 
-    var command_success = client.emojis.find("name", "white_check_mark");
-    var command_fail = client.emojis.find("name", "negative_squared_cross_mark");
+    var command_success = client.emojisByName.get('command_successful'),
+        command_fail = client.emojisByName.get('command_failed');
 
-    if(client.emojis.find("name", "command_successful")) command_success = client.emojis.find("name", "command_successful");
-    if(client.emojis.find("name", "command_failed")) command_fail = client.emojis.find("name", "command_failed");
+    // client.emojis.find(val1 => {
+
+    //     switch (val1.name) {
+    //         case "command_failed":
+    //         command_fail = val1;
+            
+    //         case "command_successful":
+    //         command_success = val1;
+    //     }
+    // })
+
+    //var command_success = client.emojis.find("name", "white_check_mark");
+    //var command_fail = client.emojis.find("name", "negative_squared_cross_mark");
+
+    //if(client.emojis.find("name", "command_successful")) command_success = client.emojis.find("name", "command_successful");
+    //if(client.emojis.find("name", "command_failed")) command_fail = client.emojis.find("name", "command_failed");
 
     if (message.author.bot) return;
     serverSettings = func.readFromFileSync('./config/serverSettings.json');
@@ -53,7 +67,7 @@ module.exports = (message, active) => {
                 active: active
             };
 
-        updateServerSettings(serverSettings, cmd, client);
+        func.updateServerSettings(serverSettings, cmd, client);
 
         if(!message.guild) {
             enabled = cmd.conf.enabled;
@@ -66,7 +80,7 @@ module.exports = (message, active) => {
         }
         if(!enabled) return response.send('This command has been disabled by an admin on this server');
         if(cmd.conf.guildOnly && !message.guild) return response.send('This command only works in a server');
-        if(permLevel > 0) {message.react('🔒');return response.send('You do not have the permissions to do this')}
+        if(permLevel > 0) {message.react('🔒');return response.send('You do not have the permissions to do this')};
         cmd.run(client, message, params, command_success, command_fail, ops);
         let guildName = ``;
         let channelName = `a private message`;
@@ -74,24 +88,5 @@ module.exports = (message, active) => {
         if(message.channel.name) channelName = message.channel.name;
         log(`${m.cyan.bold(cmd.help.name)} command used by ${m.cyan.bold(message.author.tag)} in ${m.cyan.bold(channelName)} ${guildName}`);
         delete serverSettings;
-    }
-}
-
-function updateServerSettings(serverSettings, cmd, client) {
-    if(!serverSettings[cmd.help.name]) {
-        if(!serverSettings[cmd.help.name]) {
-            serverSettings[cmd.help.name] = { 'command_Name' : cmd.help.name };
-            serverSettings[cmd.help.name]['guilds'] = new Object;
-            client.guilds.map((g) => {
-                serverSettings[cmd.help.name][`guilds`][g.id] = { 'guild_Name' : g.name }
-                serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = new Object;
-                serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = {
-                    'enabled' : cmd.conf.enabled,
-                    'perm_Level' : cmd.conf.permLevel,
-                    'custom_Text' : 'custom'
-                }
-            });
-        }
-        func.writeToFileSync('./config/serverSettings.json',func.beautifyJSON(serverSettings));
     }
 }

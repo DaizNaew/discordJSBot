@@ -310,6 +310,32 @@ module.exports = {
     
     },
     /**
+     * Updates and adds a new command to the server settings list
+     * @param {Object} serverSettings All the settings for the supplied server
+     * @param {Object} cmd The command to update
+     * @param {DiscordClient} client The currently logged in client as an Object
+     * @returns {string} The formatted time format
+     */
+     updateServerSettings:function (serverSettings, cmd, client) {
+        if(!serverSettings[cmd.help.name]) {
+            if(!serverSettings[cmd.help.name]) {
+                serverSettings[cmd.help.name] = { 'command_Name' : cmd.help.name };
+                serverSettings[cmd.help.name]['guilds'] = new Object;
+                client.guilds.map((g) => {
+                    serverSettings[cmd.help.name][`guilds`][g.id] = { 'guild_Name' : g.name }
+                    serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = new Object;
+                    serverSettings[cmd.help.name][`guilds`][g.id]['conf'] = {
+                        'enabled' : cmd.conf.enabled,
+                        'perm_Level' : cmd.conf.permLevel,
+                        'custom_Text' : 'custom'
+                    }
+                });
+            }
+            this.writeToFileSync('./config/serverSettings.json',this.beautifyJSON(serverSettings));
+        }
+    },
+
+    /**
      * Takes in seconds and converts them to a proper time format, complete with a formatted sentence
      * @param {number} d The time which to convert, supplied as seconds
      * @returns {string} The formatted time format
