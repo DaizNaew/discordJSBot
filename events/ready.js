@@ -52,9 +52,17 @@ module.exports = client => {
                 } else {
                     log.success("No errors found in userStats/guilds directory.")
                 }
-            })
+            });
+        });
 
-        })
+        //Checks ServerStats
+        func.checkDirectory("./storage/serverStats", function(err) {
+            if(err) {
+                log.error("Something went wrong: ", err);
+            } else {
+                log.success("No errors found in serverStats directory");
+            }
+        });
 
         //Checks RPG storage
         func.checkDirectory("./storage/RPG/", function(err) {
